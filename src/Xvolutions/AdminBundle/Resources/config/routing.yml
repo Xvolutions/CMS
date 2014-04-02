@@ -1,0 +1,3 @@
+xvolutions_admin_homepage:
+    pattern:  /
+    defaults: { _controller: XvolutionsAdminBundle:Admin:login }

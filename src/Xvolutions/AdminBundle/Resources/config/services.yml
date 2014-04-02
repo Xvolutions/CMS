@@ -1,0 +1,7 @@
+parameters:
+#    xvolutions_admin.example.class: Xvolutions\AdminBundle\Example
+
+services:
+#    xvolutions_admin.example:
+#        class: %xvolutions_admin.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

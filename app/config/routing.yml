@@ -1,0 +1,7 @@
+cleverti_cti_login:
+    resource: "@ClevertiCTILoginBundle/Resources/config/routing.yml"
+    prefix:   /
+
+xvolutions_admin:
+    resource: "@XvolutionsAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin/
