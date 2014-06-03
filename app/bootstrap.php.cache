@@ -897,7 +897,6 @@ if (in_array($mimeType, (array) $mimeTypes)) {
 return $format;
 }
 }
-return null;
 }
 public function setFormat($format, $mimeTypes)
 {
@@ -1532,7 +1531,6 @@ return (int) $this->headers->getCacheControlDirective('max-age');
 if (null !== $this->getExpires()) {
 return $this->getExpires()->format('U') - $this->getDate()->format('U');
 }
-return null;
 }
 public function setMaxAge($value)
 {
@@ -1550,7 +1548,6 @@ public function getTtl()
 if (null !== $maxAge = $this->getMaxAge()) {
 return $maxAge - $this->getAge();
 }
-return null;
 }
 public function setTtl($seconds)
 {
@@ -1641,10 +1638,14 @@ return null !== $this->headers->get('Vary');
 }
 public function getVary()
 {
-if (!$vary = $this->headers->get('Vary')) {
+if (!$vary = $this->headers->get('Vary', null, false)) {
 return array();
 }
-return is_array($vary) ? $vary : preg_split('/[\s,]+/', $vary);
+$ret = array();
+foreach ($vary as $item) {
+$ret = array_merge($ret, preg_split('/[\s,]+/', $item));
+}
+return $ret;
 }
 public function setVary($headers, $replace = true)
 {
@@ -1710,7 +1711,7 @@ return in_array($this->statusCode, array(201, 301, 302, 303, 307, 308)) && (null
 }
 public function isEmpty()
 {
-return in_array($this->statusCode, array(201, 204, 304));
+return in_array($this->statusCode, array(204, 304));
 }
 protected function ensureIEOverSSLCompatibility(Request $request)
 {
@@ -2026,7 +2027,7 @@ $alternatives[] = $key;
 }
 throw new ServiceNotFoundException($id, null, null, $alternatives);
 }
-return null;
+return;
 }
 $this->loading[$id] = true;
 try {
@@ -2037,7 +2038,7 @@ if (array_key_exists($id, $this->services)) {
 unset($this->services[$id]);
 }
 if ($e instanceof InactiveScopeException && self::EXCEPTION_ON_INVALID_REFERENCE !== $invalidBehavior) {
-return null;
+return;
 }
 throw $e;
 }
@@ -2218,6 +2219,7 @@ use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\Config\Loader\DelegatingLoader;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\ClassLoader\ClassCollectionLoader;
+use Symfony\Component\Filesystem\Filesystem;
 abstract class Kernel implements KernelInterface, TerminableInterface
 {
 protected $bundles = array();
@@ -2230,16 +2232,16 @@ protected $booted = false;
 protected $name;
 protected $startTime;
 protected $loadClassCache;
-const VERSION ='2.4.2';
-const VERSION_ID ='20402';
+const VERSION ='2.4.5';
+const VERSION_ID ='20405';
 const MAJOR_VERSION ='2';
 const MINOR_VERSION ='4';
-const RELEASE_VERSION ='2';
+const RELEASE_VERSION ='5';
 const EXTRA_VERSION ='';
 public function __construct($environment, $debug)
 {
 $this->environment = $environment;
-$this->debug = (Boolean) $debug;
+$this->debug = (bool) $debug;
 $this->rootDir = $this->getRootDir();
 $this->name = $this->getName();
 if ($this->debug) {
@@ -2576,7 +2578,32 @@ $content = $dumper->dump(array('class'=> $class,'base_class'=> $baseClass));
 if (!$this->debug) {
 $content = static::stripComments($content);
 }
+$content = $this->removeAbsolutePathsFromContainer($content);
 $cache->write($content, $container->getResources());
+}
+private function removeAbsolutePathsFromContainer($content)
+{
+if (!class_exists('Symfony\Component\Filesystem\Filesystem')) {
+return $content;
+}
+$rootDir = $this->getRootDir();
+$previous = $rootDir;
+while (!file_exists($rootDir.'/composer.json')) {
+if ($previous === $rootDir = realpath($rootDir.'/..')) {
+return $content;
+}
+$previous = $rootDir;
+}
+$rootDir = rtrim($rootDir,'/');
+$cacheDir = $this->getCacheDir();
+$filesystem = new Filesystem();
+return preg_replace_callback("{'([^']*)(".preg_quote($rootDir)."[^']*)'}", function ($match) use ($filesystem, $cacheDir) {
+$prefix = isset($match[1]) && $match[1] ? "'$match[1]'.__DIR__" :"__DIR__";
+if ('.'=== $relativePath = rtrim($filesystem->makePathRelative($match[2], $cacheDir),'/')) {
+return $prefix;
+}
+return $prefix.".'/".$relativePath."'";
+}, $content);
 }
 protected function getContainerLoader(ContainerInterface $container)
 {
@@ -2598,21 +2625,33 @@ return $source;
 $rawChunk ='';
 $output ='';
 $tokens = token_get_all($source);
+$ignoreSpace = false;
 for (reset($tokens); false !== $token = current($tokens); next($tokens)) {
 if (is_string($token)) {
 $rawChunk .= $token;
 } elseif (T_START_HEREDOC === $token[0]) {
-$output .= preg_replace(array('/\s+$/Sm','/\n+/S'),"\n", $rawChunk).$token[1];
+$output .= $rawChunk.$token[1];
 do {
 $token = next($tokens);
 $output .= $token[1];
 } while ($token[0] !== T_END_HEREDOC);
 $rawChunk ='';
-} elseif (!in_array($token[0], array(T_COMMENT, T_DOC_COMMENT))) {
+} elseif (T_WHITESPACE === $token[0]) {
+if ($ignoreSpace) {
+$ignoreSpace = false;
+continue;
+}
+$rawChunk .= preg_replace(array('/\n{2,}/S'),"\n", $token[1]);
+} elseif (in_array($token[0], array(T_COMMENT, T_DOC_COMMENT))) {
+$ignoreSpace = true;
+} else {
 $rawChunk .= $token[1];
+if (T_OPEN_TAG === $token[0]) {
+$ignoreSpace = true;
 }
 }
-$output .= preg_replace(array('/\s+$/Sm','/\n+/S'),"\n", $rawChunk);
+}
+$output .= $rawChunk;
 return $output;
 }
 public function serialize()
@@ -2758,7 +2797,6 @@ return $this->path;
 }
 public function getParent()
 {
-return null;
 }
 final public function getName()
 {
@@ -2808,7 +2846,7 @@ private $file;
 public function __construct($file, $debug)
 {
 $this->file = $file;
-$this->debug = (Boolean) $debug;
+$this->debug = (bool) $debug;
 }
 public function __toString()
 {
@@ -2839,9 +2877,11 @@ public function write($content, array $metadata = null)
 {
 $mode = 0666 & ~umask();
 $filesystem = new Filesystem();
-$filesystem->dumpFile($this->file, $content, $mode);
+$filesystem->dumpFile($this->file, $content, null);
+@chmod($this->file, $mode);
 if (null !== $metadata && true === $this->debug) {
-$filesystem->dumpFile($this->getMetaFile(), serialize($metadata), $mode);
+$filesystem->dumpFile($this->getMetaFile(), serialize($metadata), null);
+@chmod($this->getMetaFile(), $mode);
 }
 }
 private function getMetaFile()

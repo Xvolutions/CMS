@@ -1,7 +1,0 @@
-cleverti_cti_login_homepage:
-    pattern:  /
-    defaults: { _controller: ClevertiCTILoginBundle:Login:index }
-
-cleverti_cti_login_recover:
-    pattern:  /recover
-    defaults: { _controller: ClevertiCTILoginBundle:Login:recover }

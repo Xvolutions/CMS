@@ -28,12 +28,14 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        version: "v. 2.0 alpha"
 
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ XvolutionsAdminBundle, ClevertiCTILoginBundle ]
+    bundles:        [ XvolutionsAdminBundle ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~

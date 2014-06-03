@@ -1,0 +1,49 @@
+{% extends "XvolutionsAdminBundle:template:template.html.twig" %}
+
+{% block title %}Login{% endblock %}
+
+{% block styles %}
+    {% stylesheets 
+        'bundles/xvolutionsadmin/css/login.css'
+    %}
+        <link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
+    {% endstylesheets %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="top-20">
+        <div class="col-md-4 col-sm-3 col-xs-2"></div>
+        <div class="col-md-4 col-sm-6 col-xs-8">
+            <div class="login-form">
+                <form action="{{ path('login_check') }}" method="post">
+                    <h2>Consola de Gestão</h2>
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            {{ error.message|trans }}
+                        </div>
+                    {% else %}
+                        <br><br>
+                    {% endif %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" placeholder="Username"/>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="password" placeholder="Password" name="_password" />
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    {#
+                        If you want to control the URL the user
+                        is redirected to on success (more details below)
+                        <input type="hidden" name="_target_path" value="/account" />
+                    #}
+                    <button type="submit" class="btn btn-primary">login</button>
+                    <button type="reset" class="btn btn-bg">reset</button>
+                </form>{# empty Twig template #}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-3 col-xs-2"></div>
+    </div>
+{% endblock %}

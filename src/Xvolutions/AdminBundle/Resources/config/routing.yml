@@ -1,3 +1,25 @@
-xvolutions_admin_homepage:
+login:
     pattern:  /
-    defaults: { _controller: XvolutionsAdminBundle:Admin:login }
+    defaults: { _controller: XvolutionsAdminBundle:Security:login }
+
+login_check:
+    pattern: /login_check
+    
+logout:
+   pattern:   /logout
+
+recover:
+    pattern:  /recover
+    defaults: { _controller: XvolutionsAdminBundle:Security:recover }
+
+backoffice:
+    pattern: /backoffice
+    defaults: { _controller: XvolutionsAdminBundle:Admin:backoffice }
+
+setup:
+    pattern: /setup
+    defaults: { _controller: XvolutionsAdminBundle:Admin:setup }
+
+pages:
+    pattern: /pages
+    defaults: { _controller: XvolutionsAdminBundle:Admin:pages }
