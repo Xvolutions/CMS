@@ -1,23 +1,24 @@
 {% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
 
-{% block title %}Pages - Backoffice{% endblock %}
+{% block title %}Páginas - Backoffice{% endblock %}
 
 {% block username %}{{ username }}{% endblock %}
 {% block maincontent %}
-    <h1>Pages</h1>
+    <h1>{{ "Páginas"|trans }}</h1>
     <form name="xvolutions_adminbundle_page" method="post" action="">
         <div id="xvolutions_adminbundle_page"><div>
-                {{ form_label( form.title ) }}
+                <p>{{ "Título"|trans }}</p>
                 {{ form_widget( form.title ) }}
             </div>
             <div>
-                {{ form_label( form.url ) }}
+                <p>{{ "URL"|trans }}</p>
                 {{ form_widget( form.url ) }}
             </div>
             <div>
-                {{ form_label( form.text ) }}
+                <p>{{ "Texto"|trans }}</p>
                 {{ form_widget( form.text ) }}
             </div>
+            <br><br>
             <div>
                 {{ form_end(form) }}
             </div>
