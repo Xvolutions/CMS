@@ -1,0 +1,56 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{path('backoffice')}}">Consola de Gestão</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">CMS <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{path('pages')}}">Páginas</a></li>
+                        <li><a href="#">Menus</a></li>
+                        <li><a href="#">Gestor de Ficheiros</a></li>
+                        <li><a href="#">Notícias</a></li>
+                        <li><a href="#">Eventos</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fórum <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Temas</a></li>
+                        <li><a href="#">Tópicos</a></li>
+                        <li><a href="#">Mensagens</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Newsletter</a></li>
+                <li><a href="#">Associados</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="{{path('setup')}}" class="dropdown-toggle" data-toggle="dropdown">Setup <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{path('sections')}}">Secções</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bem-vindo, {% block username %}{% endblock %} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Configurações de Utilizadores</a></li>
+                        <li class="divider"></li>
+                        <li><a href="logout">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
