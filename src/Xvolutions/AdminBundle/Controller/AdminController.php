@@ -20,7 +20,7 @@ class AdminController extends Controller {
         $this->verifyaccess();
 
         return $this->render(
-            'XvolutionsAdminBundle:Pages:main.html.twig',
+            'XvolutionsAdminBundle:pages:main.html.twig',
             array(
                 'username' => $this->getUsername()
             )
@@ -29,7 +29,7 @@ class AdminController extends Controller {
 
     public function setupAction() {
         $this->verifyaccess();
-        return $this->render('XvolutionsAdminBundle:Pages:setup.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:pages:setup.html.twig', array(
                 'username' => $this->getUsername()
             )
         );
@@ -52,13 +52,13 @@ class AdminController extends Controller {
             $em->persist( $page );
             $em->flush();
             
-            return $this->render('XvolutionsAdminBundle:Pages:pages.html.twig', array(
+            return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                 'form' => $form->createView(),
                 'username' => $this->getUsername()
             ));
         }
 
-        return $this->render('XvolutionsAdminBundle:Pages:pages.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
             'form' => $form->createView(),
             'username' => $this->getUsername()
         ));
