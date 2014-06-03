@@ -49,7 +49,12 @@
                     <li><a href="#">Associados</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{path('setup')}}">Setup</a></li>
+                    <li class="dropdown">
+                        <a href="{{path('setup')}}" class="dropdown-toggle" data-toggle="dropdown">Setup <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{path('sections')}}">Secções</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bem-vindo, {% block username %}{% endblock %} <b class="caret"></b></a>
                         <ul class="dropdown-menu">

@@ -1,0 +1,27 @@
+{% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
+
+{% block title %}Pages - Backoffice{% endblock %}
+
+{% block username %}{{ username }}{% endblock %}
+{% block maincontent %}
+    <h1>Sections</h1>
+    {% if sectionList|length > 0 %}
+        <select>
+        {% for section in sectionList %}
+            <option value="{{section.id}}">{{section.section}}</option>
+        {% endfor %}
+        </select>
+    {% endif %}
+
+    <form name="xvolutions_adminbundle_page" method="post" action="">
+        <div id="xvolutions_adminbundle_page"><div>
+                {{ form_label( form.section ) }}
+                {{ form_widget( form.section ) }}
+            </div>
+            <div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

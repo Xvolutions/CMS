@@ -6,7 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Xvolutions\AdminBundle\Entity\Page;
+use Xvolutions\AdminBundle\Entity\Section;
 use \Xvolutions\AdminBundle\Form\PageType;
+use \Xvolutions\AdminBundle\Form\SectionType;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
@@ -48,7 +50,7 @@ class AdminController extends Controller {
         if ( $form->isValid() ) {
             $datetime = new \DateTime( 'now' );
             $em = $this->getDoctrine()->getManager();
-            var_dump( $page->setDate($datetime ) );
+            $page->setDate($datetime ); // I Want to define the date
             $em->persist( $page );
             $em->flush();
             
@@ -61,6 +63,31 @@ class AdminController extends Controller {
         return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
             'form' => $form->createView(),
             'username' => $this->getUsername()
+        ));
+    }
+
+    public function sectionsAction(Request $request) {
+        $section = new Section();
+        $sectionType = new SectionType();
+
+        $form = $this->createForm( $sectionType, $section )
+                ->add('Criar', 'submit')
+        ;
+
+        $form->handleRequest($request);
+
+        if ( $form->isValid() ) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist( $section );
+            $em->flush();
+        }
+
+        $sectionList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Section' )->findAll();
+
+        return $this->render('XvolutionsAdminBundle:pages:sections.html.twig', array(
+            'form' => $form->createView(),
+            'username' => $this->getUsername(),
+            'sectionList' => $sectionList
         ));
     }
 

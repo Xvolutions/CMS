@@ -23,3 +23,7 @@ setup:
 pages:
     pattern: /pages
     defaults: { _controller: XvolutionsAdminBundle:Admin:pages }
+
+sections:
+    pattern: /sections
+    defaults: { _controller: XvolutionsAdminBundle:Admin:sections }
