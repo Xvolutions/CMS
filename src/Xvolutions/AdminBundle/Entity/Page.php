@@ -49,6 +49,12 @@ class Page
      */
     private $date;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_section", type="integer")
+     */
+    private $id_section;
 
     /**
      * Get id
@@ -150,5 +156,28 @@ class Page
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Get id_section
+     *
+     * @return integer 
+     */
+    public function getId_section()
+    {
+        return $this->id_section;
+    }
+
+    /**
+     * Set id_section
+     *
+     * @param integer id_sectuib
+     * @return Page
+     */
+    public function setId_section($id_section)
+    {
+        $this->title = $id_section;
+
+        return $this;
     }
 }
