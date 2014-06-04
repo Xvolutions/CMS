@@ -5,6 +5,7 @@ namespace Xvolutions\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Page;
 use Xvolutions\AdminBundle\Entity\Section;
 use \Xvolutions\AdminBundle\Form\PageType;
@@ -78,7 +79,7 @@ class AdminController extends Controller {
         ));
     }
 
-    public function sectionsAction(Request $request) {
+    public function sectionsAction(Request $request, $status = NULL) {
         $section = new Section();
         $sectionType = new SectionType();
 
@@ -88,6 +89,8 @@ class AdminController extends Controller {
 
         $form->handleRequest($request);
 
+        $ok = NULL;
+        $error = NULL;
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($section);
@@ -97,10 +100,75 @@ class AdminController extends Controller {
         $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
 
         return $this->render('XvolutionsAdminBundle:pages:sections.html.twig', array(
-                    'form' => $form->createView(),
-                    'username' => $this->getUsername(),
-                    'sectionList' => $sectionList
+                    'form'          => $form->createView(),
+                    'username'      => $this->getUsername(),
+                    'sectionList'   => $sectionList,
+                    'ok'            => $ok,
+                    'error'         => $error,
+                    'status'       => $status
         ));
+    }
+
+    public function sectionsoptionsAction(Request $request, $option, $id) {
+        $ok = NULL;
+        $error = NULL;
+
+        switch( $option ) {
+            case 'edit': {
+                $this->EditSection($id);
+                break;
+            }
+            case 'remove': {
+                $status = $this->RemoveSection($id);
+                break;
+            }
+            case 'removeselected': {
+                $this->RemoveSelectedSection($id);
+                break;
+            }
+            case 'add': {
+                $this->AddSection($id);
+                break;
+            }
+            default: {
+                $this->AddSection($id);
+                break;
+            }
+        }
+
+        return $this->sectionsAction($request, $status);
+    }
+
+    private function EditSection( $id )
+    {
+        
+    }
+
+    private function RemoveSection( $id )
+    {
+        $em = $this->getDoctrine()->getManager();
+        $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
+        $em->remove($section);
+        $em->flush();
+        return 'Secção removida com sucesso';
+    }
+
+    private function RemoveSelectedSection( $ids )
+    {
+        $em = $this->getDoctrine()->getManager();
+        foreach( $ids as $id ) {
+            $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
+            $em->remove($section);
+            $em->flush();
+        }
+
+        return 'Secção(ões) removida(s) com sucesso';
+    }
+
+    
+    private function AddSection( $id )
+    {
+        
     }
 
     /**
