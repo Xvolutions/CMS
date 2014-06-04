@@ -27,14 +27,11 @@
 
     {{ form_start(form) }}
         {{ form_errors(form) }}
-        <div id="xvolutions_adminbundle_page"><div>
+        <div id="xvolutions_adminbundle_page">
+            <div>
                 {{ form_label( form.section ) }}
                 {{ form_widget( form.section ) }}
             </div>
-            <div>
-                {{ form_row(form.submit, { 'label': 'Submit me' }) }}
-
-            </div>
-        </div>
-    {{ form_end(form) }}
+            {{ form_end(form) }}
+	</div>
 {% endblock %}
