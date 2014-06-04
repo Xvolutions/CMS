@@ -5,7 +5,7 @@
 {% block username %}{{ username }}{% endblock %}
 {% block maincontent %}
     <h1>{{ "Secções"|trans }}</h1>
-    {% if ok %}
+    {% if ok%}
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             {{ ok|trans }}
@@ -14,7 +14,13 @@
     {% if error %}
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ error|trans }}
+            {{ status|trans }}
+        </div>
+    {% endif %}
+    {% if status %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ status|trans }}
         </div>
     {% endif %}
 
@@ -39,12 +45,12 @@
     {% endif %}
 
     {{ form_start(form) }}
-        {{ form_errors(form) }}
-        <div id="xvolutions_adminbundle_page">
-            <div>
-                {{ form_label( form.section ) }}
-                {{ form_widget( form.section ) }}
-            </div>
-            {{ form_end(form) }}
-	</div>
+    {{ form_errors(form) }}
+    <div id="xvolutions_adminbundle_page">
+        <div>
+            {{ form_label( form.section ) }}
+            {{ form_widget( form.section ) }}
+        </div>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
