@@ -22,18 +22,17 @@ class AdminController extends Controller {
         $this->verifyaccess();
 
         return $this->render(
-            'XvolutionsAdminBundle:pages:main.html.twig',
-            array(
-                'username' => $this->getUsername()
-            )
+                        'XvolutionsAdminBundle:pages:main.html.twig', array(
+                    'username' => $this->getUsername()
+                        )
         );
     }
 
     public function setupAction() {
         $this->verifyaccess();
         return $this->render('XvolutionsAdminBundle:pages:setup.html.twig', array(
-                'username' => $this->getUsername()
-            )
+                    'username' => $this->getUsername()
+                        )
         );
     }
 
@@ -41,28 +40,41 @@ class AdminController extends Controller {
         $page = new Page();
         $pageType = new PageType();
 
-        $form = $this->createForm( $pageType, $page )
-            ->add('Criar', 'submit')
+        $form = $this->createForm($pageType, $page)
+                ->add('Criar', 'submit')
         ;
 
         $form->handleRequest($request);
 
-        if ( $form->isValid() ) {
-            $datetime = new \DateTime( 'now' );
+        $error = NULL;
+        $ok = NULL;
+        if ($form->isValid()) {
+            $datetime = new \DateTime('now');
             $em = $this->getDoctrine()->getManager();
-            $page->setDate($datetime ); // I Want to define the date
-            $em->persist( $page );
-            $em->flush();
-            
-            return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
-                'form' => $form->createView(),
-                'username' => $this->getUsername()
-            ));
+            $page->setDate($datetime); // I Want to define the date
+            $page->setId_section($request->request->get('section'));
+
+            $formValues = $request->request->get('xvolutions_adminbundle_page');
+            $url = $formValues["url"];
+            // Verify the URL of the page don't exists yet
+            $titleIsPresent = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->findBy(array('url' => $url));
+            if (ount($titleIsPresent) < 1) {
+                $em->persist($page);
+                $em->flush();
+                $ok = 'Página inserida com sucesso';
+            } else {
+                $error = 'Uma página com esse URL já existe';
+            }
         }
 
+        $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
+
         return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
-            'form' => $form->createView(),
-            'username' => $this->getUsername()
+                    'form' => $form->createView(),
+                    'username' => $this->getUsername(),
+                    'sectionList' => $sectionList,
+                    'ok' => $ok,
+                    'error' => $error
         ));
     }
 
@@ -70,24 +82,24 @@ class AdminController extends Controller {
         $section = new Section();
         $sectionType = new SectionType();
 
-        $form = $this->createForm( $sectionType, $section )
+        $form = $this->createForm($sectionType, $section)
                 ->add('Criar', 'submit')
         ;
 
         $form->handleRequest($request);
 
-        if ( $form->isValid() ) {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist( $section );
+            $em->persist($section);
             $em->flush();
         }
 
-        $sectionList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Section' )->findAll();
+        $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
 
         return $this->render('XvolutionsAdminBundle:pages:sections.html.twig', array(
-            'form' => $form->createView(),
-            'username' => $this->getUsername(),
-            'sectionList' => $sectionList
+                    'form' => $form->createView(),
+                    'username' => $this->getUsername(),
+                    'sectionList' => $sectionList
         ));
     }
 
@@ -96,8 +108,7 @@ class AdminController extends Controller {
      * Role admin is authenticated
      * @throws AccessDeniedException
      */
-    public function verifyaccess() 
-    {
+    public function verifyaccess() {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
             //return $this->redirect($this->generateUrl('login'), 301);
@@ -110,7 +121,8 @@ class AdminController extends Controller {
      * @return type string
      */
     private function getUsername() {
-        $usr= $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.context')->getToken()->getUser();
         return $usr->getUsername();
     }
+
 }
