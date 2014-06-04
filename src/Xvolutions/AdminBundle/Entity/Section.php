@@ -24,7 +24,7 @@ class Section
     /**
      * @var string
      *
-     * @ORM\Column(name="section", type="string", length=255)
+     * @ORM\Column(name="section", type="string", unique="true", length=255)
      */
     private $section;
 
