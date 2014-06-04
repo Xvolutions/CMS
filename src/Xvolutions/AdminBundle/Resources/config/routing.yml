@@ -27,7 +27,9 @@ pages:
 sections:
     pattern: /sections
     defaults: { _controller: XvolutionsAdminBundle:Admin:sections }
+    methods:  [GET,POST]
 
 sectionsoption:
-    pattern: /sections/{option}/{ids}
-    defaults: { _controller: XvolutionsAdminBundle:Admin:sectionsoptions, ids: 0 }
+    pattern: /sections/{option}/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin:sectionsoptions, id: 0 }
+    methods:  [GET]
