@@ -33,14 +33,14 @@
             </tr>
             {% for section in sectionList %}
                 <tr>
-                    <td><input type="checkbox" value="{{section.id}}"></td>
+                    <td><input type="checkbox" id="{{section.id}}" onclick="SelectForRemoval('{{section.id}}');"></td>
                     <td>{{section.section}}</td>
-                    <td><a href="{{path('sections')}}/edit/{{section.id}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> <a href="{{path('sections')}}/remove/{{section.id}}" type="reset" class="btn btn-danger btn-xs">{{ "Apagar"|trans }}</a></td>
+                    <td><a href="{{path('sections')}}/edit/{{section.id}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> <a href="{{path('sections')}}/remove/{{section.id}}" class="btn btn-danger btn-xs">{{ "Apagar"|trans }}</a></td>
                 </tr>
             {% endfor %}
         </table>
         <p>
-            <a href="{{path('sections')}}/add" type="submit" class="btn btn-primary btn-sm">{{ "Criar uma nova secção"|trans }}</a> <a href="{{path('sections')}}/removeselected" type="reset" class="btn btn-danger btn-sm">{{ "Apagar Seleccionadas"|trans }}</a>
+            <a href="{{path('sections')}}/add" type="submit" class="btn btn-primary btn-sm">{{ "Criar uma nova secção"|trans }}</a> <a href="{{path('sections')}}/removeselected" id="RemoveMany" class="btn btn-danger btn-sm">{{ "Apagar Seleccionadas"|trans }}</a>
         </p> 
     {% endif %}
 

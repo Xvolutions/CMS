@@ -59,7 +59,7 @@ class AdminController extends Controller {
             $url = $formValues["url"];
             // Verify the URL of the page don't exists yet
             $titleIsPresent = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->findBy(array('url' => $url));
-            if (ount($titleIsPresent) < 1) {
+            if (count($titleIsPresent) < 1) {
                 $em->persist($page);
                 $em->flush();
                 $ok = 'Página inserida com sucesso';
@@ -100,12 +100,12 @@ class AdminController extends Controller {
         $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
 
         return $this->render('XvolutionsAdminBundle:pages:sections.html.twig', array(
-                    'form'          => $form->createView(),
-                    'username'      => $this->getUsername(),
-                    'sectionList'   => $sectionList,
-                    'ok'            => $ok,
-                    'error'         => $error,
-                    'status'       => $status
+                    'form' => $form->createView(),
+                    'username' => $this->getUsername(),
+                    'sectionList' => $sectionList,
+                    'ok' => $ok,
+                    'error' => $error,
+                    'status' => $status
         ));
     }
 
@@ -113,39 +113,38 @@ class AdminController extends Controller {
         $ok = NULL;
         $error = NULL;
 
-        switch( $option ) {
+        switch ($option) {
             case 'edit': {
-                $this->EditSection($id);
-                break;
-            }
+                    $this->EditSection($id);
+                    break;
+                }
             case 'remove': {
-                $status = $this->RemoveSection($id);
-                break;
-            }
+                    $status = $this->RemoveSection($id);
+                    break;
+                }
             case 'removeselected': {
-                $this->RemoveSelectedSection($id);
-                break;
-            }
+                    $ids = json_decode($id);
+                    $status = $this->RemoveSelectedSection($ids);
+                    break;
+                }
             case 'add': {
-                $this->AddSection($id);
-                break;
-            }
+                    $this->AddSection($id);
+                    break;
+                }
             default: {
-                $this->AddSection($id);
-                break;
-            }
+                    $this->AddSection($id);
+                    break;
+                }
         }
 
         return $this->sectionsAction($request, $status);
     }
 
-    private function EditSection( $id )
-    {
+    private function EditSection($id) {
         
     }
 
-    private function RemoveSection( $id )
-    {
+    private function RemoveSection($id) {
         $em = $this->getDoctrine()->getManager();
         $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
         $em->remove($section);
@@ -153,21 +152,17 @@ class AdminController extends Controller {
         return 'Secção removida com sucesso';
     }
 
-    private function RemoveSelectedSection( $ids )
-    {
+    private function RemoveSelectedSection($ids) {
         $em = $this->getDoctrine()->getManager();
-        foreach( $ids as $id ) {
+        foreach ($ids as $id) {
             $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
             $em->remove($section);
             $em->flush();
         }
-
         return 'Secção(ões) removida(s) com sucesso';
     }
 
-    
-    private function AddSection( $id )
-    {
+    private function AddSection($id) {
         
     }
 

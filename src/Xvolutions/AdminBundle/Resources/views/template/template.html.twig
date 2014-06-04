@@ -31,9 +31,11 @@
         {% javascripts 
                     '@XvolutionsAdminBundle/Resources/public/js/jquery-1.11.0.min.js' 
                     '@XvolutionsAdminBundle/Resources/public/js/bootstrap.min.js' 
+                    '@XvolutionsAdminBundle/Resources/public/js/selectforremoval.js' 
         %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
+        {% block javascripts %}{% endblock %}
         <!-- Javascript -->
     </body>
 </html>
