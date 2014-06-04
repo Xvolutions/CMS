@@ -4,24 +4,24 @@
 
 {% block username %}{{ username }}{% endblock %}
 {% block maincontent %}
-    <h1>Secções</h1>
+    <h1>{{ "Secções"|trans }}</h1>
     {% if sectionList|length > 0 %}
         <table class="table table-hover">
             <tr>
                 <th></th>
-                <th>Nome da Secção</th>
-                <th>Opções</th>
+                <th>{{ "Nome da Secção"|trans }}</th>
+                <th>{{ "Opções"|trans }}</th>
             </tr>
             {% for section in sectionList %}
                 <tr>
                     <td><input type="checkbox" value="{{section.id}}"></td>
                     <td>{{section.section}}</td>
-                    <td><button type="submit" class="btn btn-primary btn-xs">Editar</button> <button type="reset" class="btn btn-danger btn-xs">Apagar</button></td>
+                    <td><button type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</button> <button type="reset" class="btn btn-danger btn-xs">{{ "Apagar"|trans }}</button></td>
                 </tr>
             {% endfor %}
         </table>
         <p>
-            <button type="reset" class="btn btn-danger btn-sm">Apagar Seleccionados</button>
+            <button type="reset" class="btn btn-danger btn-sm">{{ "Apagar Seleccionadas"|trans }}</button>
         </p> 
     {% endif %}
 
