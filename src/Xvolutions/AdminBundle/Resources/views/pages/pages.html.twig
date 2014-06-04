@@ -5,23 +5,48 @@
 {% block username %}{{ username }}{% endblock %}
 {% block maincontent %}
     <h1>{{ "Páginas"|trans }}</h1>
-    <form name="xvolutions_adminbundle_page" method="post" action="">
-        <div id="xvolutions_adminbundle_page"><div>
-                <p>{{ "Título"|trans }}</p>
-                {{ form_widget( form.title ) }}
-            </div>
-            <div>
-                <p>{{ "URL"|trans }}</p>
-                {{ form_widget( form.url ) }}
-            </div>
-            <div>
-                <p>{{ "Texto"|trans }}</p>
-                {{ form_widget( form.text ) }}
-            </div>
-            <br><br>
-            <div>
-                {{ form_end(form) }}
-            </div>
+    {% if ok %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ ok|trans }}
         </div>
-    </form>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
+
+    {{ form_start( form ) }}
+    <div id="xvolutions_adminbundle_page"><div>
+            <p>{{ "Título"|trans }}</p>
+            {{ form_widget( form.title ) }}
+        </div>
+        <div>
+            <p>{{ "URL"|trans }}</p>
+            {{ form_widget( form.url ) }}
+        </div>
+        <div>
+            <p>{{ "Secção"|trans }}</p>
+            {% if sectionList|length > 0 %}
+                <select name="section">
+                    {% for section in sectionList %}
+                        <option value="{{section.id}}">{{section.section}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                {{ "Não existem secções definidas"|trans }}
+            {% endif %}
+        </div>
+        <div>
+            <p>{{ "Texto"|trans }}</p>
+            {{ form_widget( form.text ) }}
+        </div>
+        <br><br>
+        <div>
+            {{ form_end( form ) }}
+        </div>
+    </div>
+</form>
 {% endblock %}
