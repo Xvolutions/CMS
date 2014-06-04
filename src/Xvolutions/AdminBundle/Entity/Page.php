@@ -171,12 +171,12 @@ class Page
     /**
      * Set id_section
      *
-     * @param integer id_sectuib
+     * @param integer id_section
      * @return Page
      */
     public function setId_section($id_section)
     {
-        $this->title = $id_section;
+        $this->id_section = $id_section;
 
         return $this;
     }
