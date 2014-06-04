@@ -29,12 +29,12 @@
                 <tr>
                     <td><input type="checkbox" value="{{section.id}}"></td>
                     <td>{{section.section}}</td>
-                    <td><button type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</button> <button type="reset" class="btn btn-danger btn-xs">{{ "Apagar"|trans }}</button></td>
+                    <td><a href="{{path('sections')}}/edit/{{section.id}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> <a href="{{path('sections')}}/remove/{{section.id}}" type="reset" class="btn btn-danger btn-xs">{{ "Apagar"|trans }}</a></td>
                 </tr>
             {% endfor %}
         </table>
         <p>
-            <button type="reset" class="btn btn-danger btn-sm">{{ "Apagar Seleccionadas"|trans }}</button>
+            <a href="{{path('sections')}}/add" type="submit" class="btn btn-primary btn-sm">{{ "Criar uma nova secção"|trans }}</a> <a href="{{path('sections')}}/removeselected" type="reset" class="btn btn-danger btn-sm">{{ "Apagar Seleccionadas"|trans }}</a>
         </p> 
     {% endif %}
 
