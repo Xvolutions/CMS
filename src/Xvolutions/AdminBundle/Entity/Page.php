@@ -38,7 +38,7 @@ class Page
     /**
      * @var string
      *
-     * @ORM\Column(name="Text", type="text")
+     * @ORM\Column(name="Text", type="text", nullable=true)
      */
     private $text;
 
