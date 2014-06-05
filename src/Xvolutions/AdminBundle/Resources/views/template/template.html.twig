@@ -14,28 +14,28 @@
         %}
         <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
         {% endstylesheets %}
-        {% block styles %}{% endblock %}
-    </head>
-    <body>
+    {% block styles %}{% endblock %}
+</head>
+<body>
 
-        <div class="container-fluid">
-            <div class="content">
-                <div class="row">
-                {% block content %}{% endblock %}
-                </div>
-            </div>
+    <div class="container-fluid">
+        <div class="content">
+            <div class="row">
+            {% block content %}{% endblock %}
         </div>
+    </div>
+</div>
 
-        <!-- Javascript -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        {% javascripts 
+<!-- Javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+{% javascripts 
                     '@XvolutionsAdminBundle/Resources/public/js/jquery-1.11.0.min.js' 
                     '@XvolutionsAdminBundle/Resources/public/js/bootstrap.min.js' 
                     '@XvolutionsAdminBundle/Resources/public/js/selectforremoval.js' 
-        %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-        {% block javascripts %}{% endblock %}
-        <!-- Javascript -->
-    </body>
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% block javascripts %}{% endblock %}
+<!-- Javascript -->
+</body>
 </html>
