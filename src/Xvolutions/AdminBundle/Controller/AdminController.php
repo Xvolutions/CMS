@@ -133,6 +133,52 @@ class AdminController extends Controller
         return $this->render( 'XvolutionsAdminBundle:pages:add_sections.html.twig', array(
                     'form'      => $form->createView(),
                     'username'  => $this->getUsername(),
+                    'title'     => 'Adicionar uma Secção',
+                    'ok'        => $ok,
+                    'error'     => $error
+        ) );
+    }
+
+    public function editsectionAction( Request $request, $id )
+    {
+        //$section = new Section();
+        $sectionType = new SectionType();
+
+        // Verify if the section don't exists yet
+        $section = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Section' )->findBy( array( 'id' => $id ) );
+
+        $form = $this->createForm( $sectionType, $section[0] )
+                ->add( 'Guardar', 'submit' )
+        ;
+
+        $ok = NULL;
+        $error = NULL;
+
+        $form->handleRequest( $request );
+
+        if ( $form->isValid() )
+        {
+            $formValues = $request->request->get( 'xvolutions_adminbundle_section' );
+            $SectionName = $formValues[ "section" ];
+            // Verify if the section don't exists yet
+            $sectionIsPresent = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Section' )->findBy( array( 'section' => $SectionName ) );
+            // TODO: Section validation
+            if ( count( $sectionIsPresent ) < 1 )
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist( $section[0] );
+                $em->flush();
+                $ok = 'Secção actualizada com sucesso';
+            } else
+            {
+                $error = 'Uma secção com esse nome já existe';
+            }
+        }
+
+        return $this->render( 'XvolutionsAdminBundle:pages:add_sections.html.twig', array(
+                    'form'      => $form->createView(),
+                    'username'  => $this->getUsername(),
+                    'title'     => 'Editar uma Secção',
                     'ok'        => $ok,
                     'error'     => $error
         ) );
@@ -144,10 +190,6 @@ class AdminController extends Controller
         $error = NULL;
 
         switch ( $option ) {
-            case 'edit': {
-                    $this->EditSection( $id );
-                    break;
-                }
             case 'remove': {
                     $status = $this->RemoveSection( $id );
                     break;
@@ -160,11 +202,6 @@ class AdminController extends Controller
         }
 
         return $this->sectionsAction( $request, $status, $ok, $error );
-    }
-
-    private function EditSection( $id )
-    {
-        
     }
 
     private function RemoveSection( $id )
