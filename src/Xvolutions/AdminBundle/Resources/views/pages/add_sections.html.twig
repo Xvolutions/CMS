@@ -1,0 +1,33 @@
+{% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
+
+{% block title %}Secções - Backoffice{% endblock %}
+
+{% block username %}{{ username }}{% endblock %}
+{% block maincontent %}
+    <h1>{{ "Adicionar uma Secção"|trans }}</h1>
+    {% if ok %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ ok|trans }}
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div id="xvolutions_adminbundle_page">
+        <div>
+            {{ form_label( form.section ) }}
+            {{ form_widget( form.section ) }}
+        </div>
+        {{ form_end(form) }}
+        <br>
+        <div>
+            <a href="{{path('sections')}}" class="btn btn-primary btn-sm">{{ "Ver Secções"|trans }}</a>
+        </div>
+    </div>
+{% endblock %}

@@ -27,6 +27,11 @@ pages:
 sections:
     pattern: /sections
     defaults: { _controller: XvolutionsAdminBundle:Admin:sections }
+    methods:  [GET]
+
+sectionsadd:
+    pattern: /sections/add
+    defaults: { _controller: XvolutionsAdminBundle:Admin:addsection }
     methods:  [GET,POST]
 
 sectionsoption:
