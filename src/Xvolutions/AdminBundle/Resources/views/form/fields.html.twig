@@ -1,0 +1,31 @@
+{% block button_widget_submit %}
+{% spaceless %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <button type="{{ type|default('button') }}" class="btn btn-primary btn-sm" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain) }}</button>
+{% endspaceless %}
+{% endblock button_widget_submit %}
+
+{% block button_widget_reset %}
+{% spaceless %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <button type="{{ type|default('button') }}" class="btn btn-danger btn-sm" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain) }}</button>
+{% endspaceless %}
+{% endblock button_widget_reset %}
+
+{% block submit_widget %}
+{% spaceless %}
+    {% set type = type|default('submit') %}
+    {{ block('button_widget_submit') }}
+{% endspaceless %}
+{% endblock submit_widget %}
+
+{% block reset_widget %}
+{% spaceless %}
+    {% set type = type|default('reset') %}
+    {{ block('button_widget_reset') }}
+{% endspaceless %}
+{% endblock reset_widget %}
