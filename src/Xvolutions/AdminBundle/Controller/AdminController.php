@@ -92,9 +92,18 @@ class AdminController extends Controller {
         $ok = NULL;
         $error = NULL;
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($section);
-            $em->flush();
+            $formValues = $request->request->get('xvolutions_adminbundle_section');
+            $section = $formValues["section"];
+            // Verify if the section don't exists yet
+            $sectionIsPresent = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findBy(array('section' => $section));
+            if (count($sectionIsPresent) < 1) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($section);
+                $em->flush();
+                $ok = 'Secção inserida com sucesso';
+            } else {
+                $error = 'Uma secção com esse nome já existe';
+            }
         }
 
         $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
