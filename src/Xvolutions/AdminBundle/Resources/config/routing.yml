@@ -31,5 +31,5 @@ sections:
 
 sectionsoption:
     pattern: /sections/{option}/{id}
-    defaults: { _controller: XvolutionsAdminBundle:Admin:sectionsoptions, id: 0 }
+    defaults: { _controller: XvolutionsAdminBundle:Admin:sectionsoptions }
     methods:  [GET]
