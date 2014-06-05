@@ -93,9 +93,9 @@ class AdminController extends Controller {
         $error = NULL;
         if ($form->isValid()) {
             $formValues = $request->request->get('xvolutions_adminbundle_section');
-            $section = $formValues["section"];
+            $SectionName = $formValues["section"];
             // Verify if the section don't exists yet
-            $sectionIsPresent = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findBy(array('section' => $section));
+            $sectionIsPresent = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findBy(array('section' => $SectionName));
             if (count($sectionIsPresent) < 1) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($section);
