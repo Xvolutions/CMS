@@ -42,6 +42,7 @@ class AdminController extends Controller
 
     public function pagesAction( Request $request )
     {
+        $this->verifyaccess();
         $page = new Page();
         $pageType = new PageType();
 
@@ -88,6 +89,7 @@ class AdminController extends Controller
 
     public function sectionsAction( Request $request, $status = NULL, $ok = NULL, $error = NULL )
     {
+        $this->verifyaccess();
         $sectionList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Section' )->findAll();
 
         return $this->render( 'XvolutionsAdminBundle:pages:sections.html.twig', array(
@@ -101,6 +103,7 @@ class AdminController extends Controller
 
     public function addsectionAction( Request $request )
     {
+        $this->verifyaccess();
         $section = new Section();
         $sectionType = new SectionType();
 
@@ -141,6 +144,7 @@ class AdminController extends Controller
 
     public function editsectionAction( Request $request, $id )
     {
+        $this->verifyaccess();
         //$section = new Section();
         $sectionType = new SectionType();
 
@@ -186,6 +190,7 @@ class AdminController extends Controller
 
     public function sectionsoptionsAction( Request $request, $option, $id )
     {
+        $this->verifyaccess();
         $ok = NULL;
         $error = NULL;
 
