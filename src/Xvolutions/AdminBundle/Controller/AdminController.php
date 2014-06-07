@@ -272,7 +272,7 @@ class AdminController extends Controller {
      * 
      * @throws AccessDeniedException
      */
-    public function verifyaccess() {
+    private function verifyaccess() {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
             //return $this->redirect($this->generateUrl('login'), 301);
