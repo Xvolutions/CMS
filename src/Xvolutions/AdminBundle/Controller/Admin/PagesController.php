@@ -24,6 +24,29 @@ class PagesController extends AdminController {
     public function pagesAction(Request $request) {
         parent::verifyaccess();
 
+        $status = NULL;
+
+        // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+           'SELECT p.id, p.title, s.section
+            FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
+            WHERE p.id_section = s.id
+            ORDER BY p.title ASC'
+        );
+
+        $pagesList = $query->getResult();
+        
+        return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
+                    'username' => $this->getUsername(),
+                    'pagesList' => $pagesList,
+                    'status' => $status,
+        ));
+    }
+
+    public function addpagesAction(Request $request) {
+        parent::verifyaccess();
+
         $page = new Page();
         $pageType = new PageType();
 
@@ -56,7 +79,7 @@ class PagesController extends AdminController {
 
         $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:pages:add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
                     'sectionList' => $sectionList,
@@ -64,5 +87,4 @@ class PagesController extends AdminController {
                     'error' => $error
         ));
     }
-
 }

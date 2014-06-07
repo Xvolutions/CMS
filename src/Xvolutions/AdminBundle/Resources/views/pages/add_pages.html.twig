@@ -1,0 +1,54 @@
+{% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
+
+{% block title %}Páginas - Backoffice{% endblock %}
+
+{% block username %}{{ username }}{% endblock %}
+{% block maincontent %}
+    <h1>{{ "Adicionar uma Página"|trans }}</h1>
+    {% if ok %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ ok|trans }}
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
+
+    {{ form_start( form ) }}
+    <div id="xvolutions_adminbundle_page"><div>
+            <p>{{ "Título"|trans }}</p>
+            {{ form_widget( form.title ) }}
+        </div>
+        <div>
+            <p>{{ "URL"|trans }}</p>
+            {{ form_widget( form.url ) }}
+        </div>
+        <div>
+            <p>{{ "Secção"|trans }}</p>
+            {% if sectionList|length > 0 %}
+                <select name="section">
+                    {% for section in sectionList %}
+                        <option value="{{section.id}}">{{section.section}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                {{ "Não existem secções definidas"|trans }}
+            {% endif %}
+        </div>
+        <div>
+            <p>{{ "Texto"|trans }}</p>
+            {{ form_widget( form.text ) }}
+        </div>
+        <br><br>
+            {{ form_end( form ) }}
+        <br>
+        <div>
+            <a href="{{path('pages')}}" class="btn btn-primary btn-sm">{{ "Ver Páginas"|trans }}</a>
+        </div>
+    </div>
+</form>
+{% endblock %}

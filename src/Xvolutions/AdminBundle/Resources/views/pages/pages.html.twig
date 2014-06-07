@@ -5,48 +5,31 @@
 {% block username %}{{ username }}{% endblock %}
 {% block maincontent %}
     <h1>{{ "Páginas"|trans }}</h1>
-    {% if ok %}
+    {% if status %}
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ ok|trans }}
+            {{ status|trans }}
         </div>
     {% endif %}
-    {% if error %}
-        <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ error|trans }}
-        </div>
+    {% if pagesList|length > 0 %}
+        <table class="table table-hover">
+            <tr>
+                <th></th>
+                <th>{{ "Nome da Página"|trans }}</th>
+                <th>{{ "Secção"| trans }}
+                <th>{{ "Opções"|trans }}</th>
+            </tr>
+            {% for page in pagesList %}
+                <tr>
+                    <td><input type="checkbox" id="{{page.id}}" onclick="SelectForRemoval('{{page.id}}');"></td>
+                    <td>{{page.title}}</td>
+                    <td>{{page.section}}</td>
+                    <td><a href="{{path('pages')}}/edit/{{page.id}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> <a href="{{path('pages')}}/remove/{{page.id}}" class="btn btn-danger btn-xs">{{ "Apagar"|trans }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+        <p>
+            <a href="{{path('addpages')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar uma nova página"|trans }}</a> <a href="{{path('pages')}}/removeselected" id="RemoveMany" class="btn btn-danger btn-sm">{{ "Apagar Seleccionadas"|trans }}</a>
+        </p> 
     {% endif %}
-
-    {{ form_start( form ) }}
-    <div id="xvolutions_adminbundle_page"><div>
-            <p>{{ "Título"|trans }}</p>
-            {{ form_widget( form.title ) }}
-        </div>
-        <div>
-            <p>{{ "URL"|trans }}</p>
-            {{ form_widget( form.url ) }}
-        </div>
-        <div>
-            <p>{{ "Secção"|trans }}</p>
-            {% if sectionList|length > 0 %}
-                <select name="section">
-                    {% for section in sectionList %}
-                        <option value="{{section.id}}">{{section.section}}</option>
-                    {% endfor %}
-                </select>
-            {% else %}
-                {{ "Não existem secções definidas"|trans }}
-            {% endif %}
-        </div>
-        <div>
-            <p>{{ "Texto"|trans }}</p>
-            {{ form_widget( form.text ) }}
-        </div>
-        <br><br>
-        <div>
-            {{ form_end( form ) }}
-        </div>
-    </div>
-</form>
 {% endblock %}
