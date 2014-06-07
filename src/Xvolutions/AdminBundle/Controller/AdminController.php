@@ -5,12 +5,10 @@ namespace Xvolutions\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Page;
 use Xvolutions\AdminBundle\Entity\Section;
 use \Xvolutions\AdminBundle\Form\PageType;
 use \Xvolutions\AdminBundle\Form\SectionType;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Description of SecurityController
