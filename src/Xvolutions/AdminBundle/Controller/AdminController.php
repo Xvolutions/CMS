@@ -209,24 +209,44 @@ class AdminController extends Controller
         return $this->sectionsAction( $request, $status, $ok, $error );
     }
 
+    /**
+     * @Description This is function is repsonsible to remove a section
+     * @param type $id the id of the section to be removed
+     * @return string with the information message
+     */
     private function RemoveSection( $id )
     {
-        $em = $this->getDoctrine()->getManager();
-        $section = $em->getRepository( 'XvolutionsAdminBundle:Section' )->find( $id );
-        $em->remove( $section );
-        $em->flush();
-        return 'Secção removida com sucesso';
-    }
-
-    private function RemoveSelectedSection( $ids )
-    {
-        $em = $this->getDoctrine()->getManager();
-        foreach ( $ids as $id ) {
+        try {
+            $em = $this->getDoctrine()->getManager();
             $section = $em->getRepository( 'XvolutionsAdminBundle:Section' )->find( $id );
             $em->remove( $section );
             $em->flush();
+            return 'Secção removida com sucesso';
+        } catch (Exception $ex) {
+            return "Erro $ex ao remover a secção";
         }
-        return 'Secção(ões) removida(s) com sucesso';
+
+    }
+
+    /**
+     * @Description This function is responsible to remove a list of sections
+     * @param type $ids array containing the id's of the sections to be removed
+     * @return string With the message
+     */
+    private function RemoveSelectedSection( $ids )
+    {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            foreach ( $ids as $id ) {
+                $section = $em->getRepository( 'XvolutionsAdminBundle:Section' )->find( $id );
+                $em->remove( $section );
+                $em->flush();
+            }
+            return 'Secção(ões) removida(s) com sucesso';
+        } catch (Exception $ex) {
+            return "Erro $ex ao remover as secção(ões)";
+        }
+        
     }
 
     /**
