@@ -19,6 +19,11 @@ use Symfony\Component\Validator\Constraints\DateTime;
  */
 class AdminController extends Controller {
 
+    /**
+     * Controller responsible to show the backoffice main page
+     * 
+     * @return type the template
+     */
     public function backofficeAction() {
         $this->verifyaccess();
 
@@ -29,6 +34,11 @@ class AdminController extends Controller {
         );
     }
 
+        /**
+     * Controller responsible to show the setup main page
+     * 
+     * @return type the template
+     */
     public function setupAction() {
         $this->verifyaccess();
         return $this->render('XvolutionsAdminBundle:pages:setup.html.twig', array(
@@ -37,6 +47,13 @@ class AdminController extends Controller {
         );
     }
 
+    /**
+     * Controller responsible to show the pages for and handling the form
+     * submission and the database insertion
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return type the template of the pages
+     */
     public function pagesAction(Request $request) {
         $this->verifyaccess();
         $page = new Page();
@@ -80,19 +97,14 @@ class AdminController extends Controller {
                 ));
     }
 
-    public function sectionsAction(Request $request, $status = NULL, $ok = NULL, $error = NULL) {
-        $this->verifyaccess();
-        $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:pages:sections.html.twig', array(
-                    'username' => $this->getUsername(),
-                    'sectionList' => $sectionList,
-                    'ok' => $ok,
-                    'error' => $error,
-                    'status' => $status
-                ));
-    }
-
+    /**
+     * Controller responsible to add a new section for and handling the form
+     * submission and the database insertion
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return type the templates for adding a new section
+     */
     public function addsectionAction(Request $request) {
         $this->verifyaccess();
         $section = new Section();
@@ -130,6 +142,14 @@ class AdminController extends Controller {
                 ));
     }
 
+    /**
+     * Controller responsible to edit a new section for and handling the form
+     * submission and the database insertion
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param type $id the id of an existing section
+     * @return type the template for editing a section
+     */
     public function editsectionAction(Request $request, $id) {
         $this->verifyaccess();
         //$section = new Section();
@@ -172,6 +192,16 @@ class AdminController extends Controller {
                 ));
     }
 
+    /**
+     * Function responsible for handling the section removal and the section
+     * removal array
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param type $option This option might be a 'remove' for a single section and
+     * 'removeselected' to remove an array of id's
+     * @param type $id The id, or id's, of the section(s) to be removed
+     * @return type call the controller to handle 
+     */
     public function sectionsoptionsAction(Request $request, $option, $id) {
         $this->verifyaccess();
         $ok = NULL;
@@ -189,11 +219,19 @@ class AdminController extends Controller {
                 }
         }
 
-        return $this->sectionsAction($request, $status, $ok, $error);
+        $this->verifyaccess();
+        $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
+
+        return $this->render('XvolutionsAdminBundle:pages:sections.html.twig', array(
+                    'username' => $this->getUsername(),
+                    'sectionList' => $sectionList,
+                    'status' => $status
+                ));
     }
 
     /**
-     * @Description This is function is repsonsible to remove a section
+     * This is function is repsonsible to remove a section
+     * 
      * @param type $id the id of the section to be removed
      * @return string with the information message
      */
@@ -210,7 +248,8 @@ class AdminController extends Controller {
     }
 
     /**
-     * @Description This function is responsible to remove a list of sections
+     * This function is responsible to remove a list of sections
+     * 
      * @param type $ids array containing the id's of the sections to be removed
      * @return string With the message
      */
@@ -229,8 +268,9 @@ class AdminController extends Controller {
     }
 
     /**
-     * @Description This function is responsible to verify is the use with the
+     * This function is responsible to verify is the use with the
      * Role admin is authenticated
+     * 
      * @throws AccessDeniedException
      */
     public function verifyaccess() {
@@ -241,8 +281,9 @@ class AdminController extends Controller {
     }
 
     /**
-     * @Description This function is responsible for fetching the username of 
+     * This function is responsible for fetching the username of 
      * the logged in user
+     * 
      * @return type string
      */
     private function getUsername() {
