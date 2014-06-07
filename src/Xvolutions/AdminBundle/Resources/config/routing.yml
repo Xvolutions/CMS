@@ -26,21 +26,21 @@ pages:
 
 sections:
     pattern: /sections
-    defaults: { _controller: XvolutionsAdminBundle:Admin:sections }
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:sections }
     methods:  [GET]
 
 sectionsoption:
     pattern: /sections/{option}/{id}
-    defaults: { _controller: XvolutionsAdminBundle:Admin:sections }
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:sections }
     methods:  [GET]
 
 sectionsadd:
     pattern: /sections/add
-    defaults: { _controller: XvolutionsAdminBundle:Admin:addsection }
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:addsection }
     methods:  [GET,POST]
 
 sectionsedit:
     pattern: /sections/edit/{id}
-    defaults: { _controller: XvolutionsAdminBundle:Admin:editsection }
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:editsection }
     methods:  [GET,POST]
 
