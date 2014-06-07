@@ -202,11 +202,10 @@ class AdminController extends Controller {
      * @param type $id The id, or id's, of the section(s) to be removed
      * @return type call the controller to handle 
      */
-    public function sectionsoptionsAction(Request $request, $option, $id) {
+    public function sectionsAction(Request $request, $option = NULL, $id = NULL) {
         $this->verifyaccess();
-        $ok = NULL;
-        $error = NULL;
 
+        $status = NULL;
         switch ($option) {
             case 'remove': {
                     $status = $this->RemoveSection($id);
