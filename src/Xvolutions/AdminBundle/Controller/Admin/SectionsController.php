@@ -135,7 +135,6 @@ class SectionsController extends AdminController {
                 }
         }
 
-        $this->verifyaccess();
         $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
 
         return $this->render('XvolutionsAdminBundle:pages:sections.html.twig', array(
