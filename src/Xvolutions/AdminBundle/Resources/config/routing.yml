@@ -20,6 +20,10 @@ setup:
     pattern: /setup
     defaults: { _controller: XvolutionsAdminBundle:Admin:setup }
 
+editpages:
+    pattern: /pages/edit/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:editpages }
+
 pages:
     pattern: /pages
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages }
