@@ -89,8 +89,8 @@ class SectionsController extends AdminController {
             $SectionName = $formValues["section"];
             // Verify if the section don't exists yet
             $sectionIsPresent = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findBy(array('section' => $SectionName));
-            // @TODO: Section validation
-            if (count($sectionIsPresent) < 1) {
+
+            if (count($sectionIsPresent) < 1 || $sectionIsPresent[0]->getId() == $id) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($section[0]);
                 $em->flush();
