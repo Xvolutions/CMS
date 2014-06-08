@@ -32,7 +32,12 @@
             {% if sectionList|length > 0 %}
                 <select name="section">
                     {% for section in sectionList %}
-                        <option value="{{section.id}}">{{section.section}}</option>
+                        {% if section.id == form.vars.value.id_section %}
+                            <option value="{{section.id}}" selected>{{section.section}}</option>
+                        {% else %}
+                            <option value="{{section.id}}">{{section.section}}</option>
+                        {% endif %}
+                        
                     {% endfor %}
                 </select>
             {% else %}
