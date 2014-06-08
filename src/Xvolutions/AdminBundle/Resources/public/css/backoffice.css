@@ -1,21 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
 /* 
-    Created on : Apr 12, 2014, 10:42:34 AM
+    Created on : Jun 8, 2014, 10:12:36 AM
     Author     : Pedro Resende <pedroresende@mail.resende.biz>
 */
-
+/* line 11, /Users/pedroresende/Sites/Symfony/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/Symfony\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000311}}
 .navbar-bottom {
-    position: absolute; 
-    bottom: 0px; 
-    width: 100%; 
-    margin-bottom: 0px !important;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  margin-bottom: 0px !important;
 }
-
+/* line 18, /Users/pedroresende/Sites/Symfony/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/Symfony\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000318}}
 .container-footer {
-    padding-top: 15px;
+  padding-top: 15px;
 }
-
+/* line 22, /Users/pedroresende/Sites/Symfony/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/Symfony\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000322}}
 .navbar {
-    -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.3);
-    -moz-box-shadow: 0 2px 5px rgba(0,0,0,.3);
-    box-shadow: 0 2px 5px rgba(0,0,0,.3);
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+/* line 28, /Users/pedroresende/Sites/Symfony/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/Symfony\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000328}}
+th,
+tr td {
+  text-align: center;
+}
+/* line 32, /Users/pedroresende/Sites/Symfony/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/Symfony\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000332}}
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+  margin-bottom: 20px !important;
 }
