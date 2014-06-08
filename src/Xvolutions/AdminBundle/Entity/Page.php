@@ -24,21 +24,21 @@ class Page
     /**
      * @var string
      *
-     * @ORM\Column(name="Title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="URL", type="string", unique=true, length=255)
+     * @ORM\Column(name="url", type="string", unique=true, length=255)
      */
     private $url;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Text", type="text", nullable=true)
+     * @ORM\Column(name="text", type="text", nullable=true)
      */
     private $text;
 
