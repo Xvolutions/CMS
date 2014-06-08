@@ -11,12 +11,19 @@
             {{ status|trans }}
         </div>
     {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
     <table class="table table-hover">
         <tr>
             <th></th>
             <th>{{ "Nome da Página"|trans }}</th>
-            <th>{{ "Secção"| trans }}
-            <th>{{ "Data"| trans }}
+            <th>{{ "Secção"| trans }}</th>
+            <th>{{ "URL"| trans }}</th>
+            <th>{{ "Data"| trans }}</th>
             <th>{{ "Opções"|trans }}</th>
         </tr>
         {% if pagesList|length > 0 %}
@@ -26,6 +33,7 @@
                     <td><input type="checkbox" id="{{page.id}}" onclick="SelectForRemoval('{{page.id}}');"></td>
                     <td>{{page.title}}</td>
                     <td>{{page.section}}</td>
+                    <td>{{page.url}}</td>
                     <td>{{page.date|date('d/m/Y H:m:s') }}</td>
                     <td><a href="{{path('pages')}}/edit/{{page.id}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> <a href="{{path('pages')}}/remove/{{page.id}}" class="btn btn-danger btn-xs">{{ "Apagar"|trans }}</a></td>
                 </tr>
