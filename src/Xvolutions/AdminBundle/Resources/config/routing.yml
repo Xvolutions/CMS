@@ -25,7 +25,7 @@ pages:
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages }
 
 addpages:
-    pattern: /addpages
+    pattern: /pages/add
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:addpages }
 
 sectionsedit:
