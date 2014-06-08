@@ -60,6 +60,7 @@ class PagesController extends AdminController {
         return $this->render('XvolutionsAdminBundle:pages:add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
+                    'title' => 'Editar uma Página',
                     'sectionList' => $sectionList,
                     'ok' => $ok,
                     'error' => $error
@@ -134,6 +135,7 @@ class PagesController extends AdminController {
         return $this->render('XvolutionsAdminBundle:pages:add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
+                    'title' => 'Adicionar uma Página',
                     'sectionList' => $sectionList,
                     'ok' => $ok,
                     'error' => $error
