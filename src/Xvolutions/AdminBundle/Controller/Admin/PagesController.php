@@ -29,7 +29,7 @@ class PagesController extends AdminController {
         // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
-           'SELECT p.id, p.title, s.section
+           'SELECT p.id, p.title, p.date, s.section
             FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
             WHERE p.id_section = s.id
             ORDER BY p.title ASC'
