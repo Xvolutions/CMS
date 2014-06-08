@@ -15,6 +15,58 @@ use \Xvolutions\AdminBundle\Form\PageType;
 class PagesController extends AdminController {
 
     /**
+     * Controller responsible to edit a new section for and handling the form
+     * submission and the database insertion
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param type $id the id of an existing section
+     * @return type the template for editing a section
+     */
+    public function editpagesAction(Request $request, $id) {
+        parent::verifyaccess();
+
+        $page = new Page();
+        $pageType = new PageType();
+
+        $page = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->findBy(array('id' => $id));
+        
+        $form = $this->createForm($pageType, $page[0])
+                ->add('Guardar', 'submit')
+        ;
+
+        $ok = NULL;
+        $error = NULL;
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $formValues = $request->request->get('xvolutions_adminbundle_page');
+            $PageUrl = $formValues["url"];
+            // Verify if the url don't exists yet
+            $PageUrl = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->findBy(array('url' => $PageUrl));
+            if (count($PageUrl) < 1 || $PageUrl[0]->getId() == $id) {
+                $em = $this->getDoctrine()->getManager();
+                $page[0]->setId_section($request->request->get('section'));
+                $em->persist($page[0]);
+                $em->flush();
+                $ok = 'Página actualizada com sucesso';
+            } else {
+                $error = 'Uma página com esse URL já existe';
+            }
+        }
+
+        $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
+
+        return $this->render('XvolutionsAdminBundle:pages:add_pages.html.twig', array(
+                    'form' => $form->createView(),
+                    'username' => $this->getUsername(),
+                    'sectionList' => $sectionList,
+                    'ok' => $ok,
+                    'error' => $error
+        ));
+    }
+
+    /**
      * Controller responsible to show the pages for and handling the form
      * submission and the database insertion
      * 
