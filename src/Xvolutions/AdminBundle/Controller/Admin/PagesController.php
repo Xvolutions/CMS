@@ -74,15 +74,27 @@ class PagesController extends AdminController {
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the pages
      */
-    public function pagesAction(Request $request) {
+    public function pagesAction($option = NULL, $id= NULL) {
         parent::verifyaccess();
 
         $status = NULL;
+        $error = NULL;
+        switch ($option) {
+            case 'remove': {
+                    $this->RemovePage($id, $status, $error);
+                    break;
+                }
+            case 'removeselected': {
+                    $ids = json_decode($id);
+                    $this->RemoveSelectedPages($ids, $status, $error);
+                    break;
+                }
+        }
 
         // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
-           'SELECT p.id, p.title, p.date, s.section
+           'SELECT p.id, p.title, p.url, p.date, s.section
             FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
             WHERE p.id_section = s.id
             ORDER BY p.title ASC'
@@ -94,6 +106,7 @@ class PagesController extends AdminController {
                     'username' => $this->getUsername(),
                     'pagesList' => $pagesList,
                     'status' => $status,
+                    'error' => $error
         ));
     }
 
@@ -140,5 +153,51 @@ class PagesController extends AdminController {
                     'ok' => $ok,
                     'error' => $error
         ));
+    }
+
+        /**
+     * This is function is repsonsible to remove a page
+     * 
+     * @param type $id the id of the page to be removed
+     * @return string with the information message
+     */
+    private function RemovePage($id, &$status, &$error) {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $page = $em->getRepository('XvolutionsAdminBundle:Page')->find($id);
+            if( $page != 'empty') {
+                $em->remove($page);
+                $em->flush();
+                $status = 'Página removida com sucesso';
+            } else {
+                $error = "Erro ao remover a página";
+            }
+        } catch (Exception $ex) {
+            $error = "Erro $ex ao remover a página";
+        }
+    }
+
+    /**
+     * This function is responsible to remove a list of pages
+     * 
+     * @param type $ids array containing the id's of the pages to be removed
+     * @return string with the message
+     */
+    private function RemoveSelectedPages($ids, &$status, &$error) {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            foreach ($ids as $id) {
+                $page = $em->getRepository('XvolutionsAdminBundle:Page')->find($id);
+                if( $page != 'empty') {
+                    $em->remove($page);
+                    $em->flush();
+                    $status = 'Página(s) removida(s) com sucesso';
+                } else {
+                    $error = "Erro ao remover a(s) página(s)";
+                }
+            }
+        } catch (Exception $ex) {
+            $error = "Erro $ex ao remover as página(s)";
+        }
     }
 }
