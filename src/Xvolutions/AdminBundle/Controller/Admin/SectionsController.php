@@ -119,18 +119,19 @@ class SectionsController extends AdminController {
      * @param type $id The id, or id's, of the section(s) to be removed
      * @return type call the controller to handle 
      */
-    public function sectionsAction(Request $request, $option = NULL, $id = NULL) {
+    public function sectionsAction($option = NULL, $id = NULL) {
         parent::verifyaccess();
 
         $status = NULL;
+        $error = NULL;
         switch ($option) {
             case 'remove': {
-                    $status = $this->RemoveSection($id);
+                    $this->RemoveSection($id, $status, $error);
                     break;
                 }
             case 'removeselected': {
                     $ids = json_decode($id);
-                    $status = $this->RemoveSelectedSection($ids);
+                    $this->RemoveSelectedSections($ids, $status, $error);
                     break;
                 }
         }
@@ -140,7 +141,8 @@ class SectionsController extends AdminController {
         return $this->render('XvolutionsAdminBundle:pages:sections.html.twig', array(
                     'username' => $this->getUsername(),
                     'sectionList' => $sectionList,
-                    'status' => $status
+                    'status' => $status,
+                    'error' => $error
         ));
     }
 
@@ -150,15 +152,27 @@ class SectionsController extends AdminController {
      * @param type $id the id of the section to be removed
      * @return string with the information message
      */
-    private function RemoveSection($id) {
+    private function RemoveSection($id, &$status, &$error) {
         try {
+
             $em = $this->getDoctrine()->getManager();
-            $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
-            $em->remove($section);
-            $em->flush();
-            return 'Secção removida com sucesso';
+            $query = $em->createQuery(
+               'SELECT p.id
+                FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
+                WHERE p.id_section = :id'
+            )->setParameter('id', $id);
+            $pagesCount = $query->getResult();
+
+            if($pagesCount != NULL) {
+                $error = 'Não é possível remover uma secção associada a páginas';
+            } else {
+                $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
+                $em->remove($section);
+                $em->flush();
+                $status = 'Secção removida com sucesso';
+            }
         } catch (Exception $ex) {
-            return "Erro $ex ao remover a secção";
+            $error = "Erro $ex ao remover a secção";
         }
     }
 
@@ -168,17 +182,30 @@ class SectionsController extends AdminController {
      * @param type $ids array containing the id's of the sections to be removed
      * @return string With the message
      */
-    private function RemoveSelectedSection($ids) {
+    private function RemoveSelectedSections($ids, &$status, &$error) {
         try {
             $em = $this->getDoctrine()->getManager();
             foreach ($ids as $id) {
-                $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
-                $em->remove($section);
-                $em->flush();
+
+                $query = $em->createQuery(
+                   'SELECT p.id
+                    FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
+                    WHERE p.id_section = :id'
+                )->setParameter('id', $id);
+                $pagesCount = $query->getResult();
+
+                if($pagesCount != NULL) {
+                    $error = 'Não é possível remover uma secção associada a páginas';
+                    break;
+                } else {
+                    $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
+                    $em->remove($section);
+                    $em->flush();
+                    $status = 'Secção(ões) removida(s) com sucesso';
+                }
             }
-            return 'Secção(ões) removida(s) com sucesso';
         } catch (Exception $ex) {
-            return "Erro $ex ao remover as secção(ões)";
+            $error = "Erro $ex ao remover as secção(ões)";
         }
     }
 
