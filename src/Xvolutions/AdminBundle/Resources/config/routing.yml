@@ -37,6 +37,11 @@ sectionsedit:
     defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:editsection }
     methods:  [GET,POST]
 
+sectionsadd:
+    pattern: /sections/add
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:addsection }
+    methods:  [GET,POST]
+
 sectionsoption:
     pattern: /sections/{option}/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:sections, options: 0, id: 0 }
@@ -46,9 +51,3 @@ sections:
     pattern: /sections
     defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:sections }
     methods:  [GET]
-
-sectionsadd:
-    pattern: /sections/add
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:addsection }
-    methods:  [GET,POST]
-
