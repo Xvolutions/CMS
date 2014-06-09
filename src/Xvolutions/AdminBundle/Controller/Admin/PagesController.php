@@ -109,6 +109,13 @@ class PagesController extends AdminController {
         ));
     }
 
+    /**
+     * Controller responsible to add a new page for and handling the form
+     * submission and the database insertion
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return type the templates for adding a new page
+     */
     public function addpagesAction(Request $request) {
         parent::verifyaccess();
 
