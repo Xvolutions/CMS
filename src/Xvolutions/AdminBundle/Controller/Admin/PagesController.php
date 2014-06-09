@@ -57,7 +57,7 @@ class PagesController extends AdminController {
 
         $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:pages:add_pages.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
                     'title' => 'Editar uma Página',
@@ -102,7 +102,7 @@ class PagesController extends AdminController {
 
         $pagesList = $query->getResult();
         
-        return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
                     'username' => $this->getUsername(),
                     'pagesList' => $pagesList,
                     'status' => $status,
@@ -145,7 +145,7 @@ class PagesController extends AdminController {
 
         $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:pages:add_pages.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
                     'title' => 'Adicionar uma Página',

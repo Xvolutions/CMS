@@ -50,7 +50,7 @@ class SectionsController extends AdminController {
             }
         }
 
-        return $this->render('XvolutionsAdminBundle:pages:add_sections.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:pages:sections/add_sections.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
                     'title' => 'Adicionar uma Secção',
@@ -100,7 +100,7 @@ class SectionsController extends AdminController {
             }
         }
 
-        return $this->render('XvolutionsAdminBundle:pages:add_sections.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:pages:sections/add_sections.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
                     'title' => 'Editar uma Secção',
@@ -138,7 +138,7 @@ class SectionsController extends AdminController {
 
         $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:pages:sections.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:pages:sections/sections.html.twig', array(
                     'username' => $this->getUsername(),
                     'sectionList' => $sectionList,
                     'status' => $status,
