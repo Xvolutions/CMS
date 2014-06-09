@@ -4,7 +4,6 @@ namespace Xvolutions\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Description of SecurityController
@@ -50,7 +49,6 @@ class AdminController extends Controller {
     public function verifyaccess() {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
-            //return $this->redirect($this->generateUrl('login'), 301);
         }
     }
 
@@ -61,8 +59,12 @@ class AdminController extends Controller {
      * @return type string
      */
     public function getUsername() {
-        $usr = $this->get('security.context')->getToken()->getUser();
-        return $usr->getUsername();
+        try {
+            $usr = $this->get('security.context')->getToken()->getUser();
+            return $usr->getUsername();
+        } catch (Exception $ex) {
+            throw new AccessDeniedException();
+        }
     }
 
 }
