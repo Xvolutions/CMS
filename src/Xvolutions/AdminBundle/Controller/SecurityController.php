@@ -36,8 +36,17 @@ class SecurityController extends Controller {
         );
     }
 
-    public function recoverAction() {
-        return $this->render('XvolutionsAdminBundle:pages:login_form.html.twig');
+    public function recoverAction(Request $request) {
+        $session = $request->getSession();
+
+        return $this->render(
+            'XvolutionsAdminBundle:pages:login.html.twig', 
+            array(
+                // last username entered by the user
+                'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+                'error' => '',
+            )
+        );
     }
 
 }
