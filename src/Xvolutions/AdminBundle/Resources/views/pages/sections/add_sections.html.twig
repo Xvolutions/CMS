@@ -1,6 +1,6 @@
 {% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
 
-{% block title %}Secções - Backoffice{% endblock %}
+{% block title %}{{title|trans}} - Secções - Backoffice{% endblock %}
 
 {% block username %}{{ username }}{% endblock %}
 {% block maincontent %}
@@ -21,8 +21,8 @@
     {{ form_errors(form) }}
     <div id="xvolutions_adminbundle_page">
         <div>
-            {{ form_label( form.section ) }}
-            {{ form_widget( form.section ) }}
+            <p>{{ form_label( form.section ) }}</p>
+            <p>{{ form_widget( form.section ) }}</p>
         </div>
         <br>
         {{ form_end(form) }}

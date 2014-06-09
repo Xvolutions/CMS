@@ -57,6 +57,13 @@ class Page
     private $id_section;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_parent", type="integer", nullable=true)
+     */
+    private $id_parent;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -172,11 +179,34 @@ class Page
      * Set id_section
      *
      * @param integer id_section
-     * @return Page
+     * @return Section ID
      */
     public function setId_section($id_section)
     {
         $this->id_section = $id_section;
+
+        return $this;
+    }
+
+    /**
+     * Get id_parent
+     *
+     * @return integer 
+     */
+    public function getId_parent()
+    {
+        return $this->id_parent;
+    }
+
+    /**
+     * Set id_parent
+     *
+     * @param integer id_parent
+     * @return Page Parent ID
+     */
+    public function setId_parent($id_parent)
+    {
+        $this->id_parent = $id_parent;
 
         return $this;
     }

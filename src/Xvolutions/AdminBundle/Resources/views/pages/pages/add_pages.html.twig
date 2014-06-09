@@ -1,6 +1,6 @@
 {% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
 
-{% block title %}Páginas - Backoffice{% endblock %}
+{% block title %}{{title|trans}} - Páginas - Backoffice{% endblock %}
 
 {% block username %}{{ username }}{% endblock %}
 {% block maincontent %}
@@ -14,23 +14,39 @@
     {% if error %}
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ error|trans }}
+            {{ error|trans|raw }}
         </div>
     {% endif %}
 
     {{ form_start( form ) }}
     <div id="xvolutions_adminbundle_page"><div>
             <p>{{ "Título"|trans }}</p>
-            {{ form_widget( form.title ) }}
+            <p>{{ form_widget( form.title ) }}</p>
         </div>
         <div>
             <p>{{ "URL"|trans }}</p>
-            {{ form_widget( form.url ) }}
+            <p>{{ form_widget( form.url ) }}
+        </div>
+        <div>
+            <p>{{ "Página Superior"|trans }}</p>
+            {% if pagesList|length > 0 %}
+                <p><select name="id_parent">
+                    {% for page in pagesList %}
+                        {% if page.id == form.vars.value.id_parent %}
+                            <option value="{{page.id}}" selected>{{page.title}}</option>
+                        {% else %}
+                            <option value="{{page.id}}">{{page.title}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select></p>
+            {% else %}
+                {{ "Não existem páginas definidas"|trans }}
+            {% endif %}
         </div>
         <div>
             <p>{{ "Secção"|trans }}</p>
             {% if sectionList|length > 0 %}
-                <select name="section">
+                <p><select name="section">
                     {% for section in sectionList %}
                         {% if section.id == form.vars.value.id_section %}
                             <option value="{{section.id}}" selected>{{section.section}}</option>
@@ -39,7 +55,7 @@
                         {% endif %}
                         
                     {% endfor %}
-                </select>
+                </select></p>
             {% else %}
                 {{ "Não existem secções definidas"|trans }}
             {% endif %}
