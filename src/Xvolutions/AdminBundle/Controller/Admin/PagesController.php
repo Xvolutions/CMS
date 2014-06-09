@@ -25,7 +25,6 @@ class PagesController extends AdminController {
     public function editpagesAction(Request $request, $id) {
         parent::verifyaccess();
 
-        $page = new Page();
         $pageType = new PageType();
 
         $page = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->findBy(array('id' => $id));
@@ -43,8 +42,8 @@ class PagesController extends AdminController {
             $formValues = $request->request->get('xvolutions_adminbundle_page');
             $PageUrl = $formValues["url"];
             // Verify if the url don't exists yet
-            $PageUrl = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->findBy(array('url' => $PageUrl));
-            if (count($PageUrl) < 1 || $PageUrl[0]->getId() == $id) {
+            $PageUrlPresent = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->findBy(array('url' => $PageUrl));
+            if (count($PageUrlPresent) < 1 || $PageUrlPresent[0]->getId() == $id) {
                 $em = $this->getDoctrine()->getManager();
                 $page[0]->setId_section($request->request->get('section'));
                 $em->persist($page[0]);
