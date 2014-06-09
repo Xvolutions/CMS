@@ -3,8 +3,6 @@
 namespace Xvolutions\AdminBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Doctrine;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Xvolutions\AdminBundle\Entity\Page;
