@@ -28,6 +28,22 @@
             <p>{{ form_widget( form.url ) }}
         </div>
         <div>
+            <p>{{ "Página Superior"|trans }}</p>
+            {% if pagesList|length > 0 %}
+                <p><select name="id_parent">
+                    {% for page in pagesList %}
+                        {% if page.id == form.vars.value.id_parent %}
+                            <option value="{{page.id}}" selected>{{page.title}}</option>
+                        {% else %}
+                            <option value="{{page.id}}">{{page.title}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select></p>
+            {% else %}
+                {{ "Não existem páginas definidas"|trans }}
+            {% endif %}
+        </div>
+        <div>
             <p>{{ "Secção"|trans }}</p>
             {% if sectionList|length > 0 %}
                 <p><select name="section">

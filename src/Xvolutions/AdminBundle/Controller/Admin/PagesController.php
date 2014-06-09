@@ -5,7 +5,7 @@ namespace Xvolutions\AdminBundle\Controller\Admin;
 use Xvolutions\AdminBundle\Controller\AdminController;
 use Symfony\Component\HttpFoundation\Request;
 use Xvolutions\AdminBundle\Entity\Page;
-use \Xvolutions\AdminBundle\Form\PageType;
+use Xvolutions\AdminBundle\Form\PageType;
 
 /**
  * Description of PagesController
@@ -40,6 +40,7 @@ class PagesController extends AdminController
 
         $form->handleRequest( $request );
 
+        $em = $this->getDoctrine()->getManager();
         if ( $form->isValid() )
         {
             $formValues = $request->request->get( 'xvolutions_adminbundle_page' );
@@ -48,7 +49,6 @@ class PagesController extends AdminController
             $PageUrlPresent = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findBy( array( 'url' => $PageUrl ) );
             if ( count( $PageUrlPresent ) < 1 || $PageUrlPresent[ 0 ]->getId() == $id )
             {
-                $em = $this->getDoctrine()->getManager();
                 $page[ 0 ]->setId_section( $request->request->get( 'section' ) );
                 $em->persist( $page[ 0 ] );
                 $em->flush();
@@ -60,12 +60,21 @@ class PagesController extends AdminController
         }
 
         $sectionList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Section' )->findAll();
+        $query = $em->createQuery(
+                        'SELECT p.id, p.title, p.url, p.date, s.section
+            FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
+            WHERE p.id != :id
+            ORDER BY p.title ASC'
+                )->setParameter( 'id', $id );
+
+        $pagesList = $query->getResult();
 
         return $this->render( 'XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
                     'title' => 'Editar uma Página',
                     'sectionList' => $sectionList,
+                    'pagesList' => $pagesList,
                     'ok' => $ok,
                     'error' => $error
                 ) );
@@ -101,7 +110,7 @@ class PagesController extends AdminController
         $query = $em->createQuery(
                 'SELECT p.id, p.title, p.url, p.date, s.section
             FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
-            WHERE p.id_section = s.id
+            WHERE p.id_section = s.id AND p.id != 1
             ORDER BY p.title ASC'
         );
 
@@ -140,6 +149,7 @@ class PagesController extends AdminController
         if ( $form->isValid() )
         {
             $page->setId_section( $request->request->get( 'section' ) );
+            $page->setId_parent( $request->request->get( 'id_parent' ) );
             if ( $page->getId_section() != NULL )
             {
                 $datetime = new \DateTime( 'now' );
@@ -160,17 +170,19 @@ class PagesController extends AdminController
                 }
             } else
             {
-                $error = 'Não é possível criar uma página que não pertença a nenhuma secção, por favor <a href="' . $this->generateUrl('sectionsadd') .'">crie uma nova secção</a>';
+                $error = 'Não é possível criar uma página que não pertença a nenhuma secção, por favor <a href="' . $this->generateUrl( 'sectionsadd' ) . '">crie uma nova secção</a>';
             }
         }
 
         $sectionList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Section' )->findAll();
+        $pagesList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findAll();
 
         return $this->render( 'XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
                     'title' => 'Adicionar uma Página',
                     'sectionList' => $sectionList,
+                    'pagesList' => $pagesList,
                     'ok' => $ok,
                     'error' => $error
                 ) );
