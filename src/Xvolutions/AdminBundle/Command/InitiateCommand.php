@@ -51,18 +51,16 @@ class InitiateCommand extends ContainerAwareCommand
     private function initiatePages( &$output )
     {
         try {
-            $sectionList = $this->getContainer()->get( 'doctrine' )->getManager( 'default' )->getRepository( 'XvolutionsAdminBundle:Section' )->findBy( array( 'section' => 'Pública' ) );
-
             $em = $this->getContainer()->get( 'doctrine' )->getManager( 'default' );
 
-            $pages = array( 'Raiz', '-----' );
+            $pages = array( '-----' );
             foreach ( $pages as $p ) {
                 $page = new Page();
                 $page->setTitle( $p );
                 $page->setUrl( $p );
                 $page->setId_parent( 0 );
                 $datetime = new \DateTime( 'now' );
-                $page->setId_section( $sectionList[ 0 ]->getId() );
+                $page->setId_section( 0 );
                 $page->setDate( $datetime );
                 $em->persist( $page );
                 $em->flush();
