@@ -21,16 +21,16 @@
     {{ form_start( form ) }}
     <div id="xvolutions_adminbundle_page"><div>
             <p>{{ "Título"|trans }}</p>
-            {{ form_widget( form.title ) }}
+            <p>{{ form_widget( form.title ) }}</p>
         </div>
         <div>
             <p>{{ "URL"|trans }}</p>
-            {{ form_widget( form.url ) }}
+            <p>{{ form_widget( form.url ) }}
         </div>
         <div>
             <p>{{ "Secção"|trans }}</p>
             {% if sectionList|length > 0 %}
-                <select name="section">
+                <p><select name="section">
                     {% for section in sectionList %}
                         {% if section.id == form.vars.value.id_section %}
                             <option value="{{section.id}}" selected>{{section.section}}</option>
@@ -39,7 +39,7 @@
                         {% endif %}
                         
                     {% endfor %}
-                </select>
+                </select></p>
             {% else %}
                 {{ "Não existem secções definidas"|trans }}
             {% endif %}
