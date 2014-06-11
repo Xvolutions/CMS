@@ -29,9 +29,9 @@
         </div>
         <div>
             <p>{{ "Página Superior"|trans }}</p>
-            {% if pagesList|length > 0 %}
+            {% if pageList|length > 0 %}
                 <p><select name="id_parent">
-                    {% for page in pagesList %}
+                    {% for page in pageList %}
                         {% if page.id == form.vars.value.id_parent %}
                             <option value="{{page.id}}" selected>{{page.title}}</option>
                         {% else %}
@@ -52,6 +52,23 @@
                             <option value="{{section.id}}" selected>{{section.section}}</option>
                         {% else %}
                             <option value="{{section.id}}">{{section.section}}</option>
+                        {% endif %}
+                        
+                    {% endfor %}
+                </select></p>
+            {% else %}
+                {{ "Não existem secções definidas"|trans }}
+            {% endif %}
+        </div>
+        <div>
+            <p>{{ "Ídioma"|trans }}</p>
+            {% if languageList|length > 0 %}
+                <p><select name="id_language">
+                    {% for language in languageList %}
+                        {% if language.id == form.vars.value.id_language %}
+                            <option value="{{language.id}}" selected>{{language.language}}</option>
+                        {% else %}
+                            <option value="{{language.id}}">{{language.language}}</option>
                         {% endif %}
                         
                     {% endfor %}

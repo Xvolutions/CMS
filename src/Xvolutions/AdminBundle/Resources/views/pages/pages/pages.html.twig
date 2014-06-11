@@ -23,24 +23,26 @@
             <th>{{ "Nome da Página"|trans }}</th>
             <th>{{ "Secção"| trans }}</th>
             <th>{{ "URL"| trans }}</th>
+            <th>{{ "Language"| trans }}</th>
             <th>{{ "Data de criação"| trans }}</th>
             <th>{{ "Opções"|trans }}</th>
         </tr>
-        {% if pagesList|length > 0 %}
+        {% if pageList|length > 0 %}
 
-            {% for page in pagesList %}
+            {% for page in pageList %}
                 <tr>
                     <td><input type="checkbox" id="{{page.id}}" onclick="SelectForRemoval('{{page.id}}');"></td>
                     <td>{{page.title}}</td>
                     <td>{{page.section}}</td>
                     <td>{{page.url}}</td>
+                    <td>{{page.language}}</td>
                     <td>{{page.date|date('d/m/Y H:m:s') }}</td>
                     <td><a href="{{path('editpages', {'id': page.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> <a href="{{path('pagesoption', {'option': 'remove','id': page.id})}}" class="btn btn-danger btn-xs">{{ "Apagar"|trans }}</a></td>
                 </tr>
             {% endfor %}
         {% else %}
             <tr>
-                <td colspan="5" >{{"Não existem páginas definidas"|trans}}</td>
+                <td colspan="7" >{{"Não existem páginas definidas"|trans}}</td>
             <tr>
         {% endif %}
     </table>

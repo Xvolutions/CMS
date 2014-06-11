@@ -61,9 +61,9 @@ class InitiateCommand extends ContainerAwareCommand
                 $page->setTitle( $p );
                 $page->setUrl( $p );
                 $page->setId_parent( 0 );
-                $page->setId_language( 0 );
+                $page->setId_language( 1 );
                 $datetime = new \DateTime( 'now' );
-                $page->setId_section( 0 );
+                $page->setId_section( 1 );
                 $page->setDate( $datetime );
                 $em->persist( $page );
                 $em->flush();

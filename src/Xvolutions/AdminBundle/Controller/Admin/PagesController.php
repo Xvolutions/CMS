@@ -50,6 +50,7 @@ class PagesController extends AdminController
             if ( count( $PageUrlPresent ) < 1 || $PageUrlPresent[ 0 ]->getId() == $id )
             {
                 $page[ 0 ]->setId_section( $request->request->get( 'section' ) );
+                $page[ 0 ]->setId_language( $request->request->get( 'id_language' ) );
                 $em->persist( $page[ 0 ] );
                 $em->flush();
                 $ok = 'Página actualizada com sucesso';
@@ -60,21 +61,36 @@ class PagesController extends AdminController
         }
 
         $sectionList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Section' )->findAll();
+        $languageList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Language' )->findAll();
         $query = $em->createQuery(
-                        'SELECT p.id, p.title, p.url, p.date, s.section
-            FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
-            WHERE p.id != :id
-            ORDER BY p.title ASC'
+            'SELECT 
+                p.id, 
+                p.title, 
+                p.url, 
+                p.date, 
+                s.section, 
+                l.language
+            FROM 
+                XvolutionsAdminBundle:Page p, 
+                XvolutionsAdminBundle:Section s, 
+                XvolutionsAdminBundle:Language l
+            WHERE 
+                p.id_language = l.id AND 
+                p.id_section = s.id AND 
+                p.id != :id
+            ORDER BY 
+                p.title ASC'
                 )->setParameter( 'id', $id );
 
-        $pagesList = $query->getResult();
+        $pageList = $query->getResult();
 
         return $this->render( 'XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
                     'title' => 'Editar uma Página',
                     'sectionList' => $sectionList,
-                    'pagesList' => $pagesList,
+                    'pageList' => $pageList,
+                    'languageList' => $languageList,
                     'ok' => $ok,
                     'error' => $error
                 ) );
@@ -108,17 +124,17 @@ class PagesController extends AdminController
         // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
-                'SELECT p.id, p.title, p.url, p.date, s.section
-            FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
-            WHERE p.id_section = s.id AND p.id != 1
+                'SELECT p.id, p.title, p.url, p.date, p.id_language, s.section, l.language
+            FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s, XvolutionsAdminBundle:Language l
+            WHERE p.id_section = s.id AND p.id_language = l.id AND p.id != 1
             ORDER BY p.title ASC'
         );
 
-        $pagesList = $query->getResult();
+        $pageList = $query->getResult();
 
         return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
                     'username' => $this->getUsername(),
-                    'pagesList' => $pagesList,
+                    'pageList' => $pageList,
                     'status' => $status,
                     'error' => $error
                 ) );
@@ -150,6 +166,7 @@ class PagesController extends AdminController
         {
             $page->setId_section( $request->request->get( 'section' ) );
             $page->setId_parent( $request->request->get( 'id_parent' ) );
+            $page->setId_language( $request->request->get( 'id_language' ) );
             if ( $page->getId_section() != NULL )
             {
                 $datetime = new \DateTime( 'now' );
@@ -175,14 +192,16 @@ class PagesController extends AdminController
         }
 
         $sectionList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Section' )->findAll();
-        $pagesList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findAll();
+        $pageList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findAll();
+        $languageList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Language' )->findAll();
 
         return $this->render( 'XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
                     'title' => 'Adicionar uma Página',
                     'sectionList' => $sectionList,
-                    'pagesList' => $pagesList,
+                    'pageList' => $pageList,
+                    'languageList' => $languageList,
                     'ok' => $ok,
                     'error' => $error
                 ) );
