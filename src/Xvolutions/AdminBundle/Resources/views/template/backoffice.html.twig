@@ -11,19 +11,24 @@
 {% endblock %}
 
 {% block content %}
-    {% include 'XvolutionsAdminBundle:template:menu.html.twig' %}
-
-    <div class="col-md-1 col-sm-1"></div>
-    <div class="col-md-10 col-sm-10 col-xs-12">
-    {% block maincontent %}{% endblock %}
-</div>
-<div class="col-md-1 col-sm-1"></div>
-
-<nav class="navbar navbar-default navbar-bottom" role="navigation">
-    <div class="container-fluid container-footer">
-        <div class="version"><span class="glyphicon glyphicon-copyright-mark"></span> {{version}}</div>
+    <div id="header">
+        {% include 'XvolutionsAdminBundle:template:menu.html.twig' %}
     </div>
-</nav>
+    <div id="content">
+        <div class="col-md-1 col-sm-1"></div>
+        <div class="col-md-10 col-sm-10 col-xs-12">
+            {% block maincontent %}{% endblock %}
+        </div>
+        <div class="col-md-1 col-sm-1"></div>
+        <div class="push"></div>
+    </div>
+    <div id="footer">
+        <nav class="navbar navbar-default navbar-bottom" role="navigation">
+            <div class="container-fluid container-footer">
+                <div class="version"><span class="glyphicon glyphicon-copyright-mark"></span> {{version}}</div>
+            </div>
+        </nav>
+    </div>
 {% endblock %}
 {% block javascripts %}
     <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
