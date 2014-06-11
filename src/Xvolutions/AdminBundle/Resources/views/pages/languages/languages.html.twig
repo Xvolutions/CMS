@@ -1,0 +1,45 @@
+{% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
+
+{% block title %}Ídiomas - Backoffice{% endblock %}
+
+{% block username %}{{ username }}{% endblock %}
+{% block maincontent %}
+    <h1>{{ "Ídiomas"|trans }}</h1>
+    {% if status %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ status|trans }}
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
+    <table class="table table-hover">
+        <tr>
+            <th></th>
+            <th>{{ "Ídioma"|trans }}</th>
+            <th>{{ "Código"| trans }}</th>
+            <th>{{ "Opções"|trans }}</th>
+        </tr>
+        {% if languageList|length > 0 %}
+            {% for language in languageList %}
+                <tr>
+                    <td><input type="checkbox" id="{{language.id}}" onclick="SelectForRemoval('{{language.id}}');"></td>
+                    <td>{{language.language}}</td>
+                    <td>{{language.code}}</td>
+                    <td><a href="{{path('editlanguages', {'id': language.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> <a href="{{path('optionlanguages', {'option': 'remove','id': language.id})}}" class="btn btn-danger btn-xs">{{ "Apagar"|trans }}</a></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5" >{{"Não existem ídiomas definidos"|trans}}</td>
+            <tr>
+        {% endif %}
+    </table>
+    <p>
+        <a href="{{path('addlanguages')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar um novo ídioma"|trans }}</a> <a href="{{path('optionlanguages', {'option': 'removeselected'})}}" id="RemoveMany" class="btn btn-danger btn-sm">{{ "Apagar Seleccionados"|trans }}</a>
+    </p> 
+{% endblock %}
