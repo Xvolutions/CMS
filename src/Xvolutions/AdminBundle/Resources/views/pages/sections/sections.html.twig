@@ -28,7 +28,7 @@
                 <tr>
                     <td><input type="checkbox" id="{{section.id}}" onclick="SelectForRemoval('{{section.id}}');"></td>
                     <td>{{section.section}}</td>
-                    <td><a href="{{path('sections')}}/edit/{{section.id}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> <a href="{{path('sections')}}/remove/{{section.id}}" class="btn btn-danger btn-xs">{{ "Apagar"|trans }}</a></td>
+                    <td><a href="{{path('editsections', {'id': section.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> <a href="{{path('optionsections', {'option': 'remove','id': section.id})}}" class="btn btn-danger btn-xs">{{ "Apagar"|trans }}</a></td>
                 </tr>
             {% endfor %}
         {% else %}
@@ -39,6 +39,6 @@
     </table>
     <br>
     <p>
-        <a href="{{path('sections')}}/add" type="submit" class="btn btn-primary btn-sm">{{ "Criar uma nova secção"|trans }}</a> <a href="{{path('sections')}}/removeselected" id="RemoveMany" class="btn btn-danger btn-sm">{{ "Apagar Seleccionadas"|trans }}</a>
+        <a href="{{path('addsections')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar uma nova secção"|trans }}</a> <a href="{{path('optionsections', {'option': 'removeselected'})}}" id="RemoveMany" class="btn btn-danger btn-sm">{{ "Apagar Seleccionadas"|trans }}</a>
     </p> 
 {% endblock %}
