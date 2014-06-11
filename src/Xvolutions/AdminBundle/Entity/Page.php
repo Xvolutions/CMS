@@ -63,6 +63,13 @@ class Page
      */
     private $id_parent;
 
+        /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_language", type="integer", nullable=true)
+     */
+    private $id_language;
+
     /**
      * Get id
      *
@@ -207,6 +214,29 @@ class Page
     public function setId_parent($id_parent)
     {
         $this->id_parent = $id_parent;
+
+        return $this;
+    }
+
+    /**
+     * Get id_language
+     *
+     * @return integer 
+     */
+    public function getId_language()
+    {
+        return $this->id_language;
+    }
+
+    /**
+     * Set id_language
+     *
+     * @param integer id_language
+     * @return Page's Language ID
+     */
+    public function setId_language($id_language)
+    {
+        $this->id_language = $id_language;
 
         return $this;
     }
