@@ -56,3 +56,23 @@ sections:
     pattern: /sections
     defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:sections }
     methods:  [GET]
+
+editlanguages:
+    pattern: /languages/edit/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:editlanguages }
+    methods:  [GET,POST]
+
+addlanguages:
+    pattern: /languages/add
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:addlanguages }
+    methods:  [GET,POST]
+
+optionlanguages:
+    pattern: /languages/{option}/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:languages, options: 0, id: 0 }
+    methods:  [GET]
+
+languages:
+    pattern: /languages
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:languages }
+    methods:  [GET]
