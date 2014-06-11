@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Xvolutions\AdminBundle\Entity\Page;
 use Xvolutions\AdminBundle\Entity\Section;
+use Xvolutions\AdminBundle\Entity\Language;
 
 /**
  * Description of InitiateCommand
@@ -28,6 +29,7 @@ class InitiateCommand extends ContainerAwareCommand
     {
         $this->initiateSections( $output );
         $this->initiatePages( $output );
+        $this->initiateLanguages( $output );
     }
 
     private function initiateSections( &$output )
@@ -68,6 +70,35 @@ class InitiateCommand extends ContainerAwareCommand
             $output->writeln( 'Páginas Adicionadas' );
         } catch ( Exception $ex ) {
             $output->writeln( "Erro ao adicionar as páginas base -> $ex" );
+        }
+    }
+
+    private function initiateLanguages( &$output )
+    {
+        try {
+            $em = $this->getContainer()->get( 'doctrine' )->getManager( 'default' );
+
+            $languages = array( 
+                array(
+                    'English', 
+                    'en_GB'
+                ), 
+                array(
+                    'Portugês', 
+                    'pt-PT'
+                )
+            );
+            
+            foreach( $languages as $l) {
+                $language = new Language();
+                $language->setLanguage( $l[0] );
+                $language->setCode( $l[1] );
+                $em->persist( $language );
+                $em->flush();
+            }
+            $output->writeln( 'Ídiomas Adicionados' );
+        } catch ( Exception $ex ) {
+            $output->writeln( "Erro ao adicionar os idiomas base -> $ex" );
         }
     }
 
