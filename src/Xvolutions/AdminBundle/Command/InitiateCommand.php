@@ -85,7 +85,7 @@ class InitiateCommand extends ContainerAwareCommand
                     'en_GB'
                 ), 
                 array(
-                    'Portugês', 
+                    'Português', 
                     'pt-PT'
                 )
             );
