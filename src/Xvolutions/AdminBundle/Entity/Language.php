@@ -24,14 +24,14 @@ class Language
     /**
      * @var string
      *
-     * @ORM\Column(name="language", type="string", length=255)
+     * @ORM\Column(name="language", type="string", unique=true,  length=255)
      */
     private $language;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="code", type="string", length=255)
+     * @ORM\Column(name="code", type="string", unique=true, length=255)
      */
     private $code;
 
