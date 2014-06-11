@@ -35,12 +35,12 @@ class LanguagesController extends AdminController
         $error = NULL;
         switch ($option) {
             case 'remove': {
-                    //$this->RemoveSection($id, $status, $error);
+                    $this->RemoveLanguage($id, $status, $error);
                     break;
                 }
             case 'removeselected': {
                     $ids = json_decode($id);
-                    //$this->RemoveSelectedSections($ids, $status, $error);
+                    $this->RemoveSelectedLanguages($ids, $status, $error);
                     break;
                 }
         }
@@ -53,5 +53,57 @@ class LanguagesController extends AdminController
                     'status' => $status,
                     'error' => $error
         ));
+    }
+
+    /**
+     * This is function is repsonsible to remove a language
+     * 
+     * @param type $id the id of the language to be removed
+     * @return string with the information message
+     */
+    private function RemoveLanguage( $id, &$status, &$error) {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $language = $em->getRepository( 'XvolutionsAdminBundle:Language' )->find( $id );
+            if ( $language != 'empty' )
+            {
+                $em->remove( $language );
+                $em->flush();
+                $status = 'Ídioma removido com sucesso';
+            } else
+            {
+                $error = "Erro ao remover um ídioma";
+            }
+        } catch ( Exception $ex ) {
+            $error = "Erro $ex ao remover o ídioma";
+        }
+    }
+
+    
+    /**
+     * This function is responsible to remove a list of languages
+     * 
+     * @param type $ids array containing the id's of the languages to be removed
+     * @return string with the message
+     */
+    private function RemoveSelectedLanguages( $ids, &$status, &$error )
+    {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            foreach ( $ids as $id ) {
+                $language = $em->getRepository( 'XvolutionsAdminBundle:Language' )->find( $id );
+                if ( $language != 'empty' )
+                {
+                    $em->remove( $$languagepage );
+                    $em->flush();
+                    $status = 'Ídioma(s) removido(s) com sucesso';
+                } else
+                {
+                    $error = "Erro ao remover o(s) ídioma(s)";
+                }
+            }
+        } catch ( Exception $ex ) {
+            $error = "Erro $ex ao remover o(s) ídioma(s)";
+        }
     }
 }
