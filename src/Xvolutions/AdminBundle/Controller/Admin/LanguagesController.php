@@ -11,6 +11,7 @@ namespace Xvolutions\AdminBundle\Controller\Admin;
 use Xvolutions\AdminBundle\Controller\AdminController;
 use Symfony\Component\HttpFoundation\Request;
 use Xvolutions\AdminBundle\Entity\Language;
+use Xvolutions\AdminBundle\Form\LanguageType;
 /**
  * Description of LanguagesController
  *
@@ -18,6 +19,107 @@ use Xvolutions\AdminBundle\Entity\Language;
  */
 class LanguagesController extends AdminController
 {
+
+    /**
+     * Controller responsible to add a new language for and handling the form
+     * submission and the database insertion
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return type the templates for adding a new language
+     */
+    public function addlanguagesAction(Request $request) {
+        parent::verifyaccess();
+
+        $language = new Language();
+        $languageType = new LanguageType();
+
+        $form = $this->createForm($languageType, $language)
+                ->add('Criar', 'submit')
+        ;
+
+        $form->handleRequest($request);
+
+        $ok = NULL;
+        $error = NULL;
+        if ($form->isValid()) {
+            $formValues = $request->request->get('xvolutions_adminbundle_language');
+            $languageName = $formValues["language"];
+            $languageCode = $formValues["code"];
+            // Verify if the section don't exists yet
+            $languageIsPresent = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findBy(array('language' => $languageName));
+            $languageCodeIsPresent = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findBy(array('code' => $languageCode));
+            if (count($languageIsPresent) < 1 && count($languageCodeIsPresent) < 1) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($language);
+                $em->flush();
+                $ok = 'Ídioma inserido com sucesso';
+            } else {
+                $error = 'Um ídioma com esse nome ou esse código já existe';
+            }
+        }
+
+        return $this->render('XvolutionsAdminBundle:pages:languages/add_languages.html.twig', array(
+                    'form' => $form->createView(),
+                    'username' => $this->getUsername(),
+                    'title' => 'Adicionar um novo Ídioma',
+                    'ok' => $ok,
+                    'error' => $error
+        ));
+    }
+
+    /**
+     * Controller responsible to edit a langyage for and handling the form
+     * submission and the database insertion
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param type $id the id of an existing language
+     * @return type the template for editing a language
+     */
+    public function editlanguagesAction(Request $request, $id) {
+        parent::verifyaccess();
+
+        $languageType = new LanguageType();
+
+        // Verify if the section don't exists yet
+        $language = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findBy(array('id' => $id));
+
+        $form = $this->createForm($languageType, $language[0])
+                ->add('Guardar', 'submit')
+        ;
+
+        $ok = NULL;
+        $error = NULL;
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $formValues = $request->request->get('xvolutions_adminbundle_language');
+            $languageName = $formValues["language"];
+            $languageCode = $formValues["code"];
+
+            // Verify if the language don't exists yet
+            $languageIsPresent = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findBy(array('language' => $languageName));
+            $languageCodeIsPresent = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findBy(array('code' => $languageCode));
+
+            if ( count($languageIsPresent) < 1 || $languageIsPresent[0]->getId() == $id && count($languageCodeIsPresent) < 1 || $languageCodeIsPresent[0]->getId() == $id) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($language[0]);
+                $em->flush();
+                $ok = 'Ídioma actualizado com sucesso';
+            } else {
+                $error = 'Um ídioma com esse nome, ou código, já existe';
+            }
+        }
+
+        return $this->render('XvolutionsAdminBundle:pages:languages/add_languages.html.twig', array(
+                    'form' => $form->createView(),
+                    'username' => $this->getUsername(),
+                    'title' => 'Editar um Ídioma',
+                    'ok' => $ok,
+                    'error' => $error
+        ));
+    }
+
     /**
      * Function responsible for handling the languages removal and the languages
      * removal array
@@ -94,7 +196,7 @@ class LanguagesController extends AdminController
                 $language = $em->getRepository( 'XvolutionsAdminBundle:Language' )->find( $id );
                 if ( $language != 'empty' )
                 {
-                    $em->remove( $$languagepage );
+                    $em->remove( $language );
                     $em->flush();
                     $status = 'Ídioma(s) removido(s) com sucesso';
                 } else
