@@ -20,6 +20,8 @@ setup:
     pattern: /setup
     defaults: { _controller: XvolutionsAdminBundle:Admin:setup }
 
+### PAGES ###
+
 editpages:
     pattern: /pages/edit/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:editpages }
@@ -37,17 +39,19 @@ pages:
     pattern: /pages
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages }
 
-sectionsedit:
+### SECTIONS ###
+
+editsections:
     pattern: /sections/edit/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:editsection }
     methods:  [GET,POST]
 
-sectionsadd:
+addsections:
     pattern: /sections/add
     defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:addsection }
     methods:  [GET,POST]
 
-sectionsoption:
+optionsections:
     pattern: /sections/{option}/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:sections, options: 0, id: 0 }
     methods:  [GET]
@@ -56,6 +60,8 @@ sections:
     pattern: /sections
     defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:sections }
     methods:  [GET]
+
+### LANGUAGES ###
 
 editlanguages:
     pattern: /languages/edit/{id}
