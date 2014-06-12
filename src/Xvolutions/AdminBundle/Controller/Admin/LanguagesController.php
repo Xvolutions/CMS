@@ -10,6 +10,7 @@ namespace Xvolutions\AdminBundle\Controller\Admin;
 
 use Xvolutions\AdminBundle\Controller\AdminController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Language;
 use Xvolutions\AdminBundle\Form\LanguageType;
 /**
@@ -163,6 +164,13 @@ class LanguagesController extends AdminController
                     $this->RemoveSelectedLanguages($ids, $status, $error);
                     break;
                 }
+        }
+
+        if( $error != NULL ) {
+            return new Response($error, Response::HTTP_BAD_REQUEST);
+        } 
+        if( $status != NULL ) {
+            return new Response($status, Response::HTTP_OK);
         }
 
         $languageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findAll();
