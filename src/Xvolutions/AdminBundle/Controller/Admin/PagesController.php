@@ -35,7 +35,7 @@ class PagesController extends AdminController
                 ->add( 'Guardar', 'submit' )
         ;
 
-        $ok = NULL;
+        $status = NULL;
         $error = NULL;
 
         $form->handleRequest( $request );
@@ -53,11 +53,29 @@ class PagesController extends AdminController
                 $page[ 0 ]->setId_language( $request->request->get( 'id_language' ) );
                 $em->persist( $page[ 0 ] );
                 $em->flush();
-                $ok = 'Página actualizada com sucesso';
+                $status = 'Página actualizada com sucesso';
             } else
             {
                 $error = 'Uma página com esse URL já existe';
             }
+
+            // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
+            $em = $this->getDoctrine()->getManager();
+            $query = $em->createQuery(
+                    'SELECT p.id, p.title, p.url, p.date, p.id_language, s.section, l.language
+                FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s, XvolutionsAdminBundle:Language l
+                WHERE p.id_section = s.id AND p.id_language = l.id AND p.id != 1
+                ORDER BY p.title ASC'
+            );
+
+            $pageList = $query->getResult();
+
+            return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
+                        'username' => $this->getUsername(),
+                        'pageList' => $pageList,
+                        'status' => $status,
+                        'error' => $error
+                    ) );
         }
 
         $sectionList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Section' )->findAll();
@@ -91,7 +109,7 @@ class PagesController extends AdminController
                     'sectionList' => $sectionList,
                     'pageList' => $pageList,
                     'languageList' => $languageList,
-                    'ok' => $ok,
+                    'status' => $status,
                     'error' => $error
                 ) );
     }
@@ -161,7 +179,7 @@ class PagesController extends AdminController
         $form->handleRequest( $request );
 
         $error = NULL;
-        $ok = NULL;
+        $status = NULL;
         if ( $form->isValid() )
         {
             $page->setId_section( $request->request->get( 'section' ) );
@@ -180,7 +198,7 @@ class PagesController extends AdminController
                 {
                     $em->persist( $page );
                     $em->flush();
-                    $ok = 'Página inserida com sucesso';
+                    $status = 'Página inserida com sucesso';
                 } else
                 {
                     $error = 'Uma página com esse URL já existe';
@@ -189,6 +207,24 @@ class PagesController extends AdminController
             {
                 $error = 'Não é possível criar uma página que não pertença a nenhuma secção, por favor <a href="' . $this->generateUrl( 'sectionsadd' ) . '">crie uma nova secção</a>';
             }
+
+            // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
+            $em = $this->getDoctrine()->getManager();
+            $query = $em->createQuery(
+                    'SELECT p.id, p.title, p.url, p.date, p.id_language, s.section, l.language
+                FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s, XvolutionsAdminBundle:Language l
+                WHERE p.id_section = s.id AND p.id_language = l.id AND p.id != 1
+                ORDER BY p.title ASC'
+            );
+
+            $pageList = $query->getResult();
+
+            return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
+                        'username' => $this->getUsername(),
+                        'pageList' => $pageList,
+                        'status' => $status,
+                        'error' => $error
+                    ) );
         }
 
         $sectionList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Section' )->findAll();
@@ -202,7 +238,7 @@ class PagesController extends AdminController
                     'sectionList' => $sectionList,
                     'pageList' => $pageList,
                     'languageList' => $languageList,
-                    'ok' => $ok,
+                    'status' => $status,
                     'error' => $error
                 ) );
     }
