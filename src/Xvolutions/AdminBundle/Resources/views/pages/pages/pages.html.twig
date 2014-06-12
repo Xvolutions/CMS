@@ -5,6 +5,10 @@
 {% block username %}{{ username }}{% endblock %}
 {% block maincontent %}
     <h1>{{ "Páginas"|trans }}</h1>
+        <div id="status" class="alert alert-success alert-dismissable" style="display: none;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <div id="text"></div>
+        </div>
     {% if status %}
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
