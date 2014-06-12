@@ -45,18 +45,18 @@ class SectionsController extends AdminController {
                 $em->persist($section);
                 $em->flush();
                 $status = 'Secção inserida com sucesso';
+
+                $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
+
+                return $this->render('XvolutionsAdminBundle:pages:sections/sections.html.twig', array(
+                            'username' => $this->getUsername(),
+                            'sectionList' => $sectionList,
+                            'status' => $status,
+                            'error' => $error
+                ));
             } else {
                 $error = 'Uma secção com esse nome já existe';
             }
-
-            $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
-
-            return $this->render('XvolutionsAdminBundle:pages:sections/sections.html.twig', array(
-                        'username' => $this->getUsername(),
-                        'sectionList' => $sectionList,
-                        'status' => $status,
-                        'error' => $error
-            ));
         }
 
         return $this->render('XvolutionsAdminBundle:pages:sections/add_sections.html.twig', array(
@@ -104,18 +104,18 @@ class SectionsController extends AdminController {
                 $em->persist($section[0]);
                 $em->flush();
                 $status = 'Secção actualizada com sucesso';
+
+                $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
+
+                return $this->render('XvolutionsAdminBundle:pages:sections/sections.html.twig', array(
+                            'username' => $this->getUsername(),
+                            'sectionList' => $sectionList,
+                            'status' => $status,
+                            'error' => $error
+                ));
             } else {
                 $error = 'Uma secção com esse nome já existe';
             }
-
-            $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
-
-            return $this->render('XvolutionsAdminBundle:pages:sections/sections.html.twig', array(
-                        'username' => $this->getUsername(),
-                        'sectionList' => $sectionList,
-                        'status' => $status,
-                        'error' => $error
-            ));
         }
 
         return $this->render('XvolutionsAdminBundle:pages:sections/add_sections.html.twig', array(
