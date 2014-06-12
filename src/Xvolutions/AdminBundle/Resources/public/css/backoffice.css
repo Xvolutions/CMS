@@ -35,35 +35,36 @@ body {
   position: absolute !important;
   bottom: -80px !important;
   left: 0 !important;
+  z-index: -1;
 }
-/* line 34, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000334}}
+/* line 35, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000335}}
 .navbar-bottom {
   position: absolute;
   bottom: 0px;
   width: 100%;
   margin-bottom: 0px !important;
 }
-/* line 41, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000341}}
+/* line 42, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000342}}
 .container-footer {
   padding-top: 15px;
 }
-/* line 45, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000345}}
+/* line 46, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000346}}
 .navbar {
   -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
-/* line 51, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000351}}
+/* line 52, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000352}}
 th,
 tr td {
   text-align: center;
 }
-/* line 55, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000355}}
+/* line 56, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000356}}
 h1,
 .h1,
 h2,
