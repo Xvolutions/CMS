@@ -4,6 +4,7 @@ namespace Xvolutions\AdminBundle\Controller\Admin;
 
 use Xvolutions\AdminBundle\Controller\AdminController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Page;
 use Xvolutions\AdminBundle\Form\PageType;
 
@@ -138,6 +139,13 @@ class PagesController extends AdminController
                     $this->RemoveSelectedPages( $ids, $status, $error );
                     break;
                 }
+        }
+
+        if( $error != NULL ) {
+            return new Response($error, Response::HTTP_BAD_REQUEST);
+        } 
+        if( $status != NULL ) {
+            return new Response($status, Response::HTTP_OK);
         }
 
         // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id

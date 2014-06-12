@@ -4,6 +4,7 @@ namespace Xvolutions\AdminBundle\Controller\Admin;
 
 use Xvolutions\AdminBundle\Controller\AdminController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Section;
 use Xvolutions\AdminBundle\Form\SectionType;
 
@@ -152,6 +153,13 @@ class SectionsController extends AdminController {
                     $this->RemoveSelectedSections($ids, $status, $error);
                     break;
                 }
+        }
+
+        if( $error != NULL ) {
+            return new Response($error, Response::HTTP_BAD_REQUEST);
+        } 
+        if( $status != NULL ) {
+            return new Response($status, Response::HTTP_OK);
         }
 
         $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
