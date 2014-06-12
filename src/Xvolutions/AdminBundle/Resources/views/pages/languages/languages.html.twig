@@ -5,6 +5,10 @@
 {% block username %}{{ username }}{% endblock %}
 {% block maincontent %}
     <h1>{{ "Ídiomas"|trans }}</h1>
+        <div id="status" class="alert alert-success alert-dismissable" style="display: none;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ status|trans }}
+        </div>
     {% if status %}
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -43,6 +47,7 @@
         {% endif %}
     </table>
     <p>
-        <a href="{{path('addlanguages')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar um novo ídioma"|trans }}</a> <a href="{{path('optionlanguages', {'option': 'removeselected'})}}" id="RemoveMany" class="btn btn-danger btn-sm">{{ "Apagar Seleccionados"|trans }}</a>
+        <a href="{{path('addlanguages')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar um novo ídioma"|trans }}</a>
+        <a class="btn btn-danger btn-sm" name="{{path('optionlanguages', {'option': 'removeselected'})}}" id="RemoveMany">{{ "Apagar"|trans }}</a>
     </p> 
 {% endblock %}

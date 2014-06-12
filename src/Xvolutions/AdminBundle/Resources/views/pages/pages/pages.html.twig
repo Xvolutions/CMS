@@ -50,6 +50,7 @@
         {% endif %}
     </table>
     <p>
-        <a href="{{path('addpages')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar uma nova página"|trans }}</a> <a href="{{path('pagesoption', {'option': 'removeselected'})}}" id="RemoveMany" class="btn btn-danger btn-sm">{{ "Apagar Seleccionadas"|trans }}</a>
+        <a href="{{path('addpages')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar uma nova página"|trans }}</a>
+        <a class="btn btn-danger btn-sm" name="{{path('pagesoption', {'option': 'removeselected'})}}" id="RemoveMany">{{ "Apagar"|trans }}</a>
     </p> 
 {% endblock %}
