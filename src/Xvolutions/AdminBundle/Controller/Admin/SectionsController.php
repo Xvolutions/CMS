@@ -33,7 +33,7 @@ class SectionsController extends AdminController {
 
         $form->handleRequest($request);
 
-        $ok = NULL;
+        $status = NULL;
         $error = NULL;
         if ($form->isValid()) {
             $formValues = $request->request->get('xvolutions_adminbundle_section');
@@ -44,17 +44,26 @@ class SectionsController extends AdminController {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($section);
                 $em->flush();
-                $ok = 'Secção inserida com sucesso';
+                $status = 'Secção inserida com sucesso';
             } else {
                 $error = 'Uma secção com esse nome já existe';
             }
+
+            $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
+
+            return $this->render('XvolutionsAdminBundle:pages:sections/sections.html.twig', array(
+                        'username' => $this->getUsername(),
+                        'sectionList' => $sectionList,
+                        'status' => $status,
+                        'error' => $error
+            ));
         }
 
         return $this->render('XvolutionsAdminBundle:pages:sections/add_sections.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
                     'title' => 'Adicionar uma Secção',
-                    'ok' => $ok,
+                    'status' => $status,
                     'error' => $error
         ));
     }
@@ -79,7 +88,7 @@ class SectionsController extends AdminController {
                 ->add('Guardar', 'submit')
         ;
 
-        $ok = NULL;
+        $status = NULL;
         $error = NULL;
 
         $form->handleRequest($request);
@@ -94,17 +103,26 @@ class SectionsController extends AdminController {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($section[0]);
                 $em->flush();
-                $ok = 'Secção actualizada com sucesso';
+                $status = 'Secção actualizada com sucesso';
             } else {
                 $error = 'Uma secção com esse nome já existe';
             }
+
+            $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
+
+            return $this->render('XvolutionsAdminBundle:pages:sections/sections.html.twig', array(
+                        'username' => $this->getUsername(),
+                        'sectionList' => $sectionList,
+                        'status' => $status,
+                        'error' => $error
+            ));
         }
 
         return $this->render('XvolutionsAdminBundle:pages:sections/add_sections.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
                     'title' => 'Editar uma Secção',
-                    'ok' => $ok,
+                    'status' => $status,
                     'error' => $error
         ));
     }
