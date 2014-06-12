@@ -5,7 +5,7 @@ $(document).ready(function()
         'slow',
         function()
         {
-            $(".alert").css("display","none");
+            $(".alert").slideUp(1500);
         }
     );
 });

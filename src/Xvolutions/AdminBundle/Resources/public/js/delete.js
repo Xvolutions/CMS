@@ -24,7 +24,7 @@ $(document).ready(function()
                                 'slow',
                                 function()
                                 {
-                                    $("#status").css("display","none");
+                                    $("#status").slideUp(1500);
                                 }
                             );
                         }
@@ -81,7 +81,7 @@ $(document).ready(function()
                                     'slow',
                                     function()
                                     {
-                                        $("#status").css("display","none");
+                                        $("#status").slideUp(1500);
                                     }
                             );
                         }
