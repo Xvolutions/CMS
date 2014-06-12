@@ -13,7 +13,7 @@ $(document).ready(function()
             success: function( result )
             {
                 var text= result;
-                $("#status").text(text);
+                $("#text").text(text);
                 $("#status").fadeIn(
                         'slow',
                         function()
@@ -40,7 +40,7 @@ $(document).ready(function()
             statusCode: {
                 400: function( result ) {
                     var text= result;
-                    $("#status").text(text);
+                    $("#text").text(text);
                     $("#status").fadeIn(
                             'slow',
                             function()
@@ -70,7 +70,7 @@ $(document).ready(function()
             success: function( result )
             {
                 var text= result;
-                $("#status").text(text);
+                $("#text").text(text);
                 $("#status").fadeIn(
                         'slow',
                         function()
@@ -100,7 +100,7 @@ $(document).ready(function()
             statusCode: {
                 400: function( result ) {
                     var text= result;
-                    $("#status").text(text);
+                    $("#text").text(text);
                     $("#status").fadeIn(
                             'slow',
                             function()
