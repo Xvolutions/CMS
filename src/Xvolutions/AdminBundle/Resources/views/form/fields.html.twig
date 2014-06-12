@@ -29,3 +29,9 @@
     {{ block('button_widget_reset') }}
 {% endspaceless %}
 {% endblock reset_widget %}
+
+{% block button_row %}
+{% spaceless %}
+        {{ form_widget(form) }}
+{% endspaceless %}
+{% endblock button_row %}
