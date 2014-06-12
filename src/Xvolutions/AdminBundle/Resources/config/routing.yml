@@ -33,7 +33,7 @@ addpages:
 pagesoption:
     pattern: /pages/{option}/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages, options: 0, id: 0 }
-    methods:  [GET,DELETE]
+    methods:  [DELETE]
 
 pages:
     pattern: /pages
@@ -54,7 +54,7 @@ addsections:
 optionsections:
     pattern: /sections/{option}/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:sections, options: 0, id: 0 }
-    methods:  [GET,DELETE]
+    methods:  [DELETE]
 
 sections:
     pattern: /sections
@@ -76,7 +76,7 @@ addlanguages:
 optionlanguages:
     pattern: /languages/{option}/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:languages, options: 0, id: 0 }
-    methods:  [GET,DELETE]
+    methods:  [DELETE]
 
 languages:
     pattern: /languages
