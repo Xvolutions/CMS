@@ -161,7 +161,11 @@ class LanguagesController extends AdminController
                 }
             case 'removeselected': {
                     $ids = json_decode($id);
-                    $this->RemoveSelectedLanguages($ids, $status, $error);
+                    if( $ids != 0 ) {
+                        $this->RemoveSelectedLanguages($ids, $status, $error);
+                    } else {
+                        $error = "Erro ao remover ídioma(s)";
+                    }
                     break;
                 }
         }
