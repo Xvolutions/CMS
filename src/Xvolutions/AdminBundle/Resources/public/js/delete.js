@@ -13,12 +13,20 @@ $(document).ready(function()
             success: function( result )
             {
                 var text= result;
+                $("#status").text(text);
                 $("#status").fadeIn(
                         'slow',
                         function()
                         {
-                            $("#status").text(text);
                             $("#status").css("display","block");
+                            $("#status").delay(1500);
+                            $("#status").fadeOut(
+                                'slow',
+                                function()
+                                {
+                                    $("#status").css("display","none");
+                                }
+                            );
                         }
                 );
                 $("."+tr).fadeOut(
@@ -62,12 +70,20 @@ $(document).ready(function()
             success: function( result )
             {
                 var text= result;
+                $("#status").text(text);
                 $("#status").fadeIn(
                         'slow',
                         function()
                         {
-                            $("#status").text(text);
                             $("#status").css("display","block");
+                            $("#status").delay(1500);
+                            $("#status").fadeOut(
+                                    'slow',
+                                    function()
+                                    {
+                                        $("#status").css("display","none");
+                                    }
+                            );
                         }
                 );
                 for ( var i in tr) {
