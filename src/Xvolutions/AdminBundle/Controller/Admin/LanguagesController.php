@@ -39,7 +39,7 @@ class LanguagesController extends AdminController
 
         $form->handleRequest($request);
 
-        $ok = NULL;
+        $status = NULL;
         $error = NULL;
         if ($form->isValid()) {
             $formValues = $request->request->get('xvolutions_adminbundle_language');
@@ -52,7 +52,16 @@ class LanguagesController extends AdminController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($language);
                 $em->flush();
-                $ok = 'Ídioma inserido com sucesso';
+                $status = 'Ídioma inserido com sucesso';
+
+                $languageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findAll();
+
+                return $this->render('XvolutionsAdminBundle:pages:languages/languages.html.twig', array(
+                            'username' => $this->getUsername(),
+                            'languageList' => $languageList,
+                            'status' => $status,
+                            'error' => $error
+                ));
             } else {
                 $error = 'Um ídioma com esse nome ou esse código já existe';
             }
@@ -62,7 +71,7 @@ class LanguagesController extends AdminController
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
                     'title' => 'Adicionar um novo Ídioma',
-                    'ok' => $ok,
+                    'status' => $status,
                     'error' => $error
         ));
     }
@@ -87,7 +96,7 @@ class LanguagesController extends AdminController
                 ->add('Guardar', 'submit')
         ;
 
-        $ok = NULL;
+        $status = NULL;
         $error = NULL;
 
         $form->handleRequest($request);
@@ -105,7 +114,16 @@ class LanguagesController extends AdminController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($language[0]);
                 $em->flush();
-                $ok = 'Ídioma actualizado com sucesso';
+                $status = 'Ídioma actualizado com sucesso';
+
+                $languageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findAll();
+
+                return $this->render('XvolutionsAdminBundle:pages:languages/languages.html.twig', array(
+                            'username' => $this->getUsername(),
+                            'languageList' => $languageList,
+                            'status' => $status,
+                            'error' => $error
+                ));
             } else {
                 $error = 'Um ídioma com esse nome, ou código, já existe';
             }
@@ -115,7 +133,7 @@ class LanguagesController extends AdminController
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
                     'title' => 'Editar um Ídioma',
-                    'ok' => $ok,
+                    'status' => $status,
                     'error' => $error
         ));
     }
