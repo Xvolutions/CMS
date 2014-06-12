@@ -1,5 +1,5 @@
 var selected = new Array();
-var url = 'undefined';
+var name = 'undefined';
 function SelectForRemoval(id) {
     if (document.getElementById(id).checked) {
         selected.push(id);
@@ -7,8 +7,9 @@ function SelectForRemoval(id) {
         var tmp = selected.indexOf(id);
         selected.splice(tmp, 1);
     }
-    if (url === 'undefined') {
-        url = document.getElementById('RemoveMany').href;
+    if (name === 'undefined') {
+        name = document.getElementById('RemoveMany').name;
     }
-    document.getElementById('RemoveMany').href = url + '/' + (JSON.stringify(selected));
+
+    document.getElementById('RemoveMany').name = name + '/' + (JSON.stringify(selected));
 }
