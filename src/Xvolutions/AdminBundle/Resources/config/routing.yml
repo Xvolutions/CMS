@@ -82,3 +82,25 @@ languages:
     pattern: /languages
     defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:languages }
     methods:  [GET]
+
+### USERS ###
+
+edituser:
+    pattern: /users/edit/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Users:editusers }
+    methods:  [GET,POST]
+
+addusers:
+    pattern: /users/add
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Users:addusers }
+    methods:  [GET,POST]
+
+optionuser:
+    pattern: /users/{option}/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Users:users, options: 0, id: 0 }
+    methods:  [DELETE]
+
+users:
+    pattern: /users
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Users:users }
+    methods:  [GET]
