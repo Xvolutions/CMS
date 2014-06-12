@@ -5,10 +5,10 @@
 {% block username %}{{ username }}{% endblock %}
 {% block maincontent %}
     <h1>{{ title|trans }}</h1>
-    {% if ok %}
+    {% if status %}
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ ok|trans }}
+            {{ status|trans }}
         </div>
     {% endif %}
     {% if error %}
