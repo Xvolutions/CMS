@@ -12,7 +12,7 @@
 
 {% block content %}
     <div id="header">
-        {% include 'XvolutionsAdminBundle:template:menu.html.twig' %}
+        {% include 'XvolutionsAdminBundle:template:menu.html.twig' with {'username': username} %}
     </div>
     <div id="content">
         <div class="col-md-1 col-sm-1"></div>
