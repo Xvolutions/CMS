@@ -3,6 +3,7 @@
 namespace Xvolutions\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
@@ -25,9 +26,16 @@ class User implements AdvancedUserInterface, \Serializable, \Symfony\Component\S
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=25)
+     * @ORM\Column(name="username", type="string", length=25, unique=true)
      */
     private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
 
     /**
      * @var string
@@ -39,7 +47,7 @@ class User implements AdvancedUserInterface, \Serializable, \Symfony\Component\S
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=60)
+     * @ORM\Column(name="email", type="string", length=60, unique=true)
      */
     private $email;
 
@@ -49,6 +57,17 @@ class User implements AdvancedUserInterface, \Serializable, \Symfony\Component\S
      * @ORM\Column(name="isactive", type="boolean")
      */
     private $isactive;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     *
+     */
+    private $roles;
+
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -81,6 +100,29 @@ class User implements AdvancedUserInterface, \Serializable, \Symfony\Component\S
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return User
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -167,7 +209,7 @@ class User implements AdvancedUserInterface, \Serializable, \Symfony\Component\S
     }
 
     public function getRoles() {
-        return array('ROLE_ADMIN');
+        return $this->roles->toArray();
     }
 
     public function serialize() {
@@ -210,4 +252,26 @@ class User implements AdvancedUserInterface, \Serializable, \Symfony\Component\S
         return $this->isactive;
     }
 
+    /**
+     * Add roles
+     *
+     * @param \Xvolutions\AdminBundle\Entity\Role $roles
+     * @return User
+     */
+    public function addRole(\Xvolutions\AdminBundle\Entity\Role $roles)
+    {
+        $this->roles[] = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Remove roles
+     *
+     * @param \Xvolutions\AdminBundle\Entity\Role $roles
+     */
+    public function removeRole(\Xvolutions\AdminBundle\Entity\Role $roles)
+    {
+        $this->roles->removeElement($roles);
+    }
 }

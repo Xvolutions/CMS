@@ -1,0 +1,52 @@
+{% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
+
+{% block title %}{{title|trans}} - Utilizadores - Backoffice{% endblock %}
+
+{% block maincontent %}
+    <h1>{{ title|trans }}</h1>
+    {% if status %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ status|trans }}
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
+    {{ form_start( form ) }}
+    <div id="xvolutions_adminbundle_user">
+        <div>
+            <p>{{ "Nome do Utilizador"|trans }}</p>
+            <p>{{ form_widget( form.username ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Nome Completo"|trans }}</p>
+            <p>{{ form_widget( form.name ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Palavra Chave"|trans }}</p>
+            <p>{{ form_widget( form.password.children.password ) }}
+        </div>
+        <div>
+            <p>{{ "Confirmação da Palavra Chave"|trans }}</p>
+            <p>{{ form_widget( form.password.children.confirm ) }}
+        </div>
+        <div>
+            <p>{{ "E-mail"|trans }}</p>
+            <p>{{ form_widget( form.email ) }}
+        </div>
+        <div>
+            <p>{{ "Activo ?"|trans }}</p>
+            <p>{{ form_widget( form.isactive ) }}
+        </div>
+        <div>
+            {{ "Grupo"|trans }}
+            <p>{{ form_widget( form.roles ) }}
+        </div>
+        <br>
+        {{form_end(form)}}
+        <a href="{{path('users')}}" class="btn btn-default btn-sm">{{ "Ver Utilizadores"|trans }}</a>
+{% endblock %}
