@@ -1,21 +1,22 @@
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 12
+        default:
+            algorithm: bcrypt
+            cost: 15
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-#        main:
-#            entity:
-#                class: Cleverti\CTILoginBundle\Entity\User
-#                property: username
-        in_memory:
-            memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+        chain_provider:
+            chain:
+                providers: [user_db]
+        user_db:
+            entity: { class: Xvolutions\AdminBundle\Entity\User, property: username }
 
     firewalls:
         dev:
