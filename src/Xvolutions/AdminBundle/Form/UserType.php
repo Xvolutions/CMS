@@ -34,7 +34,7 @@ class UserType extends AbstractType
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Role',
                         'property' => 'name',
-                        'multiple' => false,
+                        'multiple' => true,
                         'expanded' => false
                     )
             )

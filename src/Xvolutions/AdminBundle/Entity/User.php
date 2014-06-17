@@ -208,6 +208,12 @@ class User implements AdvancedUserInterface, \Serializable, \Symfony\Component\S
         
     }
 
+    public function setRoles( $roles ) {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
     public function getRoles() {
         return $this->roles->toArray();
     }
