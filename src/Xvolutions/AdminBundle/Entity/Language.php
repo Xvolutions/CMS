@@ -3,6 +3,7 @@
 namespace Xvolutions\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Language
@@ -24,9 +25,9 @@ class Language
     /**
      * @var string
      *
-     * @ORM\Column(name="language", type="string", unique=true,  length=255)
+     * @ORM\Column(name="language", type="string", unique=true, length=255)
      */
-    private $language;
+    protected $language;
 
     /**
      * @var string
@@ -35,6 +36,10 @@ class Language
      */
     private $code;
 
+    public function __construct()
+    {
+        $this->page = new ArrayCollection();
+    }
 
     /**
      * Get id

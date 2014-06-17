@@ -52,21 +52,24 @@ class Page
     /**
      * @var integer
      *
-     * @ORM\Column(name="id_section", type="integer")
+     * @ORM\ManyToOne(targetEntity="Section")
+     * @ORM\JoinColumn(name="id_section", referencedColumnName="id")
      */
     private $id_section;
 
     /**
      * @var integer
      *
+     * @ORM\ManyToOne(targetEntity="Page", inversedBy="id")
      * @ORM\Column(name="id_parent", type="integer", nullable=true)
      */
     private $id_parent;
 
-        /**
+    /**
      * @var integer
      *
-     * @ORM\Column(name="id_language", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Language")
+     * @ORM\JoinColumn(name="id_language", referencedColumnName="id")
      */
     private $id_language;
 
@@ -177,7 +180,7 @@ class Page
      *
      * @return integer 
      */
-    public function getId_section()
+    public function getIdsection()
     {
         return $this->id_section;
     }
@@ -188,7 +191,7 @@ class Page
      * @param integer id_section
      * @return Section ID
      */
-    public function setId_section($id_section)
+    public function setIdsection($id_section)
     {
         $this->id_section = $id_section;
 
@@ -200,7 +203,7 @@ class Page
      *
      * @return integer 
      */
-    public function getId_parent()
+    public function getIdparent()
     {
         return $this->id_parent;
     }
@@ -211,7 +214,7 @@ class Page
      * @param integer id_parent
      * @return Page Parent ID
      */
-    public function setId_parent($id_parent)
+    public function setIdparent($id_parent)
     {
         $this->id_parent = $id_parent;
 
@@ -223,7 +226,7 @@ class Page
      *
      * @return integer 
      */
-    public function getId_language()
+    public function getIdlanguage()
     {
         return $this->id_language;
     }
@@ -234,7 +237,7 @@ class Page
      * @param integer id_language
      * @return Page's Language ID
      */
-    public function setId_language($id_language)
+    public function setIdlanguage($id_language)
     {
         $this->id_language = $id_language;
 
