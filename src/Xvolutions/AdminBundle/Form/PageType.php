@@ -18,6 +18,36 @@ class PageType extends AbstractType
             ->add('title')
             ->add('url')
             ->add('text')
+            ->add(
+                    'id_language', 
+                    'entity', 
+                    array(
+                        'class' => 'Xvolutions\AdminBundle\Entity\Language',
+                        'property' => 'language',
+                        'multiple' => false,
+                        'expanded' => false
+                    )
+            )
+            ->add(
+                    'id_section', 
+                    'entity', 
+                    array(
+                        'class' => 'Xvolutions\AdminBundle\Entity\Section',
+                        'property' => 'section',
+                        'multiple' => false,
+                        'expanded' => false
+                    )
+            )
+            ->add(
+                    'id_parent', 
+                    'entity', 
+                    array(
+                        'class' => 'Xvolutions\AdminBundle\Entity\Page',
+                        'property' => 'title',
+                        'multiple' => false,
+                        'expanded' => false
+                    )
+            )
         ;
     }
     

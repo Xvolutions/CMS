@@ -30,9 +30,8 @@ class PagesController extends AdminController
 
         $pageType = new PageType();
 
-        $page = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findBy( array( 'id' => $id ) );
-
-        $form = $this->createForm( $pageType, $page[ 0 ] )
+        $page = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->find( $id );
+        $form = $this->createForm( $pageType, $page )
                 ->add( 'Guardar', 'submit' )
         ;
 
@@ -50,16 +49,14 @@ class PagesController extends AdminController
             $PageUrlPresent = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findBy( array( 'url' => $PageUrl ) );
             if ( count( $PageUrlPresent ) < 1 || $PageUrlPresent[ 0 ]->getId() == $id )
             {
-                $page[ 0 ]->setId_section( $request->request->get( 'section' ) );
-                $page[ 0 ]->setId_language( $request->request->get( 'id_language' ) );
-                $em->persist( $page[ 0 ] );
+                $page->setIdparent( $request->request->get( 'xvolutions_adminbundle_page' )['id_parent'] );
                 $em->flush();
                 $status = 'Página actualizada com sucesso';
 
                 // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
                 $em = $this->getDoctrine()->getManager();
                 $query = $em->createQuery(
-                        'SELECT p.id, p.title, p.url, p.date, p.id_language, s.section, l.language
+                        'SELECT p.id, p.title, p.url, p.date, l.language, s.section
                     FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s, XvolutionsAdminBundle:Language l
                     WHERE p.id_section = s.id AND p.id_language = l.id AND p.id != 1
                     ORDER BY p.title ASC'
@@ -151,14 +148,14 @@ class PagesController extends AdminController
         // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
-                'SELECT p.id, p.title, p.url, p.date, p.id_language, s.section, l.language
+                'SELECT p.id, p.title, p.url, p.date, l.language, s.section
             FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s, XvolutionsAdminBundle:Language l
             WHERE p.id_section = s.id AND p.id_language = l.id AND p.id != 1
             ORDER BY p.title ASC'
         );
 
         $pageList = $query->getResult();
-
+        
         return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
                     'username' => $this->getUsername(),
                     'pageList' => $pageList,
@@ -191,49 +188,40 @@ class PagesController extends AdminController
         $status = NULL;
         if ( $form->isValid() )
         {
-            $page->setId_section( $request->request->get( 'section' ) );
-            $page->setId_parent( $request->request->get( 'id_parent' ) );
-            $page->setId_language( $request->request->get( 'id_language' ) );
-            if ( $page->getId_section() != NULL )
+            $page->setIdparent( $request->request->get( 'xvolutions_adminbundle_page' )['id_parent'] );
+            $datetime = new \DateTime( 'now' );
+            $em = $this->getDoctrine()->getManager();
+            $page->setDate( $datetime ); // I Want to define the date
+            $formValues = $request->request->get( 'xvolutions_adminbundle_page' );
+            $url = $formValues[ "url" ];
+            // Verify the URL of the page don't exists yet
+            $titleIsPresent = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findBy( array( 'url' => $url ) );
+            if ( count( $titleIsPresent ) < 1 )
             {
-                $datetime = new \DateTime( 'now' );
+                $em->persist( $page );
+                $em->flush();
+                $status = 'Página inserida com sucesso';
+
+                // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
                 $em = $this->getDoctrine()->getManager();
-                $page->setDate( $datetime ); // I Want to define the date
-                $formValues = $request->request->get( 'xvolutions_adminbundle_page' );
-                $url = $formValues[ "url" ];
-                // Verify the URL of the page don't exists yet
-                $titleIsPresent = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findBy( array( 'url' => $url ) );
-                if ( count( $titleIsPresent ) < 1 )
-                {
-                    $em->persist( $page );
-                    $em->flush();
-                    $status = 'Página inserida com sucesso';
+                $query = $em->createQuery(
+                        'SELECT p.id, p.title, p.url, p.date, l.language, s.section
+                    FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s, XvolutionsAdminBundle:Language l
+                    WHERE p.id_section = s.id AND p.id_language = l.id AND p.id != 1
+                    ORDER BY p.title ASC'
+                );
 
-                    // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
-                    $em = $this->getDoctrine()->getManager();
-                    $query = $em->createQuery(
-                            'SELECT p.id, p.title, p.url, p.date, p.id_language, s.section, l.language
-                        FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s, XvolutionsAdminBundle:Language l
-                        WHERE p.id_section = s.id AND p.id_language = l.id AND p.id != 1
-                        ORDER BY p.title ASC'
-                    );
+                $pageList = $query->getResult();
 
-                    $pageList = $query->getResult();
-
-                    return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
-                                'username' => $this->getUsername(),
-                                'pageList' => $pageList,
-                                'status' => $status,
-                                'error' => $error
-                            ) );
-                } else
-                {
-                    $error = 'Uma página com esse URL já existe';
-                }
-            } 
-            else
+                return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
+                            'username' => $this->getUsername(),
+                            'pageList' => $pageList,
+                            'status' => $status,
+                            'error' => $error
+                        ) );
+            } else
             {
-                $error = 'Não é possível criar uma página que não pertença a nenhuma secção, por favor <a href="' . $this->generateUrl( 'sectionsadd' ) . '">crie uma nova secção</a>';
+                $error = 'Uma página com esse URL já existe';
             }
         }
 

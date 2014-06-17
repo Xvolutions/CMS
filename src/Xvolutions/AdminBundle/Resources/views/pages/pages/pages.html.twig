@@ -32,7 +32,7 @@
             <th>{{ "Opções"|trans }}</th>
         </tr>
         {% if pageList|length > 0 %}
-
+ 
             {% for page in pageList %}
                 <tr class="tr{{page.id}}">
                     <td><input type="checkbox" id="{{page.id}}" onclick="SelectForRemoval('{{page.id}}');"></td>

@@ -28,60 +28,22 @@
             <p>{{ form_widget( form.url ) }}
         </div>
         <div>
-            <p>{{ "Página Superior"|trans }}</p>
-            {% if pageList|length > 0 %}
-                <p><select name="id_parent">
-                    {% for page in pageList %}
-                        {% if page.id == form.vars.value.id_parent %}
-                            <option value="{{page.id}}" selected>{{page.title}}</option>
-                        {% else %}
-                            <option value="{{page.id}}">{{page.title}}</option>
-                        {% endif %}
-                    {% endfor %}
-                </select></p>
-            {% else %}
-                {{ "Não existem páginas definidas"|trans }}
-            {% endif %}
-        </div>
-        <div>
-            <p>{{ "Secção"|trans }}</p>
-            {% if sectionList|length > 0 %}
-                <p><select name="section">
-                    {% for section in sectionList %}
-                        {% if section.id == form.vars.value.id_section %}
-                            <option value="{{section.id}}" selected>{{section.section}}</option>
-                        {% else %}
-                            <option value="{{section.id}}">{{section.section}}</option>
-                        {% endif %}
-                        
-                    {% endfor %}
-                </select></p>
-            {% else %}
-                {{ "Não existem secções definidas"|trans }}
-            {% endif %}
+            <p>{{ "Texto"|trans }}</p>
+            <p>{{ form_widget( form.text ) }}</p>
         </div>
         <div>
             <p>{{ "Ídioma"|trans }}</p>
-            {% if languageList|length > 0 %}
-                <p><select name="id_language">
-                    {% for language in languageList %}
-                        {% if language.id == form.vars.value.id_language %}
-                            <option value="{{language.id}}" selected>{{language.language}}</option>
-                        {% else %}
-                            <option value="{{language.id}}">{{language.language}}</option>
-                        {% endif %}
-                        
-                    {% endfor %}
-                </select></p>
-            {% else %}
-                {{ "Não existem secções definidas"|trans }}
-            {% endif %}
+            <p>{{ form_widget( form.id_language ) }}</p>
         </div>
         <div>
-            <p>{{ "Texto"|trans }}</p>
-            {{ form_widget( form.text ) }}
+            <p>{{ "Secção"|trans }}</p>
+            <p>{{ form_widget( form.id_section ) }}</p>
         </div>
-        <br><br>
+        <div>
+            <p>{{ "Página Superior"|trans }}</p>
+            <p>{{ form_widget( form.id_parent ) }}</p>
+        </div>
+        <br>
             {{ form_end( form ) }}
             <a href="{{path('pages')}}" class="btn btn-default btn-sm">{{ "Ver Páginas"|trans }}</a>
     </div>
