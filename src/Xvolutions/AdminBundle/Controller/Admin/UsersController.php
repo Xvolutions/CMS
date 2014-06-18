@@ -122,7 +122,7 @@ class UsersController extends AdminController {
         return $this->render('XvolutionsAdminBundle:pages:users/add_users.hml.twig', array(
                     'form' => $form->createView(),
                     'username' => parent::getUsername(),
-                    'title' => 'Adicionar um novo Utilizador',
+                    'title' => 'Editar um Utilizador',
                     'status' => $status,
                     'error' => $error,
                     'roleslist' => $rolesList
