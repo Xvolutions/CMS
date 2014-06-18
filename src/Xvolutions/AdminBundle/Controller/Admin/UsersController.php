@@ -50,7 +50,7 @@ class UsersController extends AdminController {
 
             $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
-            return $this->render('XvolutionsAdminBundle:pages:users/list_users.html.twig', array(
+            return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
                         'username' => parent::getUsername(),
                         'title' => 'Utilizadores',
                         'userlist' => $userList,
@@ -70,7 +70,6 @@ class UsersController extends AdminController {
                     'roleslist' => $rolesList
         ));
     }
-
 
     /**
      * Controller responsible to edit an existing user for and handling the form
@@ -108,7 +107,7 @@ class UsersController extends AdminController {
 
             $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
-            return $this->render('XvolutionsAdminBundle:pages:users/list_users.html.twig', array(
+            return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
                         'username' => parent::getUsername(),
                         'title' => 'Utilizadores',
                         'userlist' => $userList,
@@ -166,7 +165,7 @@ class UsersController extends AdminController {
 
         $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:pages:users/list_users.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
                     'username' => parent::getUsername(),
                     'title' => 'Utilizadores',
                     'userlist' => $userList,
