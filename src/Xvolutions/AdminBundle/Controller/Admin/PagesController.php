@@ -289,7 +289,7 @@ class PagesController extends AdminController
                 }
             }
         } catch ( Exception $ex ) {
-            $error = "Erro $ex ao remover as página(s)";
+            $error = "Erro $ex ao remover a(s) página(s)";
         }
     }
 
