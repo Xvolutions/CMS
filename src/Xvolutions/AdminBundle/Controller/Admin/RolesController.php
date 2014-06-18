@@ -168,9 +168,24 @@ class RolesController extends AdminController {
             $role = $em->getRepository( 'XvolutionsAdminBundle:Role' )->find( $id );
             if ( $role != 'empty' )
             {
-                $em->remove( $role );
-                $em->flush();
-                $status = 'Grupo removido com sucesso';
+                $usersList = $em->getRepository( 'XvolutionsAdminBundle:User' )->findAll();
+                $found = FALSE;
+                foreach( $usersList as $user )
+                {
+                    $userRole = $user->getRoles();
+                    foreach( $userRole as $urole ) {
+                        if( $urole->getId() == $role->getId()) {
+                            $found = TRUE;
+                        }
+                    }
+                }
+                if( $found == FALSE) {
+                    $em->remove( $role );
+                    $em->flush();
+                    $status = 'Grupo removido com sucesso';
+                } else {
+                    $error = 'Erro ao remover o grupo, tem utilizadores associados';
+                }
             } else
             {
                 $error = "Erro ao remover o grupo";
@@ -194,9 +209,24 @@ class RolesController extends AdminController {
                 $role = $em->getRepository( 'XvolutionsAdminBundle:Role' )->find( $id );
                 if ( $role != 'empty' )
                 {
-                    $em->remove( $role );
-                    $em->flush();
-                    $status = 'Grupo(s) removida(s) com sucesso';
+                    $usersList = $em->getRepository( 'XvolutionsAdminBundle:User' )->findAll();
+                    $found = FALSE;
+                    foreach( $usersList as $user )
+                    {
+                        $userRole = $user->getRoles();
+                        foreach( $userRole as $urole ) {
+                            if( $urole->getId() == $role->getId()) {
+                                $found = TRUE;
+                            }
+                        }
+                    }
+                    if( $found == FALSE) {
+                        $em->remove( $role );
+                        $em->flush();
+                        $status = 'Grupo removido com sucesso';
+                    } else {
+                        $error = 'Erro ao remover o grupo, tem utilizadores associados';
+                    }
                 } else
                 {
                     $error = "Erro ao remover o(s) grupo(s)";
