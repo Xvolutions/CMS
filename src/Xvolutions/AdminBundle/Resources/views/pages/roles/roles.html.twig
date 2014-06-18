@@ -1,0 +1,54 @@
+{% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
+
+{% block title %}Grupos - Backoffice{% endblock %}
+
+{% block username %}{{ username }}{% endblock %}
+{% block maincontent %}
+    <h1>{{ "Grupos"|trans }}</h1>
+        <div id="status" class="alert alert-success alert-dismissable" style="display: none;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <div id="text"></div>
+        </div>
+    {% if status %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ status|trans }}
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
+    <table class="table table-hover">
+        <tr>
+            <th></th>
+            <th>{{ "Nome Grupo"|trans }}</th>
+            <th>{{ "Papel"| trans }}</th>
+            <th>{{ "Opções"|trans }}</th>
+        </tr>
+        {% if roleList|length > 0 %}
+ 
+            {% for role in roleList %}
+                <tr class="tr{{role.id}}">
+                    <td><input type="checkbox" id="{{role.id}}" onclick="SelectForRemoval('{{role.id}}');"></td>
+                    <td>{{role.name}}</td>
+                    <td>{{role.role}}</td>
+                    <td>
+                        <a href="{{path('editroles', {'id': role.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> 
+                        <a class="btn btn-danger btn-xs" name="{{path('optionroles', {'option': 'remove','id': role.id})}}">{{ "Apagar"|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="7" >{{"Não existem Grupos definidas"|trans}}</td>
+            <tr>
+        {% endif %}
+    </table>
+    <p>
+        <a href="{{path('addroles')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar um novo grupo"|trans }}</a>
+        <a class="btn btn-danger btn-sm" name="{{path('optionroles', {'option': 'removeselected'})}}" id="RemoveMany">{{ "Apagar"|trans }}</a>
+    </p> 
+{% endblock %}
