@@ -26,7 +26,7 @@
             <th>{{ "Nome completo"|trans }}</th>
             <th>{{ "Nome de utilizador"|trans }}</th>
             <th>{{ "E-mail"|trans }}</th>
-            <th>{{ "Grupo"|trans }}</th>
+            <th>{{ "Grupos"|trans }}</th>
             <th>{{ "Opções"|trans }}</th>
         </tr>
         {% if userlist|length > 0 %}
@@ -36,9 +36,11 @@
                     <td>{{user.name}}</td>
                     <td>{{user.username}}</td>
                     <td>{{user.email}}</td>
+                    <td>
                     {% for role in user.roles %}
-                        <td>{{role.name}}</td>
+                        {{role.name}} 
                     {% endfor %}
+                    </td>
                     <td>
                         <a href="{{path('editusers', {'id': user.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> 
                         <a class="btn btn-danger btn-xs" name="{{path('optionusers', {'option': 'remove','id': user.id})}}">{{ "Apagar"|trans }}</a>
