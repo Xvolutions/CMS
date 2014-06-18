@@ -16,6 +16,13 @@ use Xvolutions\AdminBundle\Form\UserType;
  */
 class UsersController extends AdminController {
 
+    /**
+     * Controller responsible to add a new user for and handling the form
+     * submission and the database insertion
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return type the templates for adding a new user
+     */
     public function addusersAction(Request $request) {
         parent::verifyaccess();
 
@@ -54,6 +61,15 @@ class UsersController extends AdminController {
         ));
     }
 
+
+    /**
+     * Controller responsible to edit an existing user for and handling the form
+     * submission and the database insertion
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param type $id the id of an existing user
+     * @return type the template for editing a user
+     */
     public function editusersAction(Request $request, $id) {
         parent::verifyaccess();
 
@@ -93,11 +109,41 @@ class UsersController extends AdminController {
         ));
     }
 
-    public function usersAction( Request $request ) {
+    /**
+     * Function responsible for handling the user removal and the user
+     * removal array as well has the list of users
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param type $option This option might be a 'remove' for a single user and
+     * 'removeselected' to remove an array of id's
+     * @param type $id The id, or id's, of the user(s) to be removed
+     * @return type call the controller to handle 
+     */
+    public function usersAction( Request $request, $option = NULL, $id = NULL ) {
         parent::verifyaccess();
 
         $status = NULL;
         $error = NULL;
+
+        switch ($option) {
+            case 'remove': {
+                    $this->RemoveUser($id, $status, $error);
+                    break;
+                }
+            case 'removeselected': {
+                    $ids = json_decode($id);
+                    $this->RemoveSelectedUsers($ids, $status, $error);
+                    break;
+                }
+        }
+
+        if( $error != NULL ) {
+            return new Response($error, Response::HTTP_BAD_REQUEST);
+        } 
+        if( $status != NULL ) {
+            return new Response($status, Response::HTTP_OK);
+        }
+
         $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
         return $this->render('XvolutionsAdminBundle:pages:users/list_users.html.twig', array(
@@ -109,4 +155,41 @@ class UsersController extends AdminController {
         ));
     }
 
+    /**
+     * This is function is repsonsible to remove a user
+     * 
+     * @param type $id the id of the user to be removed
+     * @return string with the information message
+     */
+    private function RemoveUser($id, &$status, &$error) {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository('XvolutionsAdminBundle:User')->find($id);
+            $em->remove($user);
+            $em->flush();
+            $status = 'Utilizador removido com sucesso';
+        } catch (Exception $ex) {
+            $error = "Erro $ex ao remover um utilizador";
+        }
+    }
+
+    /**
+     * This function is responsible to remove a list of users
+     * 
+     * @param type $ids array containing the id's of the users to be removed
+     * @return string With the message
+     */
+    private function RemoveSelectedUsers($ids, &$status, &$error) {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            foreach ($ids as $id) {
+                $user = $em->getRepository('XvolutionsAdminBundle:User')->find($id);
+                $em->remove($user);
+                $em->flush();
+                $status = 'Utilizador(es) removido(s) com sucesso';
+            }
+        } catch (Exception $ex) {
+            $error = "Erro $ex ao remover utilizador(es)";
+        }
+    }
 }
