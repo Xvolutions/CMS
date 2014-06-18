@@ -24,8 +24,8 @@
             <p>{{ form_widget( form.name ) }}</p>
         </div>
         <div>
-            <p>{{ "papel"|trans }}</p>
-            <p>{{ form_widget( form.role ) }}
+            <p>{{ "Papel"|trans }}</p>
+            <p>{{ form_widget( form.role, {value : 'ROLE_'} ) }}
         </div>
         <br>
             {{ form_end( form ) }}
