@@ -39,13 +39,13 @@ $(document).ready(function()
             },
             statusCode: {
                 400: function( result ) {
-                    var text= result;
-                    $("#text").text(text);
-                    $("#status").fadeIn(
+                    var text= result.responseText;
+                    $("#text-error").text(text);
+                    $("#error").fadeIn(
                             'slow',
                             function()
                             {
-                                $("#status").css("display","block");
+                                $("#error").css("display","block");
                             }
                     );
                 }
@@ -99,13 +99,13 @@ $(document).ready(function()
             },
             statusCode: {
                 400: function( result ) {
-                    var text= result;
-                    $("#text").text(text);
-                    $("#status").fadeIn(
+                    var text= result.responseText;
+                    $("#text-error").text(text);
+                    $("#error").fadeIn(
                             'slow',
                             function()
                             {
-                                $("#status").css("display","block");
+                                $("#error").css("display","block");
                             }
                     );
                 }
