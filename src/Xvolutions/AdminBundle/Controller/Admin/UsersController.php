@@ -70,9 +70,13 @@ class UsersController extends AdminController {
 
         $form->handleRequest( $request );
 
-        $em = $this->getDoctrine()->getManager();
         if ( $form->isValid() )
         {
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($user);
+            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+            $user->setPassword($password);
+            $em = $this->getDoctrine()->getManager();
             $em->flush();
             $status = 'Utilizador actualizado com sucesso';
         }
