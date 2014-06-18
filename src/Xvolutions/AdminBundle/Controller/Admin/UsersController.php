@@ -47,6 +47,16 @@ class UsersController extends AdminController {
             $em->persist($user);
             $em->flush();
             $status = 'Utilizador adicionado com sucesso';
+
+            $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
+
+            return $this->render('XvolutionsAdminBundle:pages:users/list_users.html.twig', array(
+                        'username' => parent::getUsername(),
+                        'title' => 'Utilizadores',
+                        'userlist' => $userList,
+                        'status' => $status,
+                        'error' => $error,
+            ));
         }
 
         $rolesList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
@@ -95,6 +105,16 @@ class UsersController extends AdminController {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $status = 'Utilizador actualizado com sucesso';
+
+            $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
+
+            return $this->render('XvolutionsAdminBundle:pages:users/list_users.html.twig', array(
+                        'username' => parent::getUsername(),
+                        'title' => 'Utilizadores',
+                        'userlist' => $userList,
+                        'status' => $status,
+                        'error' => $error,
+            ));
         }
 
         $rolesList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
