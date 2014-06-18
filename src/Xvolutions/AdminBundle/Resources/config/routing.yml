@@ -107,22 +107,22 @@ users:
 
 ### ROLES ###
 
-editusers:
+editroles:
     pattern: /roles/edit/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:editroles }
     methods:  [GET,POST]
 
-addusers:
+addroles:
     pattern: /roles/add
     defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:addroles }
     methods:  [GET,POST]
 
-optionusers:
+optionroles:
     pattern: /roles/{option}/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:roles, option: 0, id: 0 }
     methods:  [DELETE]
 
-users:
+roles:
     pattern: /roles
     defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:roles }
     methods:  [GET]
