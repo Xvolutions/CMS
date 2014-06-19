@@ -1,0 +1,30 @@
+blog_posts:
+    pattern:  /
+    defaults: { _controller: "XvolutionsAdminBundle:BlogPost:index" }
+
+blog_posts_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "XvolutionsAdminBundle:BlogPost:show" }
+
+blog_posts_new:
+    pattern:  /new
+    defaults: { _controller: "XvolutionsAdminBundle:BlogPost:new" }
+
+blog_posts_create:
+    pattern:  /create
+    defaults: { _controller: "XvolutionsAdminBundle:BlogPost:create" }
+    requirements: { _method: post }
+
+blog_posts_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "XvolutionsAdminBundle:BlogPost:edit" }
+
+blog_posts_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "XvolutionsAdminBundle:BlogPost:update" }
+    requirements: { _method: post|put }
+
+blog_posts_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "XvolutionsAdminBundle:BlogPost:delete" }
+    requirements: { _method: post|delete }

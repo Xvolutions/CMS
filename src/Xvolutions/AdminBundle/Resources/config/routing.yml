@@ -126,3 +126,9 @@ roles:
     pattern: /roles
     defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:roles }
     methods:  [GET]
+
+### Blog Posts ###
+
+XvolutionsAdminBundle_blog_posts:
+        resource: "@XvolutionsAdminBundle/Resources/config/routing/blogpost.yml"
+        prefix:   /blog/posts
