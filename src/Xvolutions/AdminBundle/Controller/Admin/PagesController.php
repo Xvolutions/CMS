@@ -66,6 +66,7 @@ class PagesController extends AdminController
 
                 return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
                             'username' => $this->getUsername(),
+                            'gravatar' => parent::getGravatar(),
                             'pageList' => $pageList,
                             'status' => $status,
                             'error' => $error
@@ -104,6 +105,7 @@ class PagesController extends AdminController
         return $this->render( 'XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
+                    'gravatar' => parent::getGravatar(),
                     'title' => 'Editar uma Página',
                     'sectionList' => $sectionList,
                     'pageList' => $pageList,
@@ -158,6 +160,7 @@ class PagesController extends AdminController
         
         return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
                     'username' => $this->getUsername(),
+                    'gravatar' => parent::getGravatar(),
                     'pageList' => $pageList,
                     'status' => $status,
                     'error' => $error
@@ -215,6 +218,7 @@ class PagesController extends AdminController
 
                 return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
                             'username' => $this->getUsername(),
+                            'gravatar' => parent::getGravatar(),
                             'pageList' => $pageList,
                             'status' => $status,
                             'error' => $error
@@ -232,6 +236,7 @@ class PagesController extends AdminController
         return $this->render( 'XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
+                    'gravatar' => parent::getGravatar(),
                     'title' => 'Adicionar uma Página',
                     'sectionList' => $sectionList,
                     'pageList' => $pageList,

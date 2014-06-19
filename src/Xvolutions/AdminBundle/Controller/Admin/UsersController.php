@@ -53,6 +53,7 @@ class UsersController extends AdminController {
             return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
                         'username' => parent::getUsername(),
                         'title' => 'Utilizadores',
+                        'gravatar' => parent::getGravatar(),
                         'userlist' => $userList,
                         'status' => $status,
                         'error' => $error,
@@ -65,6 +66,7 @@ class UsersController extends AdminController {
                     'form' => $form->createView(),
                     'username' => parent::getUsername(),
                     'title' => 'Adicionar um novo Utilizador',
+                    'gravatar' => parent::getGravatar(),
                     'status' => $status,
                     'error' => $error,
                     'roleslist' => $rolesList
@@ -110,6 +112,7 @@ class UsersController extends AdminController {
             return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
                         'username' => parent::getUsername(),
                         'title' => 'Utilizadores',
+                        'gravatar' => parent::getGravatar(),
                         'userlist' => $userList,
                         'status' => $status,
                         'error' => $error,
@@ -122,6 +125,7 @@ class UsersController extends AdminController {
                     'form' => $form->createView(),
                     'username' => parent::getUsername(),
                     'title' => 'Editar um Utilizador',
+                    'gravatar' => parent::getGravatar(),
                     'status' => $status,
                     'error' => $error,
                     'roleslist' => $rolesList
@@ -168,6 +172,7 @@ class UsersController extends AdminController {
         return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
                     'username' => parent::getUsername(),
                     'title' => 'Utilizadores',
+                    'gravatar' => parent::getGravatar(),
                     'userlist' => $userList,
                     'status' => $status,
                     'error' => $error,

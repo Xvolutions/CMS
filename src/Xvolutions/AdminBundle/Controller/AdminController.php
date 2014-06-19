@@ -4,6 +4,7 @@ namespace Xvolutions\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Xvolutions\AdminBundle\Helpers\Misc;
 
 /**
  * Description of SecurityController
@@ -21,22 +22,26 @@ class AdminController extends Controller {
         $this->verifyaccess();
 
         return $this->render(
-                        'XvolutionsAdminBundle:pages:main.html.twig', array(
-                    'username' => $this->getUsername()
-                        )
+            'XvolutionsAdminBundle:pages:main.html.twig', 
+            array(
+                'username' => $this->getUsername(),
+                'gravatar' => $this->getGravatar()
+            )
         );
     }
 
-        /**
+    /**
      * Controller responsible to show the setup main page
      * 
      * @return type the template
      */
     public function setupAction() {
         $this->verifyaccess();
-        return $this->render('XvolutionsAdminBundle:pages:setup.html.twig', array(
-                    'username' => $this->getUsername()
-                        )
+        return $this->render('XvolutionsAdminBundle:pages:setup.html.twig', 
+            array(
+                'username' => $this->getUsername(),
+                'gravatar' => $this->getGravatar()
+            )
         );
     }
 
@@ -62,6 +67,24 @@ class AdminController extends Controller {
         try {
             $user = $this->get('security.context')->getToken()->getUser();
             return $user->getUsername();
+        } catch (Exception $ex) {
+            throw new AccessDeniedException();
+        }
+    }
+
+    /**
+     * 
+     * This function is responsible to retrieve the url of the user's gravatar
+     * 
+     * @return url of the gravatar
+     * @throws AccessDeniedException
+     */
+    public function getGravatar() {
+        try {
+            $user = $this->get('security.context')->getToken()->getUser();
+            $emailAddress = $user->getEmail();
+            $misc = new Misc();
+            return $misc->fetchGravatar($emailAddress);
         } catch (Exception $ex) {
             throw new AccessDeniedException();
         }

@@ -47,6 +47,7 @@ class RolesController extends AdminController {
 
             return $this->render('XvolutionsAdminBundle:pages:roles/roles.html.twig', array(
                         'username' => parent::getUsername(),
+                        'gravatar' => parent::getGravatar(),
                         'title' => 'Utilizadores',
                         'roleList' => $roleList,
                         'status' => $status,
@@ -57,6 +58,7 @@ class RolesController extends AdminController {
         return $this->render('XvolutionsAdminBundle:pages:roles/add_roles.html.twig', array(
                     'form' => $form->createView(),
                     'username' => parent::getUsername(),
+                    'gravatar' => parent::getGravatar(),
                     'title' => 'Adicionar um novo Grupo',
                     'status' => $status,
                     'error' => $error
@@ -97,6 +99,7 @@ class RolesController extends AdminController {
 
             return $this->render('XvolutionsAdminBundle:pages:roles/roles.html.twig', array(
                         'username' => parent::getUsername(),
+                        'gravatar' => parent::getGravatar(),
                         'title' => 'Utilizadores',
                         'roleList' => $roleList,
                         'status' => $status,
@@ -107,6 +110,7 @@ class RolesController extends AdminController {
         return $this->render('XvolutionsAdminBundle:pages:roles/add_roles.html.twig', array(
                     'form' => $form->createView(),
                     'username' => parent::getUsername(),
+                    'gravatar' => parent::getGravatar(),
                     'title' => 'Adicionar um novo Grupo',
                     'status' => $status,
                     'error' => $error
@@ -149,6 +153,7 @@ class RolesController extends AdminController {
         
         return $this->render( 'XvolutionsAdminBundle:pages:roles/roles.html.twig', array(
                     'username' => $this->getUsername(),
+                    'gravatar' => parent::getGravatar(),
                     'roleList' => $roleList,
                     'status' => $status,
                     'error' => $error
