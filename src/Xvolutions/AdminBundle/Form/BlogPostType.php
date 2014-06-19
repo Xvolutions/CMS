@@ -40,6 +40,26 @@ class BlogPostType extends AbstractType
                         'expanded' => false
                     )
             )
+            ->add(
+                    'section', 
+                    'entity', 
+                    array(
+                        'class' => 'Xvolutions\AdminBundle\Entity\Section',
+                        'property' => 'section',
+                        'multiple' => false,
+                        'expanded' => false
+                    )
+            )
+            ->add(
+                    'language', 
+                    'entity', 
+                    array(
+                        'class' => 'Xvolutions\AdminBundle\Entity\Language',
+                        'property' => 'language',
+                        'multiple' => false,
+                        'expanded' => false
+                    )
+            )
         ;
     }
     

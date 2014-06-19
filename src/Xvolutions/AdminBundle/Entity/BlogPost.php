@@ -62,10 +62,28 @@ class BlogPost
      */
     private $categories;
 
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="Language")
+     * @ORM\JoinColumn(name="id_language", referencedColumnName="id")
+     */
+    private $id_language;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="Section")
+     * @ORM\JoinColumn(name="id_section", referencedColumnName="id")
+     */
+    private $id_section;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->section = new ArrayCollection();
+        $this->language = new ArrayCollection();
     }
 
     /**
@@ -189,5 +207,51 @@ class BlogPost
 
     public function getCategories() {
         return $this->categories->toArray();
+    }
+
+    /**
+     * Get id_section
+     *
+     * @return integer 
+     */
+    public function getIdsection()
+    {
+        return $this->id_section;
+    }
+
+    /**
+     * Set id_section
+     *
+     * @param integer id_section
+     * @return Section ID
+     */
+    public function setIdsection($id_section)
+    {
+        $this->id_section = $id_section;
+
+        return $this;
+    }
+
+    /**
+     * Get id_language
+     *
+     * @return integer 
+     */
+    public function getIdlanguage()
+    {
+        return $this->id_language;
+    }
+
+    /**
+     * Set id_language
+     *
+     * @param integer id_language
+     * @return Page's Language ID
+     */
+    public function setIdlanguage($id_language)
+    {
+        $this->id_language = $id_language;
+
+        return $this;
     }
 }
