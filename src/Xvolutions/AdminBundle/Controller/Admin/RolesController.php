@@ -56,7 +56,6 @@ class RolesController extends AdminController {
 
         return $this->render('XvolutionsAdminBundle:pages:roles/add_roles.html.twig', array(
                     'form' => $form->createView(),
-                    'username' => parent::getUsername(),
                     'title' => 'Adicionar um novo Grupo',
                     'status' => $status,
                     'error' => $error
@@ -96,7 +95,6 @@ class RolesController extends AdminController {
             $roleList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
 
             return $this->render('XvolutionsAdminBundle:pages:roles/roles.html.twig', array(
-                        'username' => parent::getUsername(),
                         'title' => 'Utilizadores',
                         'roleList' => $roleList,
                         'status' => $status,
@@ -106,7 +104,6 @@ class RolesController extends AdminController {
 
         return $this->render('XvolutionsAdminBundle:pages:roles/add_roles.html.twig', array(
                     'form' => $form->createView(),
-                    'username' => parent::getUsername(),
                     'title' => 'Adicionar um novo Grupo',
                     'status' => $status,
                     'error' => $error
@@ -148,7 +145,6 @@ class RolesController extends AdminController {
         $roleList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
         
         return $this->render( 'XvolutionsAdminBundle:pages:roles/roles.html.twig', array(
-                    'username' => $this->getUsername(),
                     'roleList' => $roleList,
                     'status' => $status,
                     'error' => $error

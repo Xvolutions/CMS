@@ -58,7 +58,6 @@ class LanguagesController extends AdminController
                 $languageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findAll();
 
                 return $this->render('XvolutionsAdminBundle:pages:languages/languages.html.twig', array(
-                            'username' => $this->getUsername(),
                             'languageList' => $languageList,
                             'status' => $status,
                             'error' => $error
@@ -70,7 +69,6 @@ class LanguagesController extends AdminController
 
         return $this->render('XvolutionsAdminBundle:pages:languages/add_languages.html.twig', array(
                     'form' => $form->createView(),
-                    'username' => $this->getUsername(),
                     'title' => 'Adicionar um novo Ídioma',
                     'status' => $status,
                     'error' => $error
@@ -120,7 +118,6 @@ class LanguagesController extends AdminController
                 $languageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findAll();
 
                 return $this->render('XvolutionsAdminBundle:pages:languages/languages.html.twig', array(
-                            'username' => $this->getUsername(),
                             'languageList' => $languageList,
                             'status' => $status,
                             'error' => $error
@@ -132,7 +129,6 @@ class LanguagesController extends AdminController
 
         return $this->render('XvolutionsAdminBundle:pages:languages/add_languages.html.twig', array(
                     'form' => $form->createView(),
-                    'username' => $this->getUsername(),
                     'title' => 'Editar um Ídioma',
                     'status' => $status,
                     'error' => $error
@@ -180,7 +176,6 @@ class LanguagesController extends AdminController
         $languageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findAll();
 
         return $this->render('XvolutionsAdminBundle:pages:languages/languages.html.twig', array(
-                    'username' => $this->getUsername(),
                     'languageList' => $languageList,
                     'status' => $status,
                     'error' => $error

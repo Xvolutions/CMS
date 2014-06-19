@@ -51,7 +51,6 @@ class UsersController extends AdminController {
             $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
             return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
-                        'username' => parent::getUsername(),
                         'title' => 'Utilizadores',
                         'userlist' => $userList,
                         'status' => $status,
@@ -63,7 +62,6 @@ class UsersController extends AdminController {
 
         return $this->render('XvolutionsAdminBundle:pages:users/add_users.hml.twig', array(
                     'form' => $form->createView(),
-                    'username' => parent::getUsername(),
                     'title' => 'Adicionar um novo Utilizador',
                     'status' => $status,
                     'error' => $error,
@@ -108,7 +106,6 @@ class UsersController extends AdminController {
             $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
             return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
-                        'username' => parent::getUsername(),
                         'title' => 'Utilizadores',
                         'userlist' => $userList,
                         'status' => $status,
@@ -120,7 +117,6 @@ class UsersController extends AdminController {
 
         return $this->render('XvolutionsAdminBundle:pages:users/add_users.hml.twig', array(
                     'form' => $form->createView(),
-                    'username' => parent::getUsername(),
                     'title' => 'Editar um Utilizador',
                     'status' => $status,
                     'error' => $error,
@@ -132,13 +128,12 @@ class UsersController extends AdminController {
      * Function responsible for handling the user removal and the user
      * removal array as well has the list of users
      * 
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param type $option This option might be a 'remove' for a single user and
      * 'removeselected' to remove an array of id's
      * @param type $id The id, or id's, of the user(s) to be removed
      * @return type call the controller to handle 
      */
-    public function usersAction( Request $request, $option = NULL, $id = NULL ) {
+    public function usersAction( $option = NULL, $id = NULL ) {
         parent::verifyaccess();
 
         $status = NULL;
@@ -166,7 +161,6 @@ class UsersController extends AdminController {
         $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
         return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
-                    'username' => parent::getUsername(),
                     'title' => 'Utilizadores',
                     'userlist' => $userList,
                     'status' => $status,

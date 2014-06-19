@@ -2,8 +2,6 @@
 
 {% block title %}Backoffice{% endblock %}
 
-{% block gravatar %}{{ gravatar }}{% endblock %}
-
 {% block styles %}
     {% stylesheets 
         'bundles/xvolutionsadmin/css/backoffice.css'
@@ -14,7 +12,7 @@
 
 {% block content %}
     <div id="header">
-        {% include 'XvolutionsAdminBundle:template:menu.html.twig' with {'username': username} %}
+        {% include 'XvolutionsAdminBundle:template:menu.html.twig' %}
     </div>
     <div id="content">
         <div class="col-md-1 col-sm-1"></div>

@@ -65,7 +65,6 @@ class PagesController extends AdminController
                 $pageList = $query->getResult();
 
                 return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
-                            'username' => $this->getUsername(),
                             'pageList' => $pageList,
                             'status' => $status,
                             'error' => $error
@@ -103,7 +102,6 @@ class PagesController extends AdminController
 
         return $this->render( 'XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
                     'form' => $form->createView(),
-                    'username' => $this->getUsername(),
                     'title' => 'Editar uma Página',
                     'sectionList' => $sectionList,
                     'pageList' => $pageList,
@@ -157,7 +155,6 @@ class PagesController extends AdminController
         $pageList = $query->getResult();
         
         return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
-                    'username' => $this->getUsername(),
                     'pageList' => $pageList,
                     'status' => $status,
                     'error' => $error
@@ -214,7 +211,6 @@ class PagesController extends AdminController
                 $pageList = $query->getResult();
 
                 return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
-                            'username' => $this->getUsername(),
                             'pageList' => $pageList,
                             'status' => $status,
                             'error' => $error
@@ -231,7 +227,6 @@ class PagesController extends AdminController
 
         return $this->render( 'XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
                     'form' => $form->createView(),
-                    'username' => $this->getUsername(),
                     'title' => 'Adicionar uma Página',
                     'sectionList' => $sectionList,
                     'pageList' => $pageList,

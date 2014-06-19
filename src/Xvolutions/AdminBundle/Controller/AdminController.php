@@ -22,11 +22,7 @@ class AdminController extends Controller {
         $this->verifyaccess();
 
         return $this->render(
-            'XvolutionsAdminBundle:pages:main.html.twig', 
-            array(
-                'username' => $this->getUsername()
-            )
-        );
+            'XvolutionsAdminBundle:pages:main.html.twig');
     }
 
     /**
@@ -36,9 +32,21 @@ class AdminController extends Controller {
      */
     public function setupAction() {
         $this->verifyaccess();
-        return $this->render('XvolutionsAdminBundle:pages:setup.html.twig', 
+        return $this->render('XvolutionsAdminBundle:pages:setup.html.twig');
+    }
+
+    /**
+     * Controller responsible to show the username
+     * 
+     * @return type
+     */
+    public function usernameAction() {
+        $this->verifyaccess();
+        $username = $this->getUsername();
+        return $this->render(
+            'XvolutionsAdminBundle:template:username.html.twig', 
             array(
-                'username' => $this->getUsername()
+                'username' => $username
             )
         );
     }
