@@ -51,7 +51,6 @@ class SectionsController extends AdminController {
 
                 return $this->render('XvolutionsAdminBundle:pages:sections/sections.html.twig', array(
                             'username' => $this->getUsername(),
-                            'gravatar' => parent::getGravatar(),
                             'sectionList' => $sectionList,
                             'status' => $status,
                             'error' => $error
@@ -64,7 +63,6 @@ class SectionsController extends AdminController {
         return $this->render('XvolutionsAdminBundle:pages:sections/add_sections.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
-                    'gravatar' => parent::getGravatar(),
                     'title' => 'Adicionar uma Secção',
                     'status' => $status,
                     'error' => $error
@@ -112,7 +110,6 @@ class SectionsController extends AdminController {
 
                 return $this->render('XvolutionsAdminBundle:pages:sections/sections.html.twig', array(
                             'username' => $this->getUsername(),
-                            'gravatar' => parent::getGravatar(),
                             'sectionList' => $sectionList,
                             'status' => $status,
                             'error' => $error
@@ -125,7 +122,6 @@ class SectionsController extends AdminController {
         return $this->render('XvolutionsAdminBundle:pages:sections/add_sections.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
-                    'gravatar' => parent::getGravatar(),
                     'title' => 'Editar uma Secção',
                     'status' => $status,
                     'error' => $error
@@ -170,7 +166,6 @@ class SectionsController extends AdminController {
 
         return $this->render('XvolutionsAdminBundle:pages:sections/sections.html.twig', array(
                     'username' => $this->getUsername(),
-                    'gravatar' => parent::getGravatar(),
                     'sectionList' => $sectionList,
                     'status' => $status,
                     'error' => $error

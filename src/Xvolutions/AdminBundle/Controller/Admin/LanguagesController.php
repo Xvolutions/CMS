@@ -59,7 +59,6 @@ class LanguagesController extends AdminController
 
                 return $this->render('XvolutionsAdminBundle:pages:languages/languages.html.twig', array(
                             'username' => $this->getUsername(),
-                            'gravatar' => parent::getGravatar(),
                             'languageList' => $languageList,
                             'status' => $status,
                             'error' => $error
@@ -72,7 +71,6 @@ class LanguagesController extends AdminController
         return $this->render('XvolutionsAdminBundle:pages:languages/add_languages.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
-                    'gravatar' => parent::getGravatar(),
                     'title' => 'Adicionar um novo Ídioma',
                     'status' => $status,
                     'error' => $error
@@ -123,7 +121,6 @@ class LanguagesController extends AdminController
 
                 return $this->render('XvolutionsAdminBundle:pages:languages/languages.html.twig', array(
                             'username' => $this->getUsername(),
-                            'gravatar' => parent::getGravatar(),
                             'languageList' => $languageList,
                             'status' => $status,
                             'error' => $error
@@ -136,7 +133,6 @@ class LanguagesController extends AdminController
         return $this->render('XvolutionsAdminBundle:pages:languages/add_languages.html.twig', array(
                     'form' => $form->createView(),
                     'username' => $this->getUsername(),
-                    'gravatar' => parent::getGravatar(),
                     'title' => 'Editar um Ídioma',
                     'status' => $status,
                     'error' => $error
@@ -185,7 +181,6 @@ class LanguagesController extends AdminController
 
         return $this->render('XvolutionsAdminBundle:pages:languages/languages.html.twig', array(
                     'username' => $this->getUsername(),
-                    'gravatar' => parent::getGravatar(),
                     'languageList' => $languageList,
                     'status' => $status,
                     'error' => $error

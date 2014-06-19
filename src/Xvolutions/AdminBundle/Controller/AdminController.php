@@ -24,8 +24,7 @@ class AdminController extends Controller {
         return $this->render(
             'XvolutionsAdminBundle:pages:main.html.twig', 
             array(
-                'username' => $this->getUsername(),
-                'gravatar' => $this->getGravatar()
+                'username' => $this->getUsername()
             )
         );
     }
@@ -39,8 +38,23 @@ class AdminController extends Controller {
         $this->verifyaccess();
         return $this->render('XvolutionsAdminBundle:pages:setup.html.twig', 
             array(
-                'username' => $this->getUsername(),
-                'gravatar' => $this->getGravatar()
+                'username' => $this->getUsername()
+            )
+        );
+    }
+
+    /**
+     * Controller responsible to show the gravatar
+     * 
+     * @return type
+     */
+    public function gravatarAction() {
+        $this->verifyaccess();
+        $gravatar = $this->getGravatar();
+        return $this->render(
+            'XvolutionsAdminBundle:template:gravatar.html.twig', 
+            array(
+                'gravatar' => $gravatar
             )
         );
     }
