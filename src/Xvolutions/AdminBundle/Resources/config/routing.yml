@@ -20,10 +20,6 @@ setup:
     pattern: /setup
     defaults: { _controller: XvolutionsAdminBundle:Admin:setup }
 
-gravatar:
-    pattern: /gravatar
-    defaults: { _controller: XvolutionsAdminBundle:Admin:setup }
-
 ### PAGES ###
 
 editpages:
