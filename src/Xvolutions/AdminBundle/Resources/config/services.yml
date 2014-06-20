@@ -1,7 +1,8 @@
 parameters:
-#    xvolutions_admin.example.class: Xvolutions\AdminBundle\Example
+    xvolutions_admin.misc.class: Xvolutions\AdminBundle\Helpers\Misc
+    xvolutions_admin.misc.arguments: fetchGravatar
 
 services:
-#    xvolutions_admin.example:
-#        class: %xvolutions_admin.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    xvolutions_admin.gravatar:
+        class: %xvolutions_admin.misc.class%
+        arguments: [%xvolutions_admin.misc.arguments%]
