@@ -6,8 +6,8 @@ use Xvolutions\AdminBundle\Controller\AdminController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\User;
-use Xvolutions\AdminBundle\Entity\Role;
 use Xvolutions\AdminBundle\Form\UserType;
+use Symfony\Component\Security\Core\Exception;
 
 /**
  * Description of UsersController
@@ -27,7 +27,6 @@ class UsersController extends AdminController {
         parent::verifyaccess();
 
         $user = new User();
-        $roles = new Role();
         $userType = new UserType();
 
         $form = $this->createForm($userType, $user)

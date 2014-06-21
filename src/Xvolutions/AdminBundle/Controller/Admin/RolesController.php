@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Role;
 use Xvolutions\AdminBundle\Form\RoleType;
-use Xvolutions\AdminBundle\Entity\Page;
+use Symfony\Component\Security\Core\Exception;
 
 /**
  * Description of RolesController
@@ -46,7 +46,6 @@ class RolesController extends AdminController {
             $roleList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
 
             return $this->render('XvolutionsAdminBundle:pages:roles/roles.html.twig', array(
-                        'username' => parent::getUsername(),
                         'title' => 'Utilizadores',
                         'roleList' => $roleList,
                         'status' => $status,

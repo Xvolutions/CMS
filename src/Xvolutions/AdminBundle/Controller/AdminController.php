@@ -84,7 +84,7 @@ class AdminController extends Controller {
      * 
      * @return type string
      */
-    public function getUsername() {
+    private function getUsername() {
         try {
             $user = $this->get('security.context')->getToken()->getUser();
             return $user->getUsername();
@@ -100,7 +100,7 @@ class AdminController extends Controller {
      * @return url of the gravatar
      * @throws AccessDeniedException
      */
-    public function getGravatar() {
+    private function getGravatar() {
         try {
             $user = $this->get('security.context')->getToken()->getUser();
             $emailAddress = $user->getEmail();
