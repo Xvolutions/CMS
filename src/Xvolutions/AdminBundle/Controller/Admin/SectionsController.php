@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Section;
 use Xvolutions\AdminBundle\Form\SectionType;
+use Symfony\Component\Security\Core\Exception;
 
 /**
  * Description of SectionsController

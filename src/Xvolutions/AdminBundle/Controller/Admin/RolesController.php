@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Role;
 use Xvolutions\AdminBundle\Form\RoleType;
-use Xvolutions\AdminBundle\Entity\Page;
+use Symfony\Component\Security\Core\Exception;
 
 /**
  * Description of RolesController

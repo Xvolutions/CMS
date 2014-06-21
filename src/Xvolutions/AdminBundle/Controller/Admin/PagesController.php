@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Page;
 use Xvolutions\AdminBundle\Form\PageType;
+use Symfony\Component\Security\Core\Exception;
 
 /**
  * Description of PagesController
