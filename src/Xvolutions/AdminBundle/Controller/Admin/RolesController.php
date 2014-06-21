@@ -46,7 +46,6 @@ class RolesController extends AdminController {
             $roleList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
 
             return $this->render('XvolutionsAdminBundle:pages:roles/roles.html.twig', array(
-                        'username' => parent::getUsername(),
                         'title' => 'Utilizadores',
                         'roleList' => $roleList,
                         'status' => $status,
