@@ -40,6 +40,10 @@ class Pagination {
      * Class constructor
      */
 
+    /*
+     * Class constructor
+     */
+
     public function __construct($current_page, $total_pages, $boundaries, $around) {
         $this->current_page = $current_page;
         $this->total_pages = $total_pages;
@@ -47,6 +51,10 @@ class Pagination {
         $this->around = $around;
         $this->bootstrapPages();
     }
+
+    /*
+     * Function responsible to display the page numbers
+     */
 
     public function displayPagination() {
         $this->validation();
@@ -70,7 +78,8 @@ class Pagination {
             $previous = $actual;
         }
 
-        return substr($output, 0, strlen($output)-1);;
+        return substr($output, 0, strlen($output) - 1);
+        ;
     }
 
     /*
