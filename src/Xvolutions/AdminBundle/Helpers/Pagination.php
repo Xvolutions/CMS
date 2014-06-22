@@ -40,10 +40,6 @@ class Pagination {
      * Class constructor
      */
 
-    /*
-     * Class constructor
-     */
-
     public function __construct($current_page, $total_pages, $boundaries, $around) {
         $this->current_page = $current_page;
         $this->total_pages = $total_pages;
