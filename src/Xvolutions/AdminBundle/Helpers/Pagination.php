@@ -10,10 +10,10 @@ namespace Xvolutions\AdminBundle\Helpers;
  * 
  */
 class Pagination {
+
     /*
      * The current page
      */
-
     private $current_page = null;
 
     /*
@@ -39,7 +39,6 @@ class Pagination {
     /*
      * Class constructor
      */
-
     public function __construct($current_page, $total_pages, $boundaries, $around) {
         $this->current_page = $current_page;
         $this->total_pages = $total_pages;
@@ -51,7 +50,6 @@ class Pagination {
     /*
      * Function responsible to display the page numbers
      */
-
     public function displayPagination() {
         $this->validation();
 
@@ -81,7 +79,6 @@ class Pagination {
     /*
      * Function responsible to fill the pages array with zeros (0)
      */
-
     private function bootstrapPages() {
         $this->pages = array_fill(0, $this->total_pages, 0);
     }
@@ -89,7 +86,6 @@ class Pagination {
     /*
      * Function responsible to validate the variables
      */
-
     private function validation() {
         if (is_numeric($this->current_page) && is_numeric($this->total_pages) && is_numeric($this->boundaries) && is_numeric($this->around)) {
             if ($this->current_page < 1 || $this->current_page > $this->total_pages) {
@@ -103,7 +99,6 @@ class Pagination {
     /*
      * Function responsible to display the first page with the boundaries
      */
-
     private function beginning() {
         if ($this->boundaries > 1) {
             for ($i = 1; $i < $this->boundaries + 1; $i ++) {
@@ -117,7 +112,6 @@ class Pagination {
     /*
      * Function reponsible to displau the current page with the arround ones
      */
-
     private function current() {
         if ($this->current_page - $this->around < 1) {
             $start = 1;
@@ -138,7 +132,6 @@ class Pagination {
     /*
      * Function responsible to display the last page with boundaries
      */
-
     private function ending() {
         if ($this->boundaries > 1) {
             $first = $this->total_pages - $this->boundaries + 1;
