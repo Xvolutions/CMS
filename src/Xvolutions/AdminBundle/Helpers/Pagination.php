@@ -73,7 +73,6 @@ class Pagination {
         }
 
         return substr($output, 0, strlen($output) - 1);
-        ;
     }
 
     /*
