@@ -27,8 +27,16 @@ class InitiateCommandTest extends WebTestCase
         $application = new Application( static::$kernel );
         $command->setApplication( $application );
         $commandTester = new CommandTester( $command );
-        $commandTester->execute( array( 'command' => $command->getName() ) );
-        $this->assertRegExp( '/Secções Adicionadas\\nPáginas Adicionadas\\nÍdiomas Adicionados\\n*/', $commandTester->getDisplay(), 'test passed' );
+        $commandTester->execute( 
+                array( 
+                    'command' => $command->getName(), 
+                    'username' => 'admin', 
+                    'name' => 'Administrator', 
+                    'password' => 'adminpass', 
+                    'email' => 'admin@admin.net' 
+                    ) 
+                );
+        $this->assertRegExp( '/Grupos Adicionados\\nUtilizadores Adicionados\\nSecções Adicionadas\\nÍdiomas Adicionados\\nPáginas Adicionadas\\n*/', $commandTester->getDisplay(), 'test passed' );
     }
 
 }
