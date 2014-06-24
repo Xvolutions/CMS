@@ -127,6 +127,12 @@ roles:
     defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:roles }
     methods:  [GET]
 
+### CATEGORIES ###
+
+XvolutionsAdminBundle_categories:
+        resource: "@XvolutionsAdminBundle/Resources/config/routing/categories.yml"
+        prefix:   /categories
+
 ### Blog Posts ###
 
 XvolutionsAdminBundle_blog_posts:
