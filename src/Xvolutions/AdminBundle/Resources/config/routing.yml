@@ -131,7 +131,7 @@ roles:
 
 XvolutionsAdminBundle_categories:
         resource: "@XvolutionsAdminBundle/Resources/config/routing/categories.yml"
-        prefix:   /categories
+        prefix:   /blog/categories
 
 ### Blog Posts ###
 
