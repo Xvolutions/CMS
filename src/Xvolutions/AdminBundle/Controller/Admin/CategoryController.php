@@ -23,7 +23,7 @@ class CategoryController extends AdminController
 
         $categoryList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Category')->findAll();
         
-        return $this->render( 'XvolutionsAdminBundle:category:categories.html.twig', array(
+        return $this->render( 'XvolutionsAdminBundle:blog:category/categories.html.twig', array(
                     'categoryList' => $categoryList,
                     'status' => $status,
                     'error' => $error
