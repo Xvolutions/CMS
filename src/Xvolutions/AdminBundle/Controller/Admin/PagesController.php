@@ -66,7 +66,7 @@ class PagesController extends AdminController
 
                 $pageList = $query->getResult();
 
-                return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
+                return $this->render( 'XvolutionsAdminBundle:pages:pages.html.twig', array(
                             'pageList' => $pageList,
                             'status' => $status,
                             'error' => $error
@@ -102,7 +102,7 @@ class PagesController extends AdminController
 
         $pageList = $query->getResult();
 
-        return $this->render( 'XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
+        return $this->render( 'XvolutionsAdminBundle:pages:add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Editar uma Página',
                     'sectionList' => $sectionList,
@@ -156,7 +156,7 @@ class PagesController extends AdminController
 
         $pageList = $query->getResult();
         
-        return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
+        return $this->render( 'XvolutionsAdminBundle:pages:pages.html.twig', array(
                     'pageList' => $pageList,
                     'status' => $status,
                     'error' => $error
@@ -213,7 +213,7 @@ class PagesController extends AdminController
 
                 $pageList = $query->getResult();
 
-                return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
+                return $this->render( 'XvolutionsAdminBundle:pages:pages.html.twig', array(
                             'pageList' => $pageList,
                             'status' => $status,
                             'error' => $error
@@ -228,7 +228,7 @@ class PagesController extends AdminController
         $pageList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findAll();
         $languageList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Language' )->findAll();
 
-        return $this->render( 'XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
+        return $this->render( 'XvolutionsAdminBundle:pages:add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Adicionar uma Página',
                     'sectionList' => $sectionList,
