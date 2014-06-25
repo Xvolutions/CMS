@@ -51,7 +51,7 @@ class UsersController extends AdminController
 
             $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
-            return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
+            return $this->render('XvolutionsAdminBundle:users:users.html.twig', array(
                         'title' => 'Utilizadores',
                         'userlist' => $userList,
                         'status' => $status,
@@ -61,7 +61,7 @@ class UsersController extends AdminController
 
         $rolesList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:pages:users/add_users.hml.twig', array(
+        return $this->render('XvolutionsAdminBundle:users:add_users.hml.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Adicionar um novo Utilizador',
                     'status' => $status,
@@ -106,7 +106,7 @@ class UsersController extends AdminController
 
             $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
-            return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
+            return $this->render('XvolutionsAdminBundle:users:users.html.twig', array(
                         'title' => 'Utilizadores',
                         'userlist' => $userList,
                         'status' => $status,
@@ -116,7 +116,7 @@ class UsersController extends AdminController
 
         $rolesList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:pages:users/add_users.hml.twig', array(
+        return $this->render('XvolutionsAdminBundle:users:add_users.hml.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Editar um Utilizador',
                     'status' => $status,
@@ -162,7 +162,7 @@ class UsersController extends AdminController
 
         $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:users:users.html.twig', array(
                     'title' => 'Utilizadores',
                     'userlist' => $userList,
                     'status' => $status,
