@@ -50,7 +50,8 @@ class PagesController extends AdminController
             $PageUrlPresent = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findBy( array( 'url' => $PageUrl ) );
             if ( count( $PageUrlPresent ) < 1 || $PageUrlPresent[ 0 ]->getId() == $id )
             {
-                $page->setIdparent( $request->request->get( 'xvolutions_adminbundle_page' )['id_parent'] );
+                $requestPage = $request->request->get( 'xvolutions_adminbundle_page' );
+                $page->setIdparent( $requestPage['id_parent'] );
                 $em->flush();
                 $status = 'Página actualizada com sucesso';
 
@@ -186,7 +187,8 @@ class PagesController extends AdminController
         $status = NULL;
         if ( $form->isValid() )
         {
-            $page->setIdparent( $request->request->get( 'xvolutions_adminbundle_page' )['id_parent'] );
+            $requestPage = $request->request->get( 'xvolutions_adminbundle_page' );
+            $page->setIdparent( $requestPage['id_parent'] );
             $datetime = new \DateTime( 'now' );
             $em = $this->getDoctrine()->getManager();
             $page->setDate( $datetime ); // I Want to define the date
