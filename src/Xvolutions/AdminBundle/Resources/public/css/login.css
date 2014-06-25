@@ -7,24 +7,24 @@ and open the template in the editor.
     Created on : Jun 8, 2014, 10:13:53 AM
     Author     : Pedro Resende <pedroresende@mail.resende.biz>
 */
-/* line 10, /Users/pedroresende/Sites/Symfony/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/Symfony\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000310}}
+/* line 10, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000310}}
 html,
 body {
   background-color: #eee !important;
-  background: url('../bundles/xvolutionsadmin/images/login_bg.jpg') no-repeat center center fixed;
+  background: url('../images/login_bg.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
-/* line 19, /Users/pedroresende/Sites/Symfony/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/Symfony\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000319}}
+/* line 19, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000319}}
 .top-20 {
   margin-top: 20%;
 }
-/* line 23, /Users/pedroresende/Sites/Symfony/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/Symfony\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000323}}
+/* line 23, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000323}}
 .login-form {
   background-color: #ffffff;
   margin-left: auto;
@@ -38,8 +38,8 @@ body {
   -moz-box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
 }
-/* line 36, /Users/pedroresende/Sites/Symfony/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/Symfony\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000336}}
+/* line 36, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000336}}
 .login-form h2 {
   text-align: center;
 }

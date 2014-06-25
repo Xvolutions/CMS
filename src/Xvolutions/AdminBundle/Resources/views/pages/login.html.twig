@@ -4,7 +4,7 @@
 
 {% block styles %}
     {% stylesheets 
-        'bundles/xvolutionsadmin/css/login.css'
+        'bundles/xvolutionsadmin/css/login.css' filter='cssrewrite'
     %}
         <link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
     {% endstylesheets %}
