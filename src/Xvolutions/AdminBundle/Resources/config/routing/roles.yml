@@ -1,0 +1,19 @@
+editroles:
+    pattern: /edit/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:editroles }
+    methods:  [GET,POST]
+
+addroles:
+    pattern: /add
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:addroles }
+    methods:  [GET,POST]
+
+optionroles:
+    pattern: /{option}/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:roles, option: 0, id: 0 }
+    methods:  [DELETE]
+
+roles:
+    pattern: /
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:roles }
+    methods:  [GET]

@@ -1,0 +1,19 @@
+editsections:
+    pattern: /edit/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:editsection }
+    methods:  [GET,POST]
+
+addsections:
+    pattern: /add
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:addsection }
+    methods:  [GET,POST]
+
+optionsections:
+    pattern: /{option}/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:sections, option: 0, id: 0 }
+    methods:  [DELETE]
+
+sections:
+    pattern: /
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:sections }
+    methods:  [GET]

@@ -22,118 +22,41 @@ setup:
 
 ### PAGES ###
 
-editpages:
-    pattern: /pages/edit/{id}
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:editpages }
-
-addpages:
-    pattern: /pages/add
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:addpages }
-
-pagesoption:
-    pattern: /pages/{option}/{id}
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages, option: 0, id: 0 }
-    methods:  [DELETE]
-
-pages:
-    pattern: /pages
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages }
+XvolutionsAdminBundle_pages:
+        resource: "@XvolutionsAdminBundle/Resources/config/routing/pages.yml"
+        prefix:   /pages
 
 ### SECTIONS ###
 
-editsections:
-    pattern: /sections/edit/{id}
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:editsection }
-    methods:  [GET,POST]
-
-addsections:
-    pattern: /sections/add
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:addsection }
-    methods:  [GET,POST]
-
-optionsections:
-    pattern: /sections/{option}/{id}
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:sections, option: 0, id: 0 }
-    methods:  [DELETE]
-
-sections:
-    pattern: /sections
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Sections:sections }
-    methods:  [GET]
+XvolutionsAdminBundle_sections:
+        resource: "@XvolutionsAdminBundle/Resources/config/routing/sections.yml"
+        prefix:   /sections
 
 ### LANGUAGES ###
 
-editlanguages:
-    pattern: /languages/edit/{id}
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:editlanguages }
-    methods:  [GET,POST]
-
-addlanguages:
-    pattern: /languages/add
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:addlanguages }
-    methods:  [GET,POST]
-
-optionlanguages:
-    pattern: /languages/{option}/{id}
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:languages, option: 0, id: 0 }
-    methods:  [DELETE]
-
-languages:
-    pattern: /languages
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:languages }
-    methods:  [GET]
+XvolutionsAdminBundle_languages:
+        resource: "@XvolutionsAdminBundle/Resources/config/routing/languages.yml"
+        prefix:   /languages
 
 ### USERS ###
 
-editusers:
-    pattern: /users/edit/{id}
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Users:editusers }
-    methods:  [GET,POST]
-
-addusers:
-    pattern: /users/add
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Users:addusers }
-    methods:  [GET,POST]
-
-optionusers:
-    pattern: /users/{option}/{id}
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Users:users, option: 0, id: 0 }
-    methods:  [DELETE]
-
-users:
-    pattern: /users
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Users:users }
-    methods:  [GET]
+XvolutionsAdminBundle_users:
+        resource: "@XvolutionsAdminBundle/Resources/config/routing/users.yml"
+        prefix:   /users
 
 ### ROLES ###
 
-editroles:
-    pattern: /roles/edit/{id}
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:editroles }
-    methods:  [GET,POST]
+XvolutionsAdminBundle_roles:
+        resource: "@XvolutionsAdminBundle/Resources/config/routing/roles.yml"
+        prefix:   /roles
 
-addroles:
-    pattern: /roles/add
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:addroles }
-    methods:  [GET,POST]
-
-optionroles:
-    pattern: /roles/{option}/{id}
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:roles, option: 0, id: 0 }
-    methods:  [DELETE]
-
-roles:
-    pattern: /roles
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Roles:roles }
-    methods:  [GET]
-
-### CATEGORIES ###
+### BLOG CATEGORIES ###
 
 XvolutionsAdminBundle_categories:
         resource: "@XvolutionsAdminBundle/Resources/config/routing/categories.yml"
         prefix:   /blog/categories
 
-### Blog Posts ###
+### BLOG POSTS ###
 
 XvolutionsAdminBundle_blog_posts:
         resource: "@XvolutionsAdminBundle/Resources/config/routing/blogpost.yml"

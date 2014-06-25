@@ -1,0 +1,19 @@
+editusers:
+    pattern: /edit/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Users:editusers }
+    methods:  [GET,POST]
+
+addusers:
+    pattern: /add
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Users:addusers }
+    methods:  [GET,POST]
+
+optionusers:
+    pattern: /{option}/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Users:users, option: 0, id: 0 }
+    methods:  [DELETE]
+
+users:
+    pattern: /
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Users:users }
+    methods:  [GET]
