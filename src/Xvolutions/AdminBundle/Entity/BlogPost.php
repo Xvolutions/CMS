@@ -57,10 +57,10 @@ class BlogPost
     private $tags;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Categories")
+     * @ORM\ManyToMany(targetEntity="Category")
      *
      */
-    private $categories;
+    private $category;
 
     /**
      * @var integer
@@ -81,7 +81,7 @@ class BlogPost
     public function __construct()
     {
         $this->tags = new ArrayCollection();
-        $this->categories = new ArrayCollection();
+        $this->category = new ArrayCollection();
         $this->section = new ArrayCollection();
         $this->language = new ArrayCollection();
     }

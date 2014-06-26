@@ -1,0 +1,52 @@
+{% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
+
+{% block title %}Ídiomas - Backoffice{% endblock %}
+
+{% block maincontent %}
+    <h1>{{ "Ídiomas"|trans }}</h1>
+        <div id="status" class="alert alert-success alert-dismissable" style="display: none;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <div id="text"></div>
+        </div>
+    {% if status %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ status|trans }}
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
+    <table class="table table-hover">
+        <tr>
+            <th></th>
+            <th>{{ "Ídioma"|trans }}</th>
+            <th>{{ "Código"| trans }}</th>
+            <th>{{ "Opções"|trans }}</th>
+        </tr>
+        {% if languageList|length > 0 %}
+            {% for language in languageList %}
+                <tr class="tr{{language.id}}">
+                    <td><input type="checkbox" id="{{language.id}}" onclick="SelectForRemoval('{{language.id}}');"></td>
+                    <td>{{language.language}}</td>
+                    <td>{{language.code}}</td>
+                    <td>
+                        <a href="{{path('editlanguages', {'id': language.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a>
+                        <a class="btn btn-danger btn-xs" name="{{path('optionlanguages', {'option': 'remove','id': language.id})}}">{{ "Apagar"|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5" >{{"Não existem ídiomas definidos"|trans}}</td>
+            <tr>
+        {% endif %}
+    </table>
+    <p>
+        <a href="{{path('addlanguages')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar um novo ídioma"|trans }}</a>
+        <a class="btn btn-danger btn-sm" name="{{path('optionlanguages', {'option': 'removeselected'})}}" id="RemoveMany">{{ "Apagar"|trans }}</a>
+    </p> 
+{% endblock %}

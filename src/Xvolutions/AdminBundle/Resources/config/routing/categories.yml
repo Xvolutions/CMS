@@ -1,0 +1,19 @@
+editcategories:
+    pattern: /edit/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Category:editcategories }
+    methods:  [GET,POST]
+
+addcategories:
+    pattern: /add
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Category:addcategories }
+    methods:  [GET,POST]
+
+optioncategories:
+    pattern: /{option}/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Category:categories, option: 0, id: 0 }
+    methods:  [DELETE]
+
+categories:
+    pattern: /
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Category:categories }
+    methods:  [GET]

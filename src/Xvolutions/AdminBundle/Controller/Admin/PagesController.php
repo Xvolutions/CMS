@@ -50,7 +50,8 @@ class PagesController extends AdminController
             $PageUrlPresent = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findBy( array( 'url' => $PageUrl ) );
             if ( count( $PageUrlPresent ) < 1 || $PageUrlPresent[ 0 ]->getId() == $id )
             {
-                $page->setIdparent( $request->request->get( 'xvolutions_adminbundle_page' )['id_parent'] );
+                $requestPage = $request->request->get( 'xvolutions_adminbundle_page' );
+                $page->setIdparent( $requestPage['id_parent'] );
                 $em->flush();
                 $status = 'Página actualizada com sucesso';
 
@@ -65,7 +66,7 @@ class PagesController extends AdminController
 
                 $pageList = $query->getResult();
 
-                return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
+                return $this->render( 'XvolutionsAdminBundle:pages:pages.html.twig', array(
                             'pageList' => $pageList,
                             'status' => $status,
                             'error' => $error
@@ -101,7 +102,7 @@ class PagesController extends AdminController
 
         $pageList = $query->getResult();
 
-        return $this->render( 'XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
+        return $this->render( 'XvolutionsAdminBundle:pages:add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Editar uma Página',
                     'sectionList' => $sectionList,
@@ -155,7 +156,7 @@ class PagesController extends AdminController
 
         $pageList = $query->getResult();
         
-        return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
+        return $this->render( 'XvolutionsAdminBundle:pages:pages.html.twig', array(
                     'pageList' => $pageList,
                     'status' => $status,
                     'error' => $error
@@ -186,7 +187,8 @@ class PagesController extends AdminController
         $status = NULL;
         if ( $form->isValid() )
         {
-            $page->setIdparent( $request->request->get( 'xvolutions_adminbundle_page' )['id_parent'] );
+            $requestPage = $request->request->get( 'xvolutions_adminbundle_page' );
+            $page->setIdparent( $requestPage['id_parent'] );
             $datetime = new \DateTime( 'now' );
             $em = $this->getDoctrine()->getManager();
             $page->setDate( $datetime ); // I Want to define the date
@@ -211,7 +213,7 @@ class PagesController extends AdminController
 
                 $pageList = $query->getResult();
 
-                return $this->render( 'XvolutionsAdminBundle:pages:pages/pages.html.twig', array(
+                return $this->render( 'XvolutionsAdminBundle:pages:pages.html.twig', array(
                             'pageList' => $pageList,
                             'status' => $status,
                             'error' => $error
@@ -226,7 +228,7 @@ class PagesController extends AdminController
         $pageList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findAll();
         $languageList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Language' )->findAll();
 
-        return $this->render( 'XvolutionsAdminBundle:pages:pages/add_pages.html.twig', array(
+        return $this->render( 'XvolutionsAdminBundle:pages:add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Adicionar uma Página',
                     'sectionList' => $sectionList,

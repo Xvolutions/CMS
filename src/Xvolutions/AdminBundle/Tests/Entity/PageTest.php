@@ -15,9 +15,9 @@ class PagesTest extends \PHPUnit_Framework_TestCase {
         $page = new Page();
         $page->setTitle("test");
         $page->setUrl("test");
-        $page->setId_section(1);
-        $page->setId_parent(1);
-        $page->setId_language(1);
+        $page->setIdsection(1);
+        $page->setIdparent(1);
+        $page->setIdlanguage(1);
         $datetime = new \DateTime('now');
         $page->setDate($datetime);
     }
@@ -45,22 +45,22 @@ class PagesTest extends \PHPUnit_Framework_TestCase {
 
     public function testsection() {
         $page = new Page();
-        $page->setId_section(1);
-        $id_section = $page->getId_section();
+        $page->setIdsection(1);
+        $id_section = $page->getIdsection();
         $this->assertTrue($id_section == 1);
     }
 
     public function testparent() {
         $page = new Page();
-        $page->setId_parent(1);
-        $id_parent = $page->getId_parent();
+        $page->setIdparent(1);
+        $id_parent = $page->getIdparent();
         $this->assertTrue($id_parent == 1);
     }
 
     public function testlanguage() {
         $page = new Page();
-        $page->setId_language(1);
-        $id_language = $page->getId_language();
+        $page->setIdlanguage(1);
+        $id_language = $page->getIdlanguage();
         $this->assertTrue($id_language == 1);
     }
 

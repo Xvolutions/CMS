@@ -1,0 +1,19 @@
+editlanguages:
+    pattern: /edit/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:editlanguages }
+    methods:  [GET,POST]
+
+addlanguages:
+    pattern: /add
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:addlanguages }
+    methods:  [GET,POST]
+
+optionlanguages:
+    pattern: /{option}/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:languages, option: 0, id: 0 }
+    methods:  [DELETE]
+
+languages:
+    pattern: /
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Languages:languages }
+    methods:  [GET]

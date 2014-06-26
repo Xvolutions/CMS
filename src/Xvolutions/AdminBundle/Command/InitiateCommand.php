@@ -55,7 +55,7 @@ class InitiateCommand extends ContainerAwareCommand
                 $section = new Section();
                 $section->setSection( $s );
                 $em->persist( $section );
-                $em->flush();
+                $em->flush( $section );
             }
             $output->writeln( 'Secções Adicionadas' );
         } catch ( Exception $ex ) {
@@ -80,7 +80,7 @@ class InitiateCommand extends ContainerAwareCommand
                 $datetime = new \DateTime( 'now' );
                 $page->setDate( $datetime );
                 $em->persist( $page );
-                $em->flush();
+                $em->flush( $page );
             }
             $output->writeln( 'Páginas Adicionadas' );
         } catch ( Exception $ex ) {
@@ -109,7 +109,7 @@ class InitiateCommand extends ContainerAwareCommand
                 $language->setLanguage( $l[0] );
                 $language->setCode( $l[1] );
                 $em->persist( $language );
-                $em->flush();
+                $em->flush( $language );
             }
             $output->writeln( 'Ídiomas Adicionados' );
         } catch ( Exception $ex ) {
@@ -138,7 +138,7 @@ class InitiateCommand extends ContainerAwareCommand
                 $role->setName( $r[0] );
                 $role->setRole( $r[1] );
                 $em->persist( $role );
-                $em->flush();
+                $em->flush( $role );
             }
             $output->writeln( 'Grupos Adicionados' );
         } catch ( Exception $ex ) {
@@ -166,6 +166,8 @@ class InitiateCommand extends ContainerAwareCommand
                 $user = new User();
                 $user->setUsername( $u[0] );
                 $user->setName( $u[1] );
+                $salt = md5(time());
+                $user->setSalt($salt);
 
                 $factory = $this->getContainer()->get('security.encoder_factory');
                 $encoder = $factory->getEncoder( $user );
@@ -176,7 +178,7 @@ class InitiateCommand extends ContainerAwareCommand
                 $user->setIsactive( $u[4] );
                 $user->setRoles( $u[5] );
                 $em->persist( $user );
-                $em->flush();
+                $em->flush( $user );
             }
             $output->writeln( 'Utilizadores Adicionados' );
         } catch ( Exception $ex ) {

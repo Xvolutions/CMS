@@ -45,7 +45,7 @@ class RolesController extends AdminController {
 
             $roleList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
 
-            return $this->render('XvolutionsAdminBundle:pages:roles/roles.html.twig', array(
+            return $this->render('XvolutionsAdminBundle:roles:roles.html.twig', array(
                         'title' => 'Utilizadores',
                         'roleList' => $roleList,
                         'status' => $status,
@@ -53,7 +53,7 @@ class RolesController extends AdminController {
             ));
         }
 
-        return $this->render('XvolutionsAdminBundle:pages:roles/add_roles.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:roles:add_roles.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Adicionar um novo Grupo',
                     'status' => $status,
@@ -93,7 +93,7 @@ class RolesController extends AdminController {
 
             $roleList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
 
-            return $this->render('XvolutionsAdminBundle:pages:roles/roles.html.twig', array(
+            return $this->render('XvolutionsAdminBundle:roles:roles.html.twig', array(
                         'title' => 'Utilizadores',
                         'roleList' => $roleList,
                         'status' => $status,
@@ -101,7 +101,7 @@ class RolesController extends AdminController {
             ));
         }
 
-        return $this->render('XvolutionsAdminBundle:pages:roles/add_roles.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:roles:add_roles.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Adicionar um novo Grupo',
                     'status' => $status,
@@ -143,7 +143,7 @@ class RolesController extends AdminController {
 
         $roleList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
         
-        return $this->render( 'XvolutionsAdminBundle:pages:roles/roles.html.twig', array(
+        return $this->render( 'XvolutionsAdminBundle:roles:roles.html.twig', array(
                     'roleList' => $roleList,
                     'status' => $status,
                     'error' => $error

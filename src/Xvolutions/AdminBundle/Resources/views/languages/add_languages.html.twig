@@ -1,0 +1,34 @@
+{% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
+
+{% block title %}{{title|trans}} - Ídiomas - Backoffice{% endblock %}
+
+{% block maincontent %}
+    <h1>{{ title|trans }}</h1>
+    {% if status %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ status|trans }}
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div id="xvolutions_adminbundle_language">
+        <div>
+            <p>{{ form_label( form.language ) }}</p>
+            <p>{{ form_widget( form.language ) }}</p>
+        </div>
+        <div>
+            <p>{{ form_label( form.code ) }}</p>
+            <p>{{ form_widget( form.code ) }}</p>
+        </div>
+        <br>
+        {{ form_end(form) }}
+        <a href="{{path('languages')}}" class="btn btn-default btn-sm">{{ "Ver Secções"|trans }}</a>
+    </div>
+{% endblock %}

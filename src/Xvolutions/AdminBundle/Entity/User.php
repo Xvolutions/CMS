@@ -40,9 +40,16 @@ class User implements AdvancedUserInterface, \Serializable, \Symfony\Component\S
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=60)
+     * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="salt", type="string", length=256)
+     */
+    private $salt;
 
     /**
      * @var string
@@ -199,9 +206,13 @@ class User implements AdvancedUserInterface, \Serializable, \Symfony\Component\S
      */
     public function getSalt()
     {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
-        return null;
+        return $this->salt;
+    }
+
+    public function setSalt( $salt ) {
+        $this->salt = $salt;
+
+        return $this;
     }
 
     public function eraseCredentials() {

@@ -1,0 +1,16 @@
+editpages:
+    pattern: /edit/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:editpages }
+
+addpages:
+    pattern: /add
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:addpages }
+
+pagesoption:
+    pattern: /{option}/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages, option: 0, id: 0 }
+    methods:  [DELETE]
+
+pages:
+    pattern: /
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages }

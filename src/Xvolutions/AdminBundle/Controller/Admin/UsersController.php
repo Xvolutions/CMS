@@ -14,7 +14,8 @@ use Symfony\Component\Security\Core\Exception;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class UsersController extends AdminController {
+class UsersController extends AdminController
+{
 
     /**
      * Controller responsible to add a new user for and handling the form
@@ -23,7 +24,8 @@ class UsersController extends AdminController {
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new user
      */
-    public function addusersAction(Request $request) {
+    public function addusersAction(Request $request)
+    {
         parent::verifyaccess();
 
         $user = new User();
@@ -35,12 +37,14 @@ class UsersController extends AdminController {
 
         $form->handleRequest($request);
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
         if ($form->isValid()) {
             $factory = $this->get('security.encoder_factory');
             $encoder = $factory->getEncoder($user);
-            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+            $salt = md5(time());
+            $user->setSalt($salt);
+            $password = $encoder->encodePassword($user->getPassword(), $salt );
             $user->setPassword($password);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -49,7 +53,7 @@ class UsersController extends AdminController {
 
             $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
-            return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
+            return $this->render('XvolutionsAdminBundle:users:users.html.twig', array(
                         'title' => 'Utilizadores',
                         'userlist' => $userList,
                         'status' => $status,
@@ -59,7 +63,7 @@ class UsersController extends AdminController {
 
         $rolesList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:pages:users/add_users.hml.twig', array(
+        return $this->render('XvolutionsAdminBundle:users:add_users.hml.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Adicionar um novo Utilizador',
                     'status' => $status,
@@ -76,27 +80,29 @@ class UsersController extends AdminController {
      * @param type $id the id of an existing user
      * @return type the template for editing a user
      */
-    public function editusersAction(Request $request, $id) {
+    public function editusersAction(Request $request, $id)
+    {
         parent::verifyaccess();
 
         $userType = new UserType();
 
-        $user = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:User' )->find( $id );
+        $user = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->find($id);
 
-        $form = $this->createForm( $userType, $user )
-                ->add( 'Guardar', 'submit' )
+        $form = $this->createForm($userType, $user)
+                ->add('Guardar', 'submit')
         ;
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
 
-        $form->handleRequest( $request );
+        $form->handleRequest($request);
 
-        if ( $form->isValid() )
-        {
+        if ($form->isValid()) {
             $factory = $this->get('security.encoder_factory');
             $encoder = $factory->getEncoder($user);
-            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+            $salt = md5(time());
+            $user->setSalt($salt);
+            $password = $encoder->encodePassword($user->getPassword(), $salt);
             $user->setPassword($password);
             $em = $this->getDoctrine()->getManager();
             $em->flush();
@@ -104,7 +110,7 @@ class UsersController extends AdminController {
 
             $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
-            return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
+            return $this->render('XvolutionsAdminBundle:users:users.html.twig', array(
                         'title' => 'Utilizadores',
                         'userlist' => $userList,
                         'status' => $status,
@@ -114,7 +120,7 @@ class UsersController extends AdminController {
 
         $rolesList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:pages:users/add_users.hml.twig', array(
+        return $this->render('XvolutionsAdminBundle:users:add_users.hml.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Editar um Utilizador',
                     'status' => $status,
@@ -132,11 +138,12 @@ class UsersController extends AdminController {
      * @param type $id The id, or id's, of the user(s) to be removed
      * @return type call the controller to handle 
      */
-    public function usersAction( $option = NULL, $id = NULL ) {
+    public function usersAction($option = null, $id = null)
+    {
         parent::verifyaccess();
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
 
         switch ($option) {
             case 'remove': {
@@ -150,16 +157,16 @@ class UsersController extends AdminController {
                 }
         }
 
-        if( $error != NULL ) {
+        if ($error != null) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
-        } 
-        if( $status != NULL ) {
+        }
+        if ($status != null) {
             return new Response($status, Response::HTTP_OK);
         }
 
         $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:pages:users/users.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:users:users.html.twig', array(
                     'title' => 'Utilizadores',
                     'userlist' => $userList,
                     'status' => $status,
@@ -173,7 +180,8 @@ class UsersController extends AdminController {
      * @param type $id the id of the user to be removed
      * @return string with the information message
      */
-    private function RemoveUser($id, &$status, &$error) {
+    private function RemoveUser($id, &$status, &$error)
+    {
         try {
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository('XvolutionsAdminBundle:User')->find($id);
@@ -191,17 +199,20 @@ class UsersController extends AdminController {
      * @param type $ids array containing the id's of the users to be removed
      * @return string With the message
      */
-    private function RemoveSelectedUsers($ids, &$status, &$error) {
+    private function RemoveSelectedUsers($ids, &$status, &$error)
+    {
         try {
             $em = $this->getDoctrine()->getManager();
-            foreach ($ids as $id) {
+            foreach ($ids as $id)
+            {
                 $user = $em->getRepository('XvolutionsAdminBundle:User')->find($id);
                 $em->remove($user);
-                $em->flush();
+                $em->flush($user);
                 $status = 'Utilizador(es) removido(s) com sucesso';
             }
         } catch (Exception $ex) {
             $error = "Erro $ex ao remover utilizador(es)";
         }
     }
+
 }

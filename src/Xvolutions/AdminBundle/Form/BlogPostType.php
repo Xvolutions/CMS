@@ -31,10 +31,10 @@ class BlogPostType extends AbstractType
                     )
             )
             ->add(
-                    'categories', 
+                    'category', 
                     'entity', 
                     array(
-                        'class' => 'Xvolutions\AdminBundle\Entity\Categories',
+                        'class' => 'Xvolutions\AdminBundle\Entity\Category',
                         'property' => 'category',
                         'multiple' => true,
                         'expanded' => false

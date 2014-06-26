@@ -50,7 +50,7 @@ class SectionsController extends AdminController {
 
                 $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
 
-                return $this->render('XvolutionsAdminBundle:pages:sections/sections.html.twig', array(
+                return $this->render('XvolutionsAdminBundle:sections:sections.html.twig', array(
                             'sectionList' => $sectionList,
                             'status' => $status,
                             'error' => $error
@@ -60,7 +60,7 @@ class SectionsController extends AdminController {
             }
         }
 
-        return $this->render('XvolutionsAdminBundle:pages:sections/add_sections.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:sections:add_sections.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Adicionar uma Secção',
                     'status' => $status,
@@ -107,7 +107,7 @@ class SectionsController extends AdminController {
 
                 $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
 
-                return $this->render('XvolutionsAdminBundle:pages:sections/sections.html.twig', array(
+                return $this->render('XvolutionsAdminBundle:sections:sections.html.twig', array(
                             'sectionList' => $sectionList,
                             'status' => $status,
                             'error' => $error
@@ -117,7 +117,7 @@ class SectionsController extends AdminController {
             }
         }
 
-        return $this->render('XvolutionsAdminBundle:pages:sections/add_sections.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:sections:add_sections.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Editar uma Secção',
                     'status' => $status,
@@ -161,7 +161,7 @@ class SectionsController extends AdminController {
 
         $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:pages:sections/sections.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:sections:sections.html.twig', array(
                     'sectionList' => $sectionList,
                     'status' => $status,
                     'error' => $error
