@@ -166,6 +166,8 @@ class InitiateCommand extends ContainerAwareCommand
                 $user = new User();
                 $user->setUsername( $u[0] );
                 $user->setName( $u[1] );
+                $salt = md5(time());
+                $user->setSalt($salt);
 
                 $factory = $this->getContainer()->get('security.encoder_factory');
                 $encoder = $factory->getEncoder( $user );

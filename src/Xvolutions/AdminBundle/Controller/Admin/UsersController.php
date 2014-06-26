@@ -42,7 +42,9 @@ class UsersController extends AdminController
         if ($form->isValid()) {
             $factory = $this->get('security.encoder_factory');
             $encoder = $factory->getEncoder($user);
-            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+            $salt = md5(time());
+            $user->setSalt($salt);
+            $password = $encoder->encodePassword($user->getPassword(), $salt );
             $user->setPassword($password);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -98,7 +100,9 @@ class UsersController extends AdminController
         if ($form->isValid()) {
             $factory = $this->get('security.encoder_factory');
             $encoder = $factory->getEncoder($user);
-            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+            $salt = md5(time());
+            $user->setSalt($salt);
+            $password = $encoder->encodePassword($user->getPassword(), $salt);
             $user->setPassword($password);
             $em = $this->getDoctrine()->getManager();
             $em->flush();
