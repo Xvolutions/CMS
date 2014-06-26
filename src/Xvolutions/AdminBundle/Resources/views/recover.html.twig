@@ -18,13 +18,20 @@
             <div class="login-form">
                 <form action="{{ path('recover') }}" method="post">
                     <h2>Consola de Gestão</h2>
-                    {% if info %}
+                    {% if error %}
                         <div class="alert alert-danger alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            {{ info|trans }}
+                            {{ error|trans }}
                         </div>
                     {% else %}
-                        <br><br>
+                        {% if info %}
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ info|trans }}
+                            </div>
+                        {% else %}
+                            <br><br>
+                        {% endif %}
                     {% endif %}
                     <div class="form-group">
                         <input type="text" class="form-control" id="email" name="_email"  placeholder="E-mail"/>

@@ -48,36 +48,40 @@ class SecurityController extends Controller
                 $email = $request->request->get('_email');
                 $user = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findBy(array('email' => $email));
                 if (sizeof($user) > 0) {
-                    $this->generatePasswordAndMail($user[0]);
+                    $this->generatePasswordAndMail($user[0], $email);
                     return $this->render(
                         'XvolutionsAdminBundle::recover.html.twig', array(
-                            'info' => 'Palavra-chave recuperada com sucesso',
+                            'error' => '',
+                            'info' => 'Palavra-chave recuperada com sucesso'
                         )
                     );
                 } else {
                     return $this->render(
                         'XvolutionsAdminBundle::recover.html.twig', array(
-                            'info' => 'E-mail não encontrado',
+                            'error' => 'E-mail não encontrado',
+                            'info' => ''
                         )
                     );
                 }
             } else {
                 return $this->render(
                     'XvolutionsAdminBundle::recover.html.twig', array(
-                        'info' => 'É necessario colocar um e-mail',
+                        'error' => 'É necessario colocar um e-mail',
+                        'info' => ''
                     )
                 );
             }
         } else {
             return $this->render(
                 'XvolutionsAdminBundle::recover.html.twig', array(
-                    'info' => '',
+                    'erro' => '',
+                    'info' => ''
                 )
             );
         }
     }
 
-    private function generatePasswordAndMail( User $user ) {
+    private function generatePasswordAndMail( User $user, $email ) {
         $factory = $this->get('security.encoder_factory');
         $encoder = $factory->getEncoder($user);
         $salt = md5(time());
@@ -100,6 +104,7 @@ class SecurityController extends Controller
                         )
                     )
                 )
+                ->setContentType("text/html")
         ;
         $this->get('mailer')->send($message);
     }
