@@ -18,6 +18,100 @@ class CategoryController extends AdminController
 {
 
     /**
+     * Controller responsible to add a new category for and handling the form
+     * submission and the database insertion
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return type the templates for adding a new role
+     */
+    public function addcategoriesAction(Request $request) {
+        parent::verifyaccess();
+
+        $category = new Category();
+        $categoryType = new CategoryType();
+
+        $form = $this->createForm($categoryType, $category)
+                ->add('Criar', 'submit')
+        ;
+
+        $form->handleRequest($request);
+
+        $status = null;
+        $error = null;
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($category);
+            $em->flush();
+            $status = 'Categoria adicionado com sucesso';
+
+            $categoryList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Category')->findAll();
+
+            return $this->render('XvolutionsAdminBundle:blog:category/categories.html.twig', array(
+                        'title' => 'Categorias',
+                        'categoryList' => $categoryList,
+                        'status' => $status,
+                        'error' => $error,
+            ));
+        }
+
+        return $this->render('XvolutionsAdminBundle:blog:category/add_categories.html.twig', array(
+                    'form' => $form->createView(),
+                    'title' => 'Adicionar uma nova Categoria',
+                    'status' => $status,
+                    'error' => $error
+        ));
+    }
+
+    /**
+     * Controller responsible to edit an existing category for and handling the form
+     * submission and the database insertion
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param type $id the id of an existing category
+     * @return type the template for editing a category
+     */
+    public function editcategoriesAction(Request $request, $id) {
+        parent::verifyaccess();
+
+        $categoryType = new CategoryType();
+
+        $category = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Category' )->find( $id );
+
+        $form = $this->createForm( $categoryType, $category )
+                ->add( 'Guardar', 'submit' )
+        ;
+
+        $status = null;
+        $error = null;
+
+        $form->handleRequest( $request );
+
+        if ( $form->isValid() )
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $status = 'Categoria actualizada com sucesso';
+
+            $categoryList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Category')->findAll();
+
+            return $this->render('XvolutionsAdminBundle:blog:category/categories.html.twig', array(
+                        'title' => 'Categorias',
+                        'categoryList' => $categoryList,
+                        'status' => $status,
+                        'error' => $error,
+            ));
+        }
+
+        return $this->render('XvolutionsAdminBundle:blog:category/add_categories.html.twig', array(
+                    'form' => $form->createView(),
+                    'title' => 'Editar uma Categoria',
+                    'status' => $status,
+                    'error' => $error
+        ));
+    }
+
+
+    /**
      * Controller responsible to show the categories for and handling the form
      * submission and the database insertion
      * 
