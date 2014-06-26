@@ -103,7 +103,7 @@ class RolesController extends AdminController {
 
         return $this->render('XvolutionsAdminBundle:roles:add_roles.html.twig', array(
                     'form' => $form->createView(),
-                    'title' => 'Adicionar um novo Grupo',
+                    'title' => 'Editar um Grupo',
                     'status' => $status,
                     'error' => $error
         ));
