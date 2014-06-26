@@ -87,7 +87,8 @@ class UsersController extends AdminController
         $userType = new UserType();
 
         $user = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->find($id);
-
+        $oldpassword = $user->getPassword();
+        $oldsalt = $user->getSalt();
         $form = $this->createForm($userType, $user)
                 ->add('Guardar', 'submit')
         ;
@@ -98,12 +99,19 @@ class UsersController extends AdminController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $factory = $this->get('security.encoder_factory');
-            $encoder = $factory->getEncoder($user);
-            $salt = md5(time());
-            $user->setSalt($salt);
-            $password = $encoder->encodePassword($user->getPassword(), $salt);
-            $user->setPassword($password);
+            // Verify is the password has been changes
+            $formValues = $request->request->get( 'xvolutions_adminbundle_user' );
+            if ($formValues['password']['password'] != null) {
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($user);
+                $salt = md5(time());
+                $user->setSalt($salt);
+                $password = $encoder->encodePassword($user->getPassword(), $salt);
+                $user->setPassword($password);
+            } else {
+                $user->setSalt($oldsalt);
+                $user->setPassword($oldpassword);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $status = 'Utilizador actualizado com sucesso';

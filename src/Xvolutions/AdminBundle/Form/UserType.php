@@ -23,7 +23,8 @@ class UserType extends AbstractType
                     array(
                         'first_name' => 'password',
                         'second_name' => 'confirm',
-                        'type' => 'password'
+                        'type' => 'password',
+                        'required' => false
                     )
             )
             ->add('email')
