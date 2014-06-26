@@ -104,7 +104,7 @@ class AdminController extends Controller {
         try {
             $user = $this->get('security.context')->getToken()->getUser();
             $emailAddress = $user->getEmail();
-            $misc = $this->get('xvolutions_admin.gravatar');
+            $misc = $this->get('xvolutions_admin.misc');
             return $misc->fetchGravatar($emailAddress);
         } catch (Exception $ex) {
             throw new AccessDeniedException();

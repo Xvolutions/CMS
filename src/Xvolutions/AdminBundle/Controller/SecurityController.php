@@ -4,7 +4,6 @@ namespace Xvolutions\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
 use Xvolutions\AdminBundle\Entity\User;
 
@@ -86,7 +85,7 @@ class SecurityController extends Controller
         $encoder = $factory->getEncoder($user);
         $salt = md5(time());
         $user->setSalt($salt);
-        $generatepassword = sha1(time());
+        $generatepassword = $this->get('xvolutions_admin.misc')->randomPassword();
         $password = $encoder->encodePassword($generatepassword, $salt);
         $user->setPassword($password);
         $em = $this->getDoctrine()->getManager();
@@ -100,7 +99,7 @@ class SecurityController extends Controller
                         'XvolutionsAdminBundle:email:recover.html.twig',
                         array(
                             'name' => $user->getName(),
-                            'password' => $password
+                            'password' => $generatepassword
                         )
                     )
                 )
@@ -108,5 +107,7 @@ class SecurityController extends Controller
         ;
         $this->get('mailer')->send($message);
     }
+
+    
 
 }

@@ -3,6 +3,6 @@ parameters:
     xvolutions_admin.misc.arguments: fetchGravatar
 
 services:
-    xvolutions_admin.gravatar:
+    xvolutions_admin.misc:
         class: %xvolutions_admin.misc.class%
         arguments: [%xvolutions_admin.misc.arguments%]
