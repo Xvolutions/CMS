@@ -1,6 +1,6 @@
 {% extends "XvolutionsAdminBundle:template:template.html.twig" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Recuperar{% endblock %}
 
 {% block styles %}
     {% stylesheets 
@@ -16,27 +16,22 @@
         <div class="col-md-4 col-sm-3 col-xs-2"></div>
         <div class="col-md-4 col-sm-6 col-xs-8">
             <div class="login-form">
-                <form action="{{ path('login_check') }}" method="post">
+                <form action="{{ path('recover') }}" method="post">
                     <h2>Consola de Gestão</h2>
-                    {% if error %}
+                    {% if info %}
                         <div class="alert alert-danger alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            {{ error.message|trans }}
+                            {{ info|trans }}
                         </div>
                     {% else %}
                         <br><br>
                     {% endif %}
                     <div class="form-group">
-                        <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" placeholder="Nome do Utilizador"/>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="password" placeholder="Palavra-chave" name="_password" />
+                        <input type="text" class="form-control" id="email" name="_email"  placeholder="E-mail"/>
                     </div>
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                    <button type="submit" class="btn btn-primary">entrar</button>
-                    <button type="reset" class="btn btn-bg">limpar</button>
-                    <a href="{{path('recover')}}" class="btn btn-info">recuperar</a>
+                    <button type="submit" class="btn btn-primary">recuperar</button>
+                    <a href="{{path('login')}}" class="btn btn-info">voltar</a>
                 </form>
             </div>
         </div>
