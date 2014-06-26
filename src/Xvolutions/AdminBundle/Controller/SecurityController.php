@@ -73,7 +73,7 @@ class SecurityController extends Controller
         } else {
             return $this->render(
                 'XvolutionsAdminBundle::recover.html.twig', array(
-                    'erro' => '',
+                    'error' => '',
                     'info' => ''
                 )
             );
