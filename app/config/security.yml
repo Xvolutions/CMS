@@ -4,8 +4,7 @@ security:
             algorithm: bcrypt
             cost: 12
         default:
-            algorithm: bcrypt
-            cost: 15
+            algorithm: sha512
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
