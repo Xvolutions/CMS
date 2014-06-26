@@ -87,7 +87,7 @@ class AdminController extends Controller {
     private function getUsername() {
         try {
             $user = $this->get('security.context')->getToken()->getUser();
-            return $user->getUsername();
+            return $user->getName();
         } catch (Exception $ex) {
             throw new AccessDeniedException();
         }
