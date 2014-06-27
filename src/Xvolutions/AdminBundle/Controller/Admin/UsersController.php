@@ -42,7 +42,8 @@ class UsersController extends AdminController
         if ($form->isValid()) {
             $factory = $this->get('security.encoder_factory');
             $encoder = $factory->getEncoder($user);
-            $salt = md5(time());
+            $misc = $this->get('xvolutions_admin.misc');
+            $salt = sha1($misc->randomPassword());
             $user->setSalt($salt);
             $password = $encoder->encodePassword($user->getPassword(), $salt );
             $user->setPassword($password);
@@ -104,7 +105,8 @@ class UsersController extends AdminController
             if ($formValues['password']['password'] != null) {
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user);
-                $salt = md5(time());
+                $misc = $this->get('xvolutions_admin.misc');
+                $salt = sha1($misc->randomPassword());
                 $user->setSalt($salt);
                 $password = $encoder->encodePassword($user->getPassword(), $salt);
                 $user->setPassword($password);
