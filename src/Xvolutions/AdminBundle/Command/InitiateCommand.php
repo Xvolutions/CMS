@@ -15,7 +15,7 @@ use Xvolutions\AdminBundle\Entity\Role;
 /**
  * Description of InitiateCommand
  *
- * @author Pedro Resende <pedro.resende@ez.no>
+ * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
 class InitiateCommand extends ContainerAwareCommand
 {
