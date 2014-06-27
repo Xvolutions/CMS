@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Exception;
 /**
  * Description of CategoriesController
  *
- * @author Pedro Resende <pedro.resende@ez.no>
+ * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
 class CategoryController extends AdminController
 {
