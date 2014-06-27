@@ -1,15 +1,6 @@
-{% extends "XvolutionsAdminBundle:template:template.html.twig" %}
+{% extends "XvolutionsAdminBundle::login.html.twig" %}
 
 {% block title %}Recuperar{% endblock %}
-
-{% block styles %}
-    {% stylesheets 
-        'bundles/xvolutionsadmin/css/login.css' filter='cssrewrite'
-    %}
-        <link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
-    {% endstylesheets %}
-{% endblock %}
-
 
 {% block content %}
     <div class="top-20">
