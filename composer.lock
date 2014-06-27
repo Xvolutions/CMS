@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5b8ae3e6a271ad8677167d70463d78e1",
+    "hash": "55da41753f73d8e12f2b4582a5a62429",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -870,6 +870,50 @@
             "time": "2014-06-04 16:30:04"
         },
         {
+            "name": "packagist/yuicompressor-bin",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/packagist/yuicompressor-bin.git",
+                "reference": "7d99543131ed6aaa70d2183f09fdef3a1ca1fe08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/packagist/yuicompressor-bin/zipball/7d99543131ed6aaa70d2183f09fdef3a1ca1fe08",
+                "reference": "7d99543131ed6aaa70d2183f09fdef3a1ca1fe08",
+                "shasum": ""
+            },
+            "bin": [
+                "bin/yuicompressor.jar"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Yahoo! Inc.",
+                    "homepage": "http://yuilibrary.com"
+                },
+                {
+                    "name": "Krusty Kode",
+                    "email": "kaiwa@20minutemail.com",
+                    "role": "maintainer"
+                }
+            ],
+            "description": "YUI Compressor packaged for composer. JavaScript and CSS minification.",
+            "homepage": "http://yui.github.io/yuicompressor",
+            "keywords": [
+                "compressor",
+                "css",
+                "javascript",
+                "minification",
+                "yui"
+            ],
+            "time": "2013-07-15 18:26:22"
+        },
+        {
             "name": "psr/log",
             "version": "1.0.0",
             "source": {
@@ -1014,17 +1058,17 @@
         },
         {
             "name": "sensio/generator-bundle",
-            "version": "v2.3.4",
+            "version": "v2.3.5",
             "target-dir": "Sensio/Bundle/GeneratorBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "4a7b126e9c22f858e3584b19ddce6e5bdd7677ee"
+                "reference": "8b7a33aa3d22388443b6de0b0cf184122e9f60d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/4a7b126e9c22f858e3584b19ddce6e5bdd7677ee",
-                "reference": "4a7b126e9c22f858e3584b19ddce6e5bdd7677ee",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/8b7a33aa3d22388443b6de0b0cf184122e9f60d2",
+                "reference": "8b7a33aa3d22388443b6de0b0cf184122e9f60d2",
                 "shasum": ""
             },
             "require": {
@@ -1060,7 +1104,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2013-08-21 18:09:35"
+            "time": "2014-04-28 14:01:06"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2223,6 +2267,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "packagist/yuicompressor-bin": 20,
         "phpunit/phpunit": 20
     },
     "platform": {
