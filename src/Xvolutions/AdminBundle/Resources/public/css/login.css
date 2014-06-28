@@ -1,14 +1,9 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
 /* 
     Created on : Jun 8, 2014, 10:13:53 AM
     Author     : Pedro Resende <pedroresende@mail.resende.biz>
 */
-/* line 10, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000310}}
+/* line 5, /Users/pedroresende/Sites/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\000035}}
 html,
 body {
   background-color: #eee !important;
@@ -18,13 +13,13 @@ body {
   -o-background-size: cover;
   background-size: cover;
 }
-/* line 19, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000319}}
+/* line 14, /Users/pedroresende/Sites/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000314}}
 .top-20 {
   margin-top: 20%;
 }
-/* line 23, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000323}}
+/* line 18, /Users/pedroresende/Sites/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000318}}
 .login-form {
   background-color: #ffffff;
   margin-left: auto;
@@ -38,8 +33,8 @@ body {
   -moz-box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
 }
-/* line 36, /var/www/html/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000336}}
+/* line 31, /Users/pedroresende/Sites/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000331}}
 .login-form h2 {
   text-align: center;
 }
