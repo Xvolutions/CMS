@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Exception;
 /**
  * Description of LanguagesController
  *
- * @author Pedro Resende <pedro.resende@ez.no>
+ * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
 class LanguagesController extends AdminController
 {

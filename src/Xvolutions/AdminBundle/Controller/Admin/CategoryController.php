@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Exception;
 /**
  * Description of CategoriesController
  *
- * @author Pedro Resende <pedro.resende@ez.no>
+ * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
 class CategoryController extends AdminController
 {
@@ -24,7 +24,7 @@ class CategoryController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new role
      */
-    public function addcategoriesAction(Request $request) {
+    public function addCategoriesAction(Request $request) {
         parent::verifyaccess();
 
         $category = new Category();
@@ -70,7 +70,7 @@ class CategoryController extends AdminController
      * @param type $id the id of an existing category
      * @return type the template for editing a category
      */
-    public function editcategoriesAction(Request $request, $id) {
+    public function editCategoriesAction(Request $request, $id) {
         parent::verifyaccess();
 
         $categoryType = new CategoryType();
@@ -158,7 +158,7 @@ class CategoryController extends AdminController
      * @param type $id the id of the category to be removed
      * @return string with the information message
      */
-    private function RemoveCategory($id, &$status, &$error)
+    private function removeCategory($id, &$status, &$error)
     {
         try {
             $em = $this->getDoctrine()->getManager();
@@ -181,7 +181,7 @@ class CategoryController extends AdminController
      * @param type $ids array containing the id's of the categories to be removed
      * @return string with the message
      */
-    private function RemoveSelectedCategories($ids, &$status, &$error)
+    private function removeSelectedCategories($ids, &$status, &$error)
     {
         try {
             $em = $this->getDoctrine()->getManager();
