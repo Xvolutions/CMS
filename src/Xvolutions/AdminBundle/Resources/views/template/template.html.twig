@@ -28,6 +28,15 @@
         <div class="container-fluid">
             <div class="content">
                 <div class="row">
+                    <div id="header">
+                        {% include 'XvolutionsAdminBundle:template:menu.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="content">
+                <div class="row">
                 {% block content %}{% endblock %}
                 </div>
             </div>

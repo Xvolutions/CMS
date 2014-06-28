@@ -19,7 +19,7 @@ body {
 /* line 21, /Users/pedroresende/Sites/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000321}}
 #main {
-  padding-bottom: 80px;
+  padding: 60px 0 80px 0;
 }
 /* line 25, /Users/pedroresende/Sites/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000325}}
@@ -46,19 +46,25 @@ body {
 }
 /* line 45, /Users/pedroresende/Sites/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000345}}
-.navbar {
+.affix-top {
+  transition: 1s;
+}
+/* line 49, /Users/pedroresende/Sites/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000349}}
+.affix {
   -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: 1s;
 }
-/* line 51, /Users/pedroresende/Sites/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000351}}
+/* line 56, /Users/pedroresende/Sites/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000356}}
 th,
 tr td {
   text-align: center;
 }
-/* line 55, /Users/pedroresende/Sites/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000355}}
+/* line 60, /Users/pedroresende/Sites/AdminBundle/src/Xvolutions/AdminBundle/Resources/public/less/backoffice.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/AdminBundle\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/backoffice\.less}line{font-family:\0000360}}
 h1,
 .h1,
 h2,
