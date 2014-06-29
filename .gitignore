@@ -1,5 +1,7 @@
 /vendor/
-/app/cache/
-/app/logs/
+/app/cache/*
+/app/logs/*
 /nbproject/private/
 /web/bundles
+/build/
+/bin/
