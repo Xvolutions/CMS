@@ -39,7 +39,7 @@ class BlogPost
     /**
      * @var string
      *
-     * @ORM\Column(name="text", type="text")
+     * @ORM\Column(name="text", type="text", nullable=true)
      */
     private $text;
 
@@ -200,7 +200,7 @@ class BlogPost
 
     
     public function setCategory( $category ) {
-        $this->category = $categories;
+        $this->category = $category;
 
         return $this;
     }
