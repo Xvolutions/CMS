@@ -11,17 +11,12 @@
 {% endblock %}
 
 {% block content %}
-    <div id="header">
-        {% include 'XvolutionsAdminBundle:template:menu.html.twig' %}
+    <div class="col-md-1 col-sm-1"></div>
+    <div id="main" class="col-md-10 col-sm-10 col-xs-12">
+        {% block maincontent %}{% endblock %}
     </div>
-    <div id="content">
-        <div class="col-md-1 col-sm-1"></div>
-        <div class="col-md-10 col-sm-10 col-xs-12">
-            {% block maincontent %}{% endblock %}
-        </div>
-        <div class="col-md-1 col-sm-1"></div>
-        <div class="push"></div>
-    </div>
+    <div class="col-md-1 col-sm-1"></div>
+    <div class="push"></div>
     <div id="footer">
         <nav class="navbar navbar-default navbar-bottom" role="navigation">
             <div class="container-fluid container-footer">
