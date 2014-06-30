@@ -80,7 +80,7 @@ class BlogPost
 
     public function __construct()
     {
-        $this->tags = new ArrayCollection();
+        $this->tag = new ArrayCollection();
         $this->category = new ArrayCollection();
         $this->section = new ArrayCollection();
         $this->language = new ArrayCollection();
@@ -199,14 +199,14 @@ class BlogPost
     }
 
     
-    public function setCategories( $categories ) {
-        $this->categories = $categories;
+    public function setCategory( $category ) {
+        $this->category = $categories;
 
         return $this;
     }
 
-    public function getCategories() {
-        return $this->categories->toArray();
+    public function getCategory() {
+        return $this->category->toArray();
     }
 
     /**

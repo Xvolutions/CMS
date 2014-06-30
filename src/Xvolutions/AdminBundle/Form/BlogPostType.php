@@ -19,12 +19,12 @@ class BlogPostType extends AbstractType
             ->add('author')
             ->add('text')
             ->add('date')
-            ->add('tags')
+            ->add('tag')
             ->add(
-                    'tags', 
+                    'tag', 
                     'entity', 
                     array(
-                        'class' => 'Xvolutions\AdminBundle\Entity\Tags',
+                        'class' => 'Xvolutions\AdminBundle\Entity\Tag',
                         'property' => 'tag',
                         'multiple' => true,
                         'expanded' => false
