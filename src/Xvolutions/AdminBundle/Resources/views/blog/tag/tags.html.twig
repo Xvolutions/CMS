@@ -49,7 +49,7 @@
         {% endif %}
     </table>
     <p>
-        <a href="{{path('addcategories')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar uma nova palavra-chave"|trans }}</a>
+        <a href="{{path('addtags')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar uma nova palavra-chave"|trans }}</a>
         <a class="btn btn-danger btn-sm" name="{{path('optiontags', {'option': 'removeselected'})}}" id="RemoveMany">{{ "Apagar"|trans }}</a>
     </p> 
 {% endblock %}
