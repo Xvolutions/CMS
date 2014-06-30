@@ -25,15 +25,7 @@
 </head>
 <body>
     <div id="wrapper">
-        <div class="container-fluid">
-            <div class="content">
-                <div class="row">
-                    <div id="header">
-                        {% include 'XvolutionsAdminBundle:template:menu.html.twig' %}
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% block menu %}{% endblock %}
         <div class="container-fluid">
             <div class="content">
                 <div class="row">
