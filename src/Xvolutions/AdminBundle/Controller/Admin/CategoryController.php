@@ -110,7 +110,6 @@ class CategoryController extends AdminController
         ));
     }
 
-
     /**
      * Controller responsible to show the categories for and handling the form
      * submission and the database insertion
