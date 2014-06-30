@@ -1,0 +1,23 @@
+{% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
+
+{% block title %}{{title|trans}} - Categorias - Backoffice{% endblock %}
+
+{% block maincontent %}
+    <h1>{{ title|trans }}</h1>
+    {% if status %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ status|trans }}
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
+    {{form(form)}}
+    <a href="{{path('blogposts')}}" class="btn btn-default btn-sm">{{ "Ver Artigos"|trans }}</a>
+</div>
+
+{% endblock %}
