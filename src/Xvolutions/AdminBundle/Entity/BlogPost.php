@@ -51,10 +51,10 @@ class BlogPost
     private $date;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tags")
+     * @ORM\ManyToMany(targetEntity="Tag")
      *
      */
-    private $tags;
+    private $tag;
 
     /**
      * @ORM\ManyToMany(targetEntity="Category")
@@ -188,14 +188,14 @@ class BlogPost
         return $this->date;
     }
 
-    public function setTags( $tags ) {
-        $this->tags = $tags;
+    public function setTag( $tag ) {
+        $this->tag = $tag;
 
         return $this;
     }
 
-    public function getTags() {
-        return $this->tags->toArray();
+    public function getTag() {
+        return $this->tag->toArray();
     }
 
     
