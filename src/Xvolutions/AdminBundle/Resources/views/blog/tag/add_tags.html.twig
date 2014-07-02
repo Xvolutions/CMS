@@ -1,6 +1,6 @@
 {% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
 
-{% block title %}{{title|trans}} - Categorias - Backoffice{% endblock %}
+{% block title %}{{title|trans}} - Palavras-Chave - Backoffice{% endblock %}
 
 {% block maincontent %}
     <h1>{{ title|trans }}</h1>
@@ -18,13 +18,13 @@
     {% endif %}
 
     {{ form_start( form ) }}
-    <div id="xvolutions_adminbundle_categories"><div>
-            <p>{{ "Nome da categoria"|trans }}</p>
-            <p>{{ form_widget( form.category ) }}</p>
+    <div id="xvolutions_adminbundle_tagss"><div>
+            <p>{{ "Nome da palavra-chave"|trans }}</p>
+            <p>{{ form_widget( form.tag ) }}</p>
         </div>
         <br>
             {{ form_end( form ) }}
-            <a href="{{path('categories')}}" class="btn btn-default btn-sm">{{ "Ver Categorias"|trans }}</a>
+            <a href="{{path('tags')}}" class="btn btn-default btn-sm">{{ "Ver Palavras-chave"|trans }}</a>
     </div>
 </form>
 {% endblock %}

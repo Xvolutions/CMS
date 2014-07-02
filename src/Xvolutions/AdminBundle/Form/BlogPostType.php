@@ -15,16 +15,36 @@ class BlogPostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('author')
-            ->add('text')
-            ->add('date')
-            ->add('tags')
             ->add(
-                    'tags', 
+                    'title', 
+                    null,
+                    array(
+                        'label' => 'Título'
+                    ))
+            ->add(
+                    'author', 
+                    null,
+                    array(
+                        'label' => 'Autor'
+                    ))
+            ->add(
+                    'text', 
+                    null,
+                    array(
+                        'label' => 'Texto'
+                    ))
+            ->add(
+                    'date', 
+                    null,
+                    array(
+                        'label' => 'Data',
+                        'data' => new \DateTime('now')
+                    ))
+            ->add(
+                    'tag', 
                     'entity', 
                     array(
-                        'class' => 'Xvolutions\AdminBundle\Entity\Tags',
+                        'class' => 'Xvolutions\AdminBundle\Entity\Tag',
                         'property' => 'tag',
                         'multiple' => true,
                         'expanded' => false
@@ -41,23 +61,25 @@ class BlogPostType extends AbstractType
                     )
             )
             ->add(
-                    'section', 
+                    'id_section', 
                     'entity', 
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Section',
                         'property' => 'section',
                         'multiple' => false,
-                        'expanded' => false
+                        'expanded' => false,
+                        'label' => 'Section'
                     )
             )
             ->add(
-                    'language', 
+                    'id_language', 
                     'entity', 
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Language',
                         'property' => 'language',
                         'multiple' => false,
-                        'expanded' => false
+                        'expanded' => false,
+                        'label' => 'Language'
                     )
             )
         ;

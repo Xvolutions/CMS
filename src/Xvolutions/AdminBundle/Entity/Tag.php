@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Tags
+class Tag
 {
     /**
      * @var integer
@@ -47,7 +47,7 @@ class Tags
      * Set tag
      *
      * @param string $tag
-     * @return Tags
+     * @return Tag
      */
     public function setTag($tag)
     {

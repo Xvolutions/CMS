@@ -84,7 +84,7 @@ class AdminController extends Controller {
      * 
      * @return type string
      */
-    private function getUsername() {
+    protected function getUsername() {
         try {
             $user = $this->get('security.context')->getToken()->getUser();
             return $user->getName();

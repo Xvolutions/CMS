@@ -39,7 +39,7 @@ class BlogPost
     /**
      * @var string
      *
-     * @ORM\Column(name="text", type="text")
+     * @ORM\Column(name="text", type="text", nullable=true)
      */
     private $text;
 
@@ -51,10 +51,10 @@ class BlogPost
     private $date;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tags")
+     * @ORM\ManyToMany(targetEntity="Tag")
      *
      */
-    private $tags;
+    private $tag;
 
     /**
      * @ORM\ManyToMany(targetEntity="Category")
@@ -80,7 +80,7 @@ class BlogPost
 
     public function __construct()
     {
-        $this->tags = new ArrayCollection();
+        $this->tag = new ArrayCollection();
         $this->category = new ArrayCollection();
         $this->section = new ArrayCollection();
         $this->language = new ArrayCollection();
@@ -188,25 +188,25 @@ class BlogPost
         return $this->date;
     }
 
-    public function setTags( $tags ) {
-        $this->tags = $tags;
+    public function setTag( $tag ) {
+        $this->tag = $tag;
 
         return $this;
     }
 
-    public function getTags() {
-        return $this->tags->toArray();
+    public function getTag() {
+        return $this->tag->toArray();
     }
 
     
-    public function setCategories( $categories ) {
-        $this->categories = $categories;
+    public function setCategory( $category ) {
+        $this->category = $category;
 
         return $this;
     }
 
-    public function getCategories() {
-        return $this->categories->toArray();
+    public function getCategory() {
+        return $this->category->toArray();
     }
 
     /**

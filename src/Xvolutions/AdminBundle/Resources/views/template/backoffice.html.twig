@@ -9,7 +9,17 @@
     <link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
     {% endstylesheets %}
 {% endblock %}
-
+{% block menu %}
+        <div class="container-fluid">
+            <div class="content">
+                <div class="row">
+                    <div id="header">
+                        {% include 'XvolutionsAdminBundle:template:menu.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
 {% block content %}
     <div class="col-md-1 col-sm-1"></div>
     <div id="main" class="col-md-10 col-sm-10 col-xs-12">
