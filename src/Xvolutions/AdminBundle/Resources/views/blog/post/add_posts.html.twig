@@ -16,8 +16,44 @@
             {{ error|trans }}
         </div>
     {% endif %}
-    {{form(form)}}
-    <a href="{{path('blogposts')}}" class="btn btn-default btn-sm">{{ "Ver Artigos"|trans }}</a>
-</div>
+    {#{form(form)}#}
+
+    {{ form_start( form ) }}
+    <div id="xvolutions_adminbundle_blogpost"><div>
+            <p>{{ "Título"|trans }}</p>
+            <p>{{ form_widget( form.title ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Autor"|trans }}</p>
+            <p>{{ form_widget( form.author ) }}
+        </div>
+        <div>
+            <p>{{ "Texto"|trans }}</p>
+            <p>{{ form_widget( form.text ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Data"|trans }}</p>
+            <p>{{ form_widget( form.date ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Palavras-Chave"|trans }}</p>
+            <p>{{ form_widget( form.tag ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Categoria"|trans }}</p>
+            <p>{{ form_widget( form.category ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Secção"|trans }}</p>
+            <p>{{ form_widget( form.id_section ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Ídioma"|trans }}</p>
+            <p>{{ form_widget( form.id_language ) }}</p>
+        </div>
+        <br>
+            {{ form_end( form ) }}
+        <a href="{{path('blogposts')}}" class="btn btn-default btn-sm">{{ "Ver Artigos"|trans }}</a>
+    </div>
 
 {% endblock %}
