@@ -1,9 +1,9 @@
 {% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
 
-{% block title %}Categorias - Backoffice{% endblock %}
+{% block title %}Artigos - Backoffice{% endblock %}
 
 {% block maincontent %}
-    <h1>{{ "Categorias"|trans }}</h1>
+    <h1>{{ "Artigos"|trans }}</h1>
         <div id="status" class="alert alert-success alert-dismissable" style="display: none;">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <div id="text"></div>
@@ -28,6 +28,8 @@
         <tr>
             <th></th>
             <th>{{ "Artigos"|trans }}</th>
+            <th>{{ "Autor"|trans }}</th>
+            <th>{{ "Data de Publicação"|trans }}</th>
             <th>{{ "Opções"|trans }}</th>
         </tr>
         {% if blogPostList|length > 0 %}
@@ -36,6 +38,8 @@
                 <tr class="tr{{blogPost.id}}">
                     <td><input type="checkbox" id="{{blogPost.id}}" onclick="SelectForRemoval('{{blogPost.id}}');"></td>
                     <td>{{blogPost.title}}</td>
+                    <td>{{blogPost.author}}</td>
+                    <td>{{blogPost.date|date('d/m/Y H:m:s')}}</td>
                     <td>
                         <a href="{{path('editblogposts', {'id': blogPost.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> 
                         <a class="btn btn-danger btn-xs" name="{{path('optionblogposts', {'option': 'remove','id': blogPost.id})}}">{{ "Apagar"|trans }}</a>
@@ -44,7 +48,7 @@
             {% endfor %}
         {% else %}
             <tr>
-                <td colspan="7" >{{"Não existem artigos definidas"|trans}}</td>
+                <td colspan="7" >{{"Não existem artigos definidos"|trans}}</td>
             <tr>
         {% endif %}
     </table>
