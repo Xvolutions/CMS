@@ -5,7 +5,7 @@ $(document).ready(function()
         title = title.replace(/ /g, "-");
 
         var charMap = {
-            à: 'a', è: 'e', é: 'e', ä: 'a', ë: 'e', ö: 'o', â: 'a', À: 'A', É: 'E', È: 'E', í: 'i', Í: 'I'
+            à: 'a', á: 'a', è: 'e', é: 'e', ã: 'a', ë: 'e', ö: 'o', â: 'a', À: 'A', Á: 'A', É: 'E', È: 'E', í: 'i', Í: 'I'
         };
         var str_array = title.split('');
         for (var i = 0, len = str_array.length; i < len; i++) {
