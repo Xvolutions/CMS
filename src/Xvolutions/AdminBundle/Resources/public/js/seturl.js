@@ -1,7 +1,7 @@
 $(document).ready(function()
 {
     $('.title').keyup(function() {
-        var title = $('#xvolutions_adminbundle_page_title').val();
+        var title = $('.title').val();
         title = title.replace(/ /g, "-");
         title = title.toLowerCase();
         var charMap = {
