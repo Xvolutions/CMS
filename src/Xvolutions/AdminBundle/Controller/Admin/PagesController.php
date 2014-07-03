@@ -25,33 +25,31 @@ class PagesController extends AdminController
      * @param type $id the id of an existing section
      * @return type the template for editing a section
      */
-    public function editpagesAction( Request $request, $id )
+    public function editpagesAction(Request $request, $id)
     {
         parent::verifyaccess();
 
         $pageType = new PageType();
 
-        $page = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->find( $id );
-        $form = $this->createForm( $pageType, $page )
-                ->add( 'Guardar', 'submit' )
+        $page = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->find($id);
+        $form = $this->createForm($pageType, $page)
+                ->add('Guardar', 'submit')
         ;
 
         $status = NULL;
         $error = NULL;
 
-        $form->handleRequest( $request );
+        $form->handleRequest($request);
 
         $em = $this->getDoctrine()->getManager();
-        if ( $form->isValid() )
-        {
-            $formValues = $request->request->get( 'xvolutions_adminbundle_page' );
-            $PageUrl = $formValues[ "url" ];
+        if ($form->isValid()) {
+            $formValues = $request->request->get('xvolutions_adminbundle_page');
+            $PageUrl = $formValues["url"];
             // Verify if the url don't exists yet
-            $PageUrlPresent = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findBy( array( 'url' => $PageUrl ) );
-            if ( count( $PageUrlPresent ) < 1 || $PageUrlPresent[ 0 ]->getId() == $id )
-            {
-                $requestPage = $request->request->get( 'xvolutions_adminbundle_page' );
-                $page->setIdparent( $requestPage['id_parent'] );
+            $PageUrlPresent = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->findBy(array('url' => $PageUrl));
+            if (count($PageUrlPresent) < 1 || $PageUrlPresent[0]->getId() == $id) {
+                $requestPage = $request->request->get('xvolutions_adminbundle_page');
+                $page->setIdparent($requestPage['id_parent']);
                 $em->flush();
                 $status = 'Página actualizada com sucesso';
 
@@ -66,22 +64,20 @@ class PagesController extends AdminController
 
                 $pageList = $query->getResult();
 
-                return $this->render( 'XvolutionsAdminBundle:pages:pages.html.twig', array(
+                return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                             'pageList' => $pageList,
                             'status' => $status,
                             'error' => $error
-                        ) );
-            } 
-            else
-            {
+                        ));
+            } else {
                 $error = 'Uma página com esse URL já existe';
             }
         }
 
-        $sectionList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Section' )->findAll();
-        $languageList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Language' )->findAll();
+        $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
+        $languageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findAll();
         $query = $em->createQuery(
-            'SELECT 
+                        'SELECT 
                 p.id, 
                 p.title, 
                 p.url, 
@@ -98,11 +94,11 @@ class PagesController extends AdminController
                 p.id != :id
             ORDER BY 
                 p.title ASC'
-                )->setParameter( 'id', $id );
+                )->setParameter('id', $id);
 
         $pageList = $query->getResult();
 
-        return $this->render( 'XvolutionsAdminBundle:pages:add_pages.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:pages:add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Editar uma Página',
                     'sectionList' => $sectionList,
@@ -110,7 +106,7 @@ class PagesController extends AdminController
                     'languageList' => $languageList,
                     'status' => $status,
                     'error' => $error
-                ) );
+                ));
     }
 
     /**
@@ -120,28 +116,28 @@ class PagesController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the pages
      */
-    public function pagesAction( $option = NULL, $id = NULL )
+    public function pagesAction($option = NULL, $id = NULL)
     {
         parent::verifyaccess();
 
         $status = NULL;
         $error = NULL;
-        switch ( $option ) {
+        switch ($option) {
             case 'remove': {
-                    $this->RemovePage( $id, $status, $error );
+                    $this->RemovePage($id, $status, $error);
                     break;
                 }
             case 'removeselected': {
-                    $ids = json_decode( $id );
-                    $this->RemoveSelectedPages( $ids, $status, $error );
+                    $ids = json_decode($id);
+                    $this->RemoveSelectedPages($ids, $status, $error);
                     break;
                 }
         }
 
-        if( $error != NULL ) {
+        if ($error != NULL) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
-        } 
-        if( $status != NULL ) {
+        }
+        if ($status != NULL) {
             return new Response($status, Response::HTTP_OK);
         }
 
@@ -155,12 +151,12 @@ class PagesController extends AdminController
         );
 
         $pageList = $query->getResult();
-        
-        return $this->render( 'XvolutionsAdminBundle:pages:pages.html.twig', array(
+
+        return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                     'pageList' => $pageList,
                     'status' => $status,
                     'error' => $error
-                ) );
+                ));
     }
 
     /**
@@ -170,35 +166,33 @@ class PagesController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new page
      */
-    public function addpagesAction( Request $request )
+    public function addpagesAction(Request $request)
     {
         parent::verifyaccess();
 
         $page = new Page();
         $pageType = new PageType();
 
-        $form = $this->createForm( $pageType, $page )
-                ->add( 'Criar', 'submit' )
+        $form = $this->createForm($pageType, $page)
+                ->add('Criar', 'submit')
         ;
 
-        $form->handleRequest( $request );
+        $form->handleRequest($request);
 
         $error = NULL;
         $status = NULL;
-        if ( $form->isValid() )
-        {
-            $requestPage = $request->request->get( 'xvolutions_adminbundle_page' );
-            $page->setIdparent( $requestPage['id_parent'] );
-            $datetime = new \DateTime( 'now' );
+        if ($form->isValid()) {
+            $requestPage = $request->request->get('xvolutions_adminbundle_page');
+            $page->setIdparent($requestPage['id_parent']);
+            $datetime = new \DateTime('now');
             $em = $this->getDoctrine()->getManager();
-            $page->setDate( $datetime ); // I Want to define the date
-            $formValues = $request->request->get( 'xvolutions_adminbundle_page' );
-            $url = $formValues[ "url" ];
+            $page->setDate($datetime); // I Want to define the date
+            $formValues = $request->request->get('xvolutions_adminbundle_page');
+            $url = $formValues["url"];
             // Verify the URL of the page don't exists yet
-            $titleIsPresent = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findBy( array( 'url' => $url ) );
-            if ( count( $titleIsPresent ) < 1 )
-            {
-                $em->persist( $page );
+            $titleIsPresent = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->findBy(array('url' => $url));
+            if (count($titleIsPresent) < 1) {
+                $em->persist($page);
                 $em->flush();
                 $status = 'Página inserida com sucesso';
 
@@ -213,22 +207,21 @@ class PagesController extends AdminController
 
                 $pageList = $query->getResult();
 
-                return $this->render( 'XvolutionsAdminBundle:pages:pages.html.twig', array(
+                return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                             'pageList' => $pageList,
                             'status' => $status,
                             'error' => $error
-                        ) );
-            } else
-            {
+                        ));
+            } else {
                 $error = 'Uma página com esse URL já existe';
             }
         }
 
-        $sectionList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Section' )->findAll();
-        $pageList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Page' )->findAll();
-        $languageList = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Language' )->findAll();
+        $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
+        $pageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->findAll();
+        $languageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findAll();
 
-        return $this->render( 'XvolutionsAdminBundle:pages:add_pages.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:pages:add_pages.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Adicionar uma Página',
                     'sectionList' => $sectionList,
@@ -236,7 +229,7 @@ class PagesController extends AdminController
                     'languageList' => $languageList,
                     'status' => $status,
                     'error' => $error
-                ) );
+                ));
     }
 
     /**
@@ -245,22 +238,20 @@ class PagesController extends AdminController
      * @param type $id the id of the page to be removed
      * @return string with the information message
      */
-    private function removePage( $id, &$status, &$error )
+    private function removePage($id, &$status, &$error)
     {
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
-            $page = $em->getRepository( 'XvolutionsAdminBundle:Page' )->find( $id );
-            if ( $page != 'empty' )
-            {
-                $em->remove( $page );
+            $page = $em->getRepository('XvolutionsAdminBundle:Page')->find($id);
+            if ($page != 'empty') {
+                $em->remove($page);
                 $em->flush();
                 $status = 'Página removida com sucesso';
-            } else
-            {
+            } else {
                 $error = "Erro ao remover a página";
             }
-        } catch ( Exception $ex ) {
+        } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover a página";
         }
     }
@@ -271,24 +262,23 @@ class PagesController extends AdminController
      * @param type $ids array containing the id's of the pages to be removed
      * @return string with the message
      */
-    private function removeSelectedPages( $ids, &$status, &$error )
+    private function removeSelectedPages($ids, &$status, &$error)
     {
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
-            foreach ( $ids as $id ) {
-                $page = $em->getRepository( 'XvolutionsAdminBundle:Page' )->find( $id );
-                if ( $page != 'empty' )
-                {
-                    $em->remove( $page );
+            foreach ($ids as $id)
+            {
+                $page = $em->getRepository('XvolutionsAdminBundle:Page')->find($id);
+                if ($page != 'empty') {
+                    $em->remove($page);
                     $em->flush();
                     $status = 'Página(s) removida(s) com sucesso';
-                } else
-                {
+                } else {
                     $error = "Erro ao remover a(s) página(s)";
                 }
             }
-        } catch ( Exception $ex ) {
+        } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover a(s) página(s)";
         }
     }

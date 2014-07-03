@@ -181,7 +181,7 @@ class BlogPostController extends AdminController
             } else {
                 $error = "Erro ao remover o artigo";
             }
-        } catch (Exception $ex) {
+        } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover o artigo";
         }
     }
@@ -211,7 +211,7 @@ class BlogPostController extends AdminController
             if ($error == null) {
                 $status = 'Artigos removidos com sucesso';
             }
-        } catch (Exception $ex) {
+        } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover o(s) artigo(s)";
         }
     }
