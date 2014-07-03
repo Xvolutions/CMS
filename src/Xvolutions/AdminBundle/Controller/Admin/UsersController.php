@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\User;
 use Xvolutions\AdminBundle\Form\UserType;
-use Symfony\Component\Security\Core\Exception;
+use Symfony\Component\Debug\ErrorHandler;
 
 /**
  * Description of UsersController
@@ -190,8 +190,9 @@ class UsersController extends AdminController
      * @param type $id the id of the user to be removed
      * @return string with the information message
      */
-    private function RemoveUser($id, &$status, &$error)
+    private function removeUser($id, &$status, &$error)
     {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository('XvolutionsAdminBundle:User')->find($id);
@@ -209,8 +210,9 @@ class UsersController extends AdminController
      * @param type $ids array containing the id's of the users to be removed
      * @return string With the message
      */
-    private function RemoveSelectedUsers($ids, &$status, &$error)
+    private function removeSelectedUsers($ids, &$status, &$error)
     {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             foreach ($ids as $id)

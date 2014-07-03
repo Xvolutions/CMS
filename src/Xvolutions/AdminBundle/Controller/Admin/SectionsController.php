@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Section;
 use Xvolutions\AdminBundle\Form\SectionType;
-use Symfony\Component\Security\Core\Exception;
+use Symfony\Component\Debug\ErrorHandler;
 
 /**
  * Description of SectionsController
@@ -174,7 +174,8 @@ class SectionsController extends AdminController {
      * @param type $id the id of the section to be removed
      * @return string with the information message
      */
-    private function RemoveSection($id, &$status, &$error) {
+    private function removeSection($id, &$status, &$error) {
+        ErrorHandler::register();
         try {
 
             $em = $this->getDoctrine()->getManager();
@@ -204,7 +205,8 @@ class SectionsController extends AdminController {
      * @param type $ids array containing the id's of the sections to be removed
      * @return string With the message
      */
-    private function RemoveSelectedSections($ids, &$status, &$error) {
+    private function removeSelectedSections($ids, &$status, &$error) {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             foreach ($ids as $id) {

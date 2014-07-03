@@ -19,9 +19,14 @@
     {#{form(form)}#}
 
     {{ form_start( form ) }}
-    <div id="xvolutions_adminbundle_blogpost"><div>
+    <div id="xvolutions_adminbundle_blogpost">
+        <div>
             <p>{{ "Título"|trans }}</p>
             <p>{{ form_widget( form.title ) }}</p>
+        </div>
+        <div>
+            <p>{{ "URL"|trans }}</p>
+            <p>{{ form_widget( form.url ) }}</p>
         </div>
         <div>
             <p>{{ "Autor"|trans }}</p>

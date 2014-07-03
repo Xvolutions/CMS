@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\BlogPost;
 use Xvolutions\AdminBundle\Form\BlogPostType;
-use Symfony\Component\Security\Core\Exception;
+use Symfony\Component\Debug\ErrorHandler;
 
 /**
  * Description of BlogPostController
@@ -170,6 +170,7 @@ class BlogPostController extends AdminController
      */
     private function removeBlogPost($id, &$status, &$error)
     {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             $blogPost = $em->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
@@ -193,6 +194,7 @@ class BlogPostController extends AdminController
      */
     private function removeSelectedBlogPosts($ids, &$status, &$error)
     {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             foreach ($ids as $id)

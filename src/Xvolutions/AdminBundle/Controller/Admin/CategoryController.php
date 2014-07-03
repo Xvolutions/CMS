@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Category;
 use Xvolutions\AdminBundle\Form\CategoryType;
-use Symfony\Component\Security\Core\Exception;
+use Symfony\Component\Debug\ErrorHandler;
 
 /**
  * Description of CategoriesController
@@ -159,6 +159,7 @@ class CategoryController extends AdminController
      */
     private function removeCategory($id, &$status, &$error)
     {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             $category = $em->getRepository('XvolutionsAdminBundle:Category')->find($id);
@@ -182,6 +183,7 @@ class CategoryController extends AdminController
      */
     private function removeSelectedCategories($ids, &$status, &$error)
     {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             foreach ($ids as $id)

@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Page;
 use Xvolutions\AdminBundle\Form\PageType;
-use Symfony\Component\Security\Core\Exception;
+use Symfony\Component\Debug\ErrorHandler;
 
 /**
  * Description of PagesController
@@ -245,8 +245,9 @@ class PagesController extends AdminController
      * @param type $id the id of the page to be removed
      * @return string with the information message
      */
-    private function RemovePage( $id, &$status, &$error )
+    private function removePage( $id, &$status, &$error )
     {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             $page = $em->getRepository( 'XvolutionsAdminBundle:Page' )->find( $id );
@@ -270,8 +271,9 @@ class PagesController extends AdminController
      * @param type $ids array containing the id's of the pages to be removed
      * @return string with the message
      */
-    private function RemoveSelectedPages( $ids, &$status, &$error )
+    private function removeSelectedPages( $ids, &$status, &$error )
     {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             foreach ( $ids as $id ) {
