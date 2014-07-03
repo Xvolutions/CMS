@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Role;
 use Xvolutions\AdminBundle\Form\RoleType;
-use Symfony\Component\Security\Core\Exception;
+use Symfony\Component\Debug\ErrorHandler;
 
 /**
  * Description of RolesController
@@ -156,8 +156,9 @@ class RolesController extends AdminController {
      * @param type $id the id of the group to be removed
      * @return string with the information message
      */
-    private function RemoveRole( $id, &$status, &$error )
+    private function removeRole( $id, &$status, &$error )
     {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             $role = $em->getRepository( 'XvolutionsAdminBundle:Role' )->find( $id );
@@ -196,8 +197,9 @@ class RolesController extends AdminController {
      * @param type $ids array containing the id's of the groups to be removed
      * @return string with the message
      */
-    private function RemoveSelectedRoles( $ids, &$status, &$error )
+    private function removeSelectedRoles( $ids, &$status, &$error )
     {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             foreach ( $ids as $id ) {

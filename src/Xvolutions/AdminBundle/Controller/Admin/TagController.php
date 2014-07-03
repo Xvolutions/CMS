@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Tag;
 use Xvolutions\AdminBundle\Form\TagType;
-use Symfony\Component\Security\Core\Exception;
+use Symfony\Component\Debug\ErrorHandler;
 
 /**
  * Description of TagsController
@@ -159,6 +159,7 @@ class TagController extends AdminController
      */
     private function removeTag($id, &$status, &$error)
     {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             $tag = $em->getRepository('XvolutionsAdminBundle:Tag')->find($id);
@@ -182,6 +183,7 @@ class TagController extends AdminController
      */
     private function removeSelectedTags($ids, &$status, &$error)
     {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             foreach ($ids as $id)

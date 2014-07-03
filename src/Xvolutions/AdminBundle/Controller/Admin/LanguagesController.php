@@ -13,7 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Language;
 use Xvolutions\AdminBundle\Form\LanguageType;
-use Symfony\Component\Security\Core\Exception;
+use Symfony\Component\Debug\ErrorHandler;
+
 /**
  * Description of LanguagesController
  *
@@ -189,7 +190,8 @@ class LanguagesController extends AdminController
      * @param type $id the id of the language to be removed
      * @return string with the information message
      */
-    private function RemoveLanguage( $id, &$status, &$error) {
+    private function removeLanguage( $id, &$status, &$error) {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             $language = $em->getRepository( 'XvolutionsAdminBundle:Language' )->find( $id );
@@ -214,8 +216,9 @@ class LanguagesController extends AdminController
      * @param type $ids array containing the id's of the languages to be removed
      * @return string with the message
      */
-    private function RemoveSelectedLanguages( $ids, &$status, &$error )
+    private function removeSelectedLanguages( $ids, &$status, &$error )
     {
+        ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
             foreach ( $ids as $id ) {
