@@ -24,7 +24,8 @@ class TagController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new role
      */
-    public function addTagsAction(Request $request) {
+    public function addTagsAction(Request $request)
+    {
         parent::verifyaccess();
 
         $tag = new Tag();
@@ -70,24 +71,24 @@ class TagController extends AdminController
      * @param type $id the id of an existing tag
      * @return type the template for editing a tag
      */
-    public function editTagsAction(Request $request, $id) {
+    public function editTagsAction(Request $request, $id)
+    {
         parent::verifyaccess();
 
         $tagType = new TagType();
 
-        $tag = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Tag' )->find( $id );
+        $tag = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Tag')->find($id);
 
-        $form = $this->createForm( $tagType, $tag )
-                ->add( 'Guardar', 'submit' )
+        $form = $this->createForm($tagType, $tag)
+                ->add('Guardar', 'submit')
         ;
 
         $status = null;
         $error = null;
 
-        $form->handleRequest( $request );
+        $form->handleRequest($request);
 
-        if ( $form->isValid() )
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $status = 'Palavra-chave actualizada com sucesso';
@@ -170,7 +171,7 @@ class TagController extends AdminController
             } else {
                 $error = "Erro ao remover a palavra-chave";
             }
-        } catch (Exception $ex) {
+        } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover a palavra-chave";
         }
     }
@@ -190,14 +191,14 @@ class TagController extends AdminController
             {
                 $tag = $em->getRepository('XvolutionsAdminBundle:Tag')->find($id);
                 if ($tag != 'empty') {
-                        $em->remove($tag);
-                        $em->flush();
-                        $status = 'Palavra-Chave removida com sucesso';
+                    $em->remove($tag);
+                    $em->flush();
+                    $status = 'Palavra-Chave removida com sucesso';
                 } else {
                     $error = "Erro ao remover a(s) palavra-chave(s)";
                 }
             }
-        } catch (Exception $ex) {
+        } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover a(s) palavra-chave(s)";
         }
     }

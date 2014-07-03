@@ -24,7 +24,8 @@ class CategoryController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new role
      */
-    public function addCategoriesAction(Request $request) {
+    public function addCategoriesAction(Request $request)
+    {
         parent::verifyaccess();
 
         $category = new Category();
@@ -70,24 +71,24 @@ class CategoryController extends AdminController
      * @param type $id the id of an existing category
      * @return type the template for editing a category
      */
-    public function editCategoriesAction(Request $request, $id) {
+    public function editCategoriesAction(Request $request, $id)
+    {
         parent::verifyaccess();
 
         $categoryType = new CategoryType();
 
-        $category = $this->getDoctrine()->getRepository( 'XvolutionsAdminBundle:Category' )->find( $id );
+        $category = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Category')->find($id);
 
-        $form = $this->createForm( $categoryType, $category )
-                ->add( 'Guardar', 'submit' )
+        $form = $this->createForm($categoryType, $category)
+                ->add('Guardar', 'submit')
         ;
 
         $status = null;
         $error = null;
 
-        $form->handleRequest( $request );
+        $form->handleRequest($request);
 
-        if ( $form->isValid() )
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $status = 'Categoria actualizada com sucesso';
@@ -170,7 +171,7 @@ class CategoryController extends AdminController
             } else {
                 $error = "Erro ao remover a categoria";
             }
-        } catch (Exception $ex) {
+        } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover a categoria";
         }
     }
@@ -190,14 +191,14 @@ class CategoryController extends AdminController
             {
                 $category = $em->getRepository('XvolutionsAdminBundle:Category')->find($id);
                 if ($category != 'empty') {
-                        $em->remove($category);
-                        $em->flush();
-                        $status = 'Categoria removido com sucesso';
+                    $em->remove($category);
+                    $em->flush();
+                    $status = 'Categoria removido com sucesso';
                 } else {
                     $error = "Erro ao remover a(s) categoria(s)";
                 }
             }
-        } catch (Exception $ex) {
+        } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover a(s) categoria(s)";
         }
     }

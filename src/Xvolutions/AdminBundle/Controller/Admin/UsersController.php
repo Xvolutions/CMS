@@ -45,7 +45,7 @@ class UsersController extends AdminController
             $misc = $this->get('xvolutions_admin.misc');
             $salt = sha1($misc->randomPassword());
             $user->setSalt($salt);
-            $password = $encoder->encodePassword($user->getPassword(), $salt );
+            $password = $encoder->encodePassword($user->getPassword(), $salt);
             $user->setPassword($password);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -101,7 +101,7 @@ class UsersController extends AdminController
 
         if ($form->isValid()) {
             // Verify is the password has been changes
-            $formValues = $request->request->get( 'xvolutions_adminbundle_user' );
+            $formValues = $request->request->get('xvolutions_adminbundle_user');
             if ($formValues['password']['password'] != null) {
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user);
@@ -199,7 +199,7 @@ class UsersController extends AdminController
             $em->remove($user);
             $em->flush();
             $status = 'Utilizador removido com sucesso';
-        } catch (Exception $ex) {
+        } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover um utilizador";
         }
     }
@@ -222,7 +222,7 @@ class UsersController extends AdminController
                 $em->flush($user);
                 $status = 'Utilizador(es) removido(s) com sucesso';
             }
-        } catch (Exception $ex) {
+        } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover utilizador(es)";
         }
     }

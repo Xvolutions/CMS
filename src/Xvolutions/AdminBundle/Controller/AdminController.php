@@ -4,6 +4,7 @@ namespace Xvolutions\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Debug\ErrorHandler;
 
 /**
  * Description of SecurityController
@@ -88,7 +89,7 @@ class AdminController extends Controller {
         try {
             $user = $this->get('security.context')->getToken()->getUser();
             return $user->getName();
-        } catch (Exception $ex) {
+        } catch (\ErrorException $ex) {
             throw new AccessDeniedException();
         }
     }
@@ -106,7 +107,7 @@ class AdminController extends Controller {
             $emailAddress = $user->getEmail();
             $misc = $this->get('xvolutions_admin.misc');
             return $misc->fetchGravatar($emailAddress);
-        } catch (Exception $ex) {
+        } catch (\ErrorException $ex) {
             throw new AccessDeniedException();
         }
     }

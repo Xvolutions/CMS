@@ -14,7 +14,8 @@ use Symfony\Component\Debug\ErrorHandler;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class SectionsController extends AdminController {
+class SectionsController extends AdminController
+{
 
     /**
      * Controller responsible to add a new section for and handling the form
@@ -23,7 +24,8 @@ class SectionsController extends AdminController {
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new section
      */
-    public function addsectionAction(Request $request) {
+    public function addsectionAction(Request $request)
+    {
         parent::verifyaccess();
 
         $section = new Section();
@@ -76,7 +78,8 @@ class SectionsController extends AdminController {
      * @param type $id the id of an existing section
      * @return type the template for editing a section
      */
-    public function editsectionAction(Request $request, $id) {
+    public function editsectionAction(Request $request, $id)
+    {
         parent::verifyaccess();
 
         $sectionType = new SectionType();
@@ -135,7 +138,8 @@ class SectionsController extends AdminController {
      * @param type $id The id, or id's, of the section(s) to be removed
      * @return type call the controller to handle 
      */
-    public function sectionsAction($option = NULL, $id = NULL) {
+    public function sectionsAction($option = NULL, $id = NULL)
+    {
         parent::verifyaccess();
 
         $status = NULL;
@@ -152,10 +156,10 @@ class SectionsController extends AdminController {
                 }
         }
 
-        if( $error != NULL ) {
+        if ($error != NULL) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
-        } 
-        if( $status != NULL ) {
+        }
+        if ($status != NULL) {
             return new Response($status, Response::HTTP_OK);
         }
 
@@ -174,19 +178,20 @@ class SectionsController extends AdminController {
      * @param type $id the id of the section to be removed
      * @return string with the information message
      */
-    private function removeSection($id, &$status, &$error) {
+    private function removeSection($id, &$status, &$error)
+    {
         ErrorHandler::register();
         try {
 
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery(
-               'SELECT p.id
+                            'SELECT p.id
                 FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
                 WHERE p.id_section = :id'
-            )->setParameter('id', $id);
+                    )->setParameter('id', $id);
             $pagesCount = $query->getResult();
 
-            if($pagesCount != NULL) {
+            if ($pagesCount != NULL) {
                 $error = 'Não é possível remover uma secção associada a páginas';
             } else {
                 $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
@@ -194,7 +199,7 @@ class SectionsController extends AdminController {
                 $em->flush();
                 $status = 'Secção removida com sucesso';
             }
-        } catch (Exception $ex) {
+        } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover a secção";
         }
     }
@@ -205,20 +210,22 @@ class SectionsController extends AdminController {
      * @param type $ids array containing the id's of the sections to be removed
      * @return string With the message
      */
-    private function removeSelectedSections($ids, &$status, &$error) {
+    private function removeSelectedSections($ids, &$status, &$error)
+    {
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
-            foreach ($ids as $id) {
+            foreach ($ids as $id)
+            {
 
                 $query = $em->createQuery(
-                   'SELECT p.id
+                                'SELECT p.id
                     FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
                     WHERE p.id_section = :id'
-                )->setParameter('id', $id);
+                        )->setParameter('id', $id);
                 $pagesCount = $query->getResult();
 
-                if($pagesCount != NULL) {
+                if ($pagesCount != NULL) {
                     $error = 'Não é possível remover uma secção associada a páginas';
                     break;
                 } else {
@@ -228,7 +235,7 @@ class SectionsController extends AdminController {
                     $status = 'Secção(ões) removida(s) com sucesso';
                 }
             }
-        } catch (Exception $ex) {
+        } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover as secção(ões)";
         }
     }
