@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\BlogPost;
 use Xvolutions\AdminBundle\Form\BlogPostType;
+use Xvolutions\AdminBundle\Entity\Alias;
 use Symfony\Component\Debug\ErrorHandler;
 
 /**
@@ -42,7 +43,17 @@ class BlogPostController extends AdminController
         $status = null;
         $error = null;
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $formValues = $request->request->get('xvolutions_adminbundle_blogpost');
+            if($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['id_url'], 'alias' => $formValues['id_url'])) == null) {
+                $em = $this->getDoctrine()->getManager();
+                $alias = new Alias();
+                $alias->setUrl($formValues['id_url']);
+                $alias->setAlias($formValues['id_url']);
+
+                $em->persist($alias);
+                $em->flush();
+            }
+            $blogPost->setIdUrl($alias->getId());
             $em->persist($blogPost);
             $em->flush();
             $status = 'Artigo adicionado com sucesso';
@@ -80,13 +91,19 @@ class BlogPostController extends AdminController
         $blogPostType = new BlogPostType();
 
         $blogPost = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
+        $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->find($blogPost->getIdurl());
 
         $form = $this->createForm($blogPostType, $blogPost)
                 ->add(
-                        'author', null, array(
+                    'author', null, array(
                     'label' => 'Autor',
                     'disabled' => true,
                     'data' => parent::getUsername()
+                        )
+                )
+                ->add(
+                    'id_url', 'text', array(
+                    'data' => $alias->getUrl()
                         )
                 )
                 ->add('Guardar', 'submit')
@@ -177,6 +194,13 @@ class BlogPostController extends AdminController
             if ($blogPost != 'empty') {
                 $em->remove($blogPost);
                 $em->flush();
+
+                $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->find($blogPost->getIdurl());
+                if($alias != 'emtpy') {
+                    $em->remove($alias);
+                    $em->flush();
+                }
+
                 $status = 'Artigo removido com sucesso';
             } else {
                 $error = "Erro ao remover o artigo";
@@ -203,6 +227,13 @@ class BlogPostController extends AdminController
                 if ($blogPost != 'empty') {
                     $em->remove($blogPost);
                     $em->flush();
+
+                    $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->find($blogPost->getIdurl());
+                    if($alias != 'emtpy') {
+                        $em->remove($alias);
+                        $em->flush();
+                    }
+
                     $status = 'Artigo removido com sucesso';
                 } else {
                     $error = "Erro ao remover o(s) artigo(s)";

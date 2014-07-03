@@ -30,11 +30,11 @@ class BlogPost
     private $title;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="url", type="string", length=255)
+     * @ORM\Column(name="id_url", type="integer")
      */
-    private $url;
+    private $id_url;
 
     /**
      * @var string
@@ -129,12 +129,12 @@ class BlogPost
     /**
      * Set URL
      *
-     * @param string $url
+     * @param string $id_url
      * @return Url
      */
-    public function setUrl($url)
+    public function setIdUrl($id_url)
     {
-        $this->url = $url;
+        $this->id_url = $id_url;
 
         return $this;
     }
@@ -144,9 +144,9 @@ class BlogPost
      *
      * @return string 
      */
-    public function getUrl()
+    public function getIdUrl()
     {
-        return $this->url;
+        return $this->id_url;
     }
 
     /**
