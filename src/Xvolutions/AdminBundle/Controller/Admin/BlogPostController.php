@@ -44,11 +44,11 @@ class BlogPostController extends AdminController
         $error = null;
         if ($form->isValid()) {
             $formValues = $request->request->get('xvolutions_adminbundle_blogpost');
-            if($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['id_url'], 'alias' => $formValues['id_url'])) == null) {
+            if($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['id_url'], 'type' => 2)) == null) {
                 $em = $this->getDoctrine()->getManager();
                 $alias = new Alias();
                 $alias->setUrl($formValues['id_url']);
-                $alias->setAlias($formValues['id_url']);
+                $alias->setType(2);
 
                 $em->persist($alias);
                 $em->flush();
@@ -91,6 +91,7 @@ class BlogPostController extends AdminController
         $blogPostType = new BlogPostType();
 
         $blogPost = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
+        $oldBlogPost = $blogPost;
         $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->find($blogPost->getIdurl());
 
         $form = $this->createForm($blogPostType, $blogPost)
@@ -102,9 +103,12 @@ class BlogPostController extends AdminController
                         )
                 )
                 ->add(
-                    'id_url', 'text', array(
-                    'data' => $alias->getUrl()
-                        )
+                    'id_url', 
+                    'text', 
+                    array(
+                        'data' => $alias->getUrl(),
+                        'attr' => array('class' => 'url')
+                    )
                 )
                 ->add('Guardar', 'submit')
         ;
@@ -116,6 +120,19 @@ class BlogPostController extends AdminController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $formValues = $request->request->get('xvolutions_adminbundle_blogpost');
+            if($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['id_url'], 'type' => 2)) == null || 
+                    $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->find($oldBlogPost->getIdUrl()) != null ) {
+                $em = $this->getDoctrine()->getManager();
+                $alias = new Alias();
+                $alias->setUrl($formValues['id_url']);
+                $alias->setType(2);
+
+                $em->persist($alias);
+                $em->flush();
+            }
+            $blogPost->setIdUrl($alias->getId());
             $em->flush();
             $status = 'Artigo actualizado com sucesso';
 

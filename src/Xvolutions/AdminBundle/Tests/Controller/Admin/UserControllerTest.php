@@ -1,10 +1,10 @@
 <?php
 
-namespace Xvolutions\AdminBundle\Tests\Controller;
+namespace Xvolutions\AdminBundle\Tests\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class PageControllerTest extends WebTestCase
+class UserControllerTest extends WebTestCase
 {
     
     public function testCompleteScenario()
@@ -13,13 +13,13 @@ class PageControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', 'admin/page/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $crawler = $client->request('GET', '/user/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /user/");
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'xvolutions_adminbundle_pagetype[field_name]'  => 'Test',
+            'xvolutions_adminbundle_usertype[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -33,7 +33,7 @@ class PageControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Edit')->form(array(
-            'xvolutions_adminbundle_pagetype[field_name]'  => 'Foo',
+            'xvolutions_adminbundle_usertype[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 
