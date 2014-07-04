@@ -75,7 +75,7 @@ class PagesController extends AdminController
                 // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
                 $em = $this->getDoctrine()->getManager();
                 $query = $em->createQuery(
-                        'SELECT p.id, p.title, p.url, p.date, l.language, s.section
+                        'SELECT p.id, p.title, p.date, l.language, s.section
                     FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s, XvolutionsAdminBundle:Language l
                     WHERE p.id_section = s.id AND p.id_language = l.id AND p.id != 1
                     ORDER BY p.title ASC'
@@ -116,7 +116,6 @@ class PagesController extends AdminController
                         'SELECT 
                 p.id, 
                 p.title, 
-                p.url, 
                 p.date, 
                 s.section, 
                 l.language
@@ -180,7 +179,7 @@ class PagesController extends AdminController
         // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
-                'SELECT p.id, p.title, p.url, p.date, l.language, s.section
+                'SELECT p.id, p.title, p.date, l.language, s.section
             FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s, XvolutionsAdminBundle:Language l
             WHERE p.id_section = s.id AND p.id_language = l.id AND p.id != 1
             ORDER BY p.title ASC'
@@ -252,7 +251,7 @@ class PagesController extends AdminController
 
             // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
             $query = $em->createQuery(
-                    'SELECT p.id, p.title, p.url, p.date, l.language, s.section
+                    'SELECT p.id, p.title, p.date, l.language, s.section
                 FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s, XvolutionsAdminBundle:Language l
                 WHERE p.id_section = s.id AND p.id_language = l.id AND p.id != 1
                 ORDER BY p.title ASC'
@@ -283,7 +282,7 @@ class PagesController extends AdminController
     }
 
     /**
-     * This is function is repsonsible to remove a page
+     * This is function is responsible to remove a page
      * 
      * @param type $id the id of the page to be removed
      * @return string with the information message
