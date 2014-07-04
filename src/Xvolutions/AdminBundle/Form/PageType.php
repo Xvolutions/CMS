@@ -21,13 +21,6 @@ class PageType extends AbstractType
                     array(
                         'attr' => array('class' => 'title')
                     ))
-            ->add(
-                    'url',
-                    null,
-                    array(
-                        'attr' => array('class' => 'url')
-                    )
-            )
             ->add('text')
             ->add(
                     'id_language', 

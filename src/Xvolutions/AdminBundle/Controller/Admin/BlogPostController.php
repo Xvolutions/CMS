@@ -33,6 +33,14 @@ class BlogPostController extends AdminController
         $blogPostType = new BlogPostType();
 
         $form = $this->createForm($blogPostType, $blogPost)
+                ->add(
+                    'url', 
+                    'text',
+                    array(
+                        'label' => 'URL',
+                        'attr' => array('class' => 'url')
+                    )
+                )
                 ->add('Criar', 'submit')
         ;
 
@@ -44,19 +52,23 @@ class BlogPostController extends AdminController
         $error = null;
         if ($form->isValid()) {
             $formValues = $request->request->get('xvolutions_adminbundle_blogpost');
-            if($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['id_url'], 'type' => 2)) == null) {
+            if($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['url'], 'type' => 2)) == null) {
                 $em = $this->getDoctrine()->getManager();
+                $em->persist($blogPost);
+                $em->flush();
+                
                 $alias = new Alias();
-                $alias->setUrl($formValues['id_url']);
+                $alias->setUrl($formValues['url']);
                 $alias->setType(2);
+                $alias->setIdExternal($blogPost->getId());
 
                 $em->persist($alias);
                 $em->flush();
+
+                $status = 'Artigo adicionado com sucesso';
+            } else {
+                $error = 'Já existe um artigo com esse endereço';
             }
-            $blogPost->setIdUrl($alias->getId());
-            $em->persist($blogPost);
-            $em->flush();
-            $status = 'Artigo adicionado com sucesso';
 
             $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
 
@@ -91,8 +103,7 @@ class BlogPostController extends AdminController
         $blogPostType = new BlogPostType();
 
         $blogPost = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
-        $oldBlogPost = $blogPost;
-        $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->find($blogPost->getIdurl());
+        $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $id));
 
         $form = $this->createForm($blogPostType, $blogPost)
                 ->add(
@@ -103,11 +114,12 @@ class BlogPostController extends AdminController
                         )
                 )
                 ->add(
-                    'id_url', 
-                    'text', 
+                    'url', 
+                    'text',
                     array(
-                        'data' => $alias->getUrl(),
-                        'attr' => array('class' => 'url')
+                        'label' => 'URL',
+                        'attr' => array('class' => 'url'),
+                        'data' => $alias[0]->getUrl()
                     )
                 )
                 ->add('Guardar', 'submit')
@@ -122,19 +134,44 @@ class BlogPostController extends AdminController
             $em = $this->getDoctrine()->getManager();
 
             $formValues = $request->request->get('xvolutions_adminbundle_blogpost');
-            if($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['id_url'], 'type' => 2)) == null || 
-                    $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->find($oldBlogPost->getIdUrl()) != null ) {
-                $em = $this->getDoctrine()->getManager();
+            $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['url'], 'type' => 2));
+
+            if(count($alias)==0) {
+                $oldAlias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $id));
+                $em->remove($oldAlias[0]);
+                
+                $em->persist($blogPost);
+                $em->flush();
+                
                 $alias = new Alias();
-                $alias->setUrl($formValues['id_url']);
+                $alias->setUrl($formValues['url']);
                 $alias->setType(2);
+                $alias->setIdExternal($blogPost->getId());
 
                 $em->persist($alias);
                 $em->flush();
+
+                $status = 'Artigo actualizado com sucesso';
+            } else {
+                if ($alias[0]->getIdExternal() == $id) {
+                    $em->remove($alias[0]);
+                    $em->flush();
+
+                    $em->persist($blogPost);
+                    $em->flush();
+
+                    $alias = new Alias();
+                    $alias->setUrl($formValues['url']);
+                    $alias->setType(2);
+                    $alias->setIdExternal($blogPost->getId());
+
+                    $em->persist($alias);
+                    $em->flush();
+                    $status = 'Artigo actualizado com sucesso';
+                } else {
+                    $error = 'Já existe um artigo com esse endereço';
+                }
             }
-            $blogPost->setIdUrl($alias->getId());
-            $em->flush();
-            $status = 'Artigo actualizado com sucesso';
 
             $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
 
@@ -212,9 +249,9 @@ class BlogPostController extends AdminController
                 $em->remove($blogPost);
                 $em->flush();
 
-                $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->find($blogPost->getIdurl());
-                if($alias != 'emtpy') {
-                    $em->remove($alias);
+                $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $blogPost->getId()));
+                if(count($alias) > 0) {
+                    $em->remove($alias[0]);
                     $em->flush();
                 }
 
@@ -245,9 +282,9 @@ class BlogPostController extends AdminController
                     $em->remove($blogPost);
                     $em->flush();
 
-                    $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->find($blogPost->getIdurl());
-                    if($alias != 'emtpy') {
-                        $em->remove($alias);
+                    $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $blogPost->getId()));
+                    if(count($alias) > 0) {
+                        $em->remove($alias[0]);
                         $em->flush();
                     }
 

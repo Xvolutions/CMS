@@ -37,6 +37,12 @@ class Alias
      */
     private $type;
 
+        /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_external", type="integer")
+     */
+    private $id_external;
 
     /**
      * Get id
@@ -92,5 +98,28 @@ class Alias
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set id_external
+     *
+     * @param string $id_external
+     * @return id_external
+     */
+    public function setIdExternal($id_external)
+    {
+        $this->id_external = $id_external;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getIdExternal()
+    {
+        return $this->id_external;
     }
 }

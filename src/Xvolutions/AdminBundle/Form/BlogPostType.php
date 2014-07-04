@@ -23,13 +23,6 @@ class BlogPostType extends AbstractType
                         'attr' => array('class' => 'title')
                     ))
             ->add(
-                    'id_url', 
-                    'text',
-                    array(
-                        'label' => 'URL',
-                        'attr' => array('class' => 'url')
-                    ))
-            ->add(
                     'author', 
                     null,
                     array(

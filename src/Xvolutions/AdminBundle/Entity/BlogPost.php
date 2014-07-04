@@ -30,13 +30,6 @@ class BlogPost
     private $title;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id_url", type="integer")
-     */
-    private $id_url;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="author", type="string", length=255)
@@ -129,24 +122,21 @@ class BlogPost
     /**
      * Set URL
      *
-     * @param string $id_url
-     * @return Url
+     * @return null
      */
-    public function setIdUrl($id_url)
+    public function setUrl($url)
     {
-        $this->id_url = $id_url;
-
-        return $this;
+        return null;
     }
 
     /**
      * Get URL
      *
-     * @return string 
+     * @return null 
      */
-    public function getIdUrl()
+    public function getUrl()
     {
-        return $this->id_url;
+        return null;
     }
 
     /**
