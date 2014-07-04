@@ -29,7 +29,6 @@
             <th></th>
             <th>{{ "Nome da Página"|trans }}</th>
             <th>{{ "Secção"| trans }}</th>
-            <th>{{ "URL"| trans }}</th>
             <th>{{ "Language"| trans }}</th>
             <th>{{ "Data de criação"| trans }}</th>
             <th>{{ "Opções"|trans }}</th>
@@ -41,7 +40,6 @@
                     <td><input type="checkbox" id="{{page.id}}" onclick="SelectForRemoval('{{page.id}}');"></td>
                     <td>{{page.title}}</td>
                     <td>{{page.section}}</td>
-                    <td>{{page.url}}</td>
                     <td>{{page.language}}</td>
                     <td>{{page.date|date('d/m/Y H:m:s') }}</td>
                     <td>
@@ -52,7 +50,7 @@
             {% endfor %}
         {% else %}
             <tr>
-                <td colspan="7" >{{"Não existem páginas definidas"|trans}}</td>
+                <td colspan="6" >{{"Não existem páginas definidas"|trans}}</td>
             <tr>
         {% endif %}
     </table>
