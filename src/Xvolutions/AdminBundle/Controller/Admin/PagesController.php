@@ -6,6 +6,7 @@ use Xvolutions\AdminBundle\Controller\AdminController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Page;
+use Xvolutions\AdminBundle\Entity\Alias;
 use Xvolutions\AdminBundle\Form\PageType;
 use Symfony\Component\Debug\ErrorHandler;
 
