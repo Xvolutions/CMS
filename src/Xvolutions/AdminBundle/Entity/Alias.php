@@ -29,12 +29,20 @@ class Alias
     private $url;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="alias", type="string", length=255)
+     * Type 1 - page
+     * Type 2 - blogPost
+     * @ORM\Column(name="type", type="integer")
      */
-    private $alias;
+    private $type;
 
+        /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_external", type="integer")
+     */
+    private $id_external;
 
     /**
      * Get id
@@ -70,25 +78,48 @@ class Alias
     }
 
     /**
-     * Set alias
+     * Set type
      *
-     * @param string $alias
-     * @return Alias
+     * @param string $type
+     * @return Type
      */
-    public function setAlias($alias)
+    public function setType($type)
     {
-        $this->alias = $alias;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get alias
+     * Get type
      *
      * @return string 
      */
-    public function getAlias()
+    public function getType()
     {
-        return $this->alias;
+        return $this->type;
+    }
+
+    /**
+     * Set id_external
+     *
+     * @param string $id_external
+     * @return id_external
+     */
+    public function setIdExternal($id_external)
+    {
+        $this->id_external = $id_external;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getIdExternal()
+    {
+        return $this->id_external;
     }
 }

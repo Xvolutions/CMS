@@ -32,13 +32,6 @@ class BlogPost
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255)
-     */
-    private $url;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="author", type="string", length=255)
      */
     private $author;
@@ -129,24 +122,21 @@ class BlogPost
     /**
      * Set URL
      *
-     * @param string $url
-     * @return Url
+     * @return null
      */
     public function setUrl($url)
     {
-        $this->url = $url;
-
-        return $this;
+        return null;
     }
 
     /**
      * Get URL
      *
-     * @return string 
+     * @return null 
      */
     public function getUrl()
     {
-        return $this->url;
+        return null;
     }
 
     /**

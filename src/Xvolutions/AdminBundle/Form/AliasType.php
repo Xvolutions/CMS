@@ -16,7 +16,7 @@ class AliasType extends AbstractType
     {
         $builder
             ->add('url')
-            ->add('alias')
+            ->add('type')
         ;
     }
     

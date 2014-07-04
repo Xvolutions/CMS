@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\BlogPost;
 use Xvolutions\AdminBundle\Form\BlogPostType;
+use Xvolutions\AdminBundle\Entity\Alias;
 use Symfony\Component\Debug\ErrorHandler;
 
 /**
@@ -32,6 +33,14 @@ class BlogPostController extends AdminController
         $blogPostType = new BlogPostType();
 
         $form = $this->createForm($blogPostType, $blogPost)
+                ->add(
+                    'url', 
+                    'text',
+                    array(
+                        'label' => 'URL',
+                        'attr' => array('class' => 'url')
+                    )
+                )
                 ->add('Criar', 'submit')
         ;
 
@@ -42,10 +51,24 @@ class BlogPostController extends AdminController
         $status = null;
         $error = null;
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($blogPost);
-            $em->flush();
-            $status = 'Artigo adicionado com sucesso';
+            $formValues = $request->request->get('xvolutions_adminbundle_blogpost');
+            if($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['url'], 'type' => 2)) == null) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($blogPost);
+                $em->flush();
+                
+                $alias = new Alias();
+                $alias->setUrl($formValues['url']);
+                $alias->setType(2);
+                $alias->setIdExternal($blogPost->getId());
+
+                $em->persist($alias);
+                $em->flush();
+
+                $status = 'Artigo adicionado com sucesso';
+            } else {
+                $error = 'Já existe um artigo com esse endereço';
+            }
 
             $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
 
@@ -80,14 +103,24 @@ class BlogPostController extends AdminController
         $blogPostType = new BlogPostType();
 
         $blogPost = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
+        $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $id));
 
         $form = $this->createForm($blogPostType, $blogPost)
                 ->add(
-                        'author', null, array(
+                    'author', null, array(
                     'label' => 'Autor',
                     'disabled' => true,
                     'data' => parent::getUsername()
                         )
+                )
+                ->add(
+                    'url', 
+                    'text',
+                    array(
+                        'label' => 'URL',
+                        'attr' => array('class' => 'url'),
+                        'data' => $alias[0]->getUrl()
+                    )
                 )
                 ->add('Guardar', 'submit')
         ;
@@ -99,8 +132,46 @@ class BlogPostController extends AdminController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->flush();
-            $status = 'Artigo actualizado com sucesso';
+
+            $formValues = $request->request->get('xvolutions_adminbundle_blogpost');
+            $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['url'], 'type' => 2));
+
+            if(count($alias)==0) {
+                $oldAlias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $id));
+                $em->remove($oldAlias[0]);
+                
+                $em->persist($blogPost);
+                $em->flush();
+                
+                $alias = new Alias();
+                $alias->setUrl($formValues['url']);
+                $alias->setType(2);
+                $alias->setIdExternal($blogPost->getId());
+
+                $em->persist($alias);
+                $em->flush();
+
+                $status = 'Artigo actualizado com sucesso';
+            } else {
+                if ($alias[0]->getIdExternal() == $id) {
+                    $em->remove($alias[0]);
+                    $em->flush();
+
+                    $em->persist($blogPost);
+                    $em->flush();
+
+                    $alias = new Alias();
+                    $alias->setUrl($formValues['url']);
+                    $alias->setType(2);
+                    $alias->setIdExternal($blogPost->getId());
+
+                    $em->persist($alias);
+                    $em->flush();
+                    $status = 'Artigo actualizado com sucesso';
+                } else {
+                    $error = 'Já existe um artigo com esse endereço';
+                }
+            }
 
             $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
 
@@ -177,6 +248,13 @@ class BlogPostController extends AdminController
             if ($blogPost != 'empty') {
                 $em->remove($blogPost);
                 $em->flush();
+
+                $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $blogPost->getId()));
+                if(count($alias) > 0) {
+                    $em->remove($alias[0]);
+                    $em->flush();
+                }
+
                 $status = 'Artigo removido com sucesso';
             } else {
                 $error = "Erro ao remover o artigo";
@@ -203,6 +281,13 @@ class BlogPostController extends AdminController
                 if ($blogPost != 'empty') {
                     $em->remove($blogPost);
                     $em->flush();
+
+                    $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $blogPost->getId()));
+                    if(count($alias) > 0) {
+                        $em->remove($alias[0]);
+                        $em->flush();
+                    }
+
                     $status = 'Artigo removido com sucesso';
                 } else {
                     $error = "Erro ao remover o(s) artigo(s)";
