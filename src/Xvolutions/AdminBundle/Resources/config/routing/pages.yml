@@ -1,10 +1,12 @@
 editpages:
     pattern: /edit/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:editpages }
+    methods:  [GET,POST]
 
 addpages:
     pattern: /add
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:addpages }
+    methods:  [GET,POST]
 
 pagesoption:
     pattern: /{option}/{id}
@@ -14,3 +16,4 @@ pagesoption:
 pages:
     pattern: /
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages }
+    methods:  [GET]
