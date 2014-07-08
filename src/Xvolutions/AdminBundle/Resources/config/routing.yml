@@ -1,6 +1,7 @@
 login:
     pattern:  /
     defaults: { _controller: XvolutionsAdminBundle:Security:login }
+    methods:  [GET,POST]
 
 login_check:
     pattern: /login_check
@@ -11,14 +12,17 @@ logout:
 recover:
     pattern:  /recover
     defaults: { _controller: XvolutionsAdminBundle:Security:recover }
+    methods:  [GET,POST]
 
 backoffice:
     pattern: /backoffice
     defaults: { _controller: XvolutionsAdminBundle:Admin:backoffice }
+    methods:  [GET]
 
 setup:
     pattern: /setup
     defaults: { _controller: XvolutionsAdminBundle:Admin:setup }
+    methods:  [GET]
 
 ### PAGES ###
 
