@@ -5,6 +5,7 @@ namespace Xvolutions\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Debug\ErrorHandler;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Description of SecurityController
@@ -63,6 +64,23 @@ class AdminController extends Controller {
             'XvolutionsAdminBundle:template:gravatar.html.twig', 
             array(
                 'gravatar' => $gravatar
+            )
+        );
+    }
+
+    /**
+     * Controller responsible to show the phpinfo
+     * 
+     * @return type
+     */
+    public function phpinfoAction() {
+        ob_start();
+        phpinfo();
+        $phpinfo = ob_get_clean();
+        return $this->render(
+            'XvolutionsAdminBundle:phpinfo:phpinfo.html.twig', 
+            array(
+                'phpinfo' => $phpinfo
             )
         );
     }
