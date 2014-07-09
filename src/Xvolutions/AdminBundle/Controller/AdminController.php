@@ -5,7 +5,6 @@ namespace Xvolutions\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Debug\ErrorHandler;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Description of SecurityController
