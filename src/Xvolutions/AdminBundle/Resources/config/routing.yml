@@ -24,6 +24,11 @@ setup:
     defaults: { _controller: XvolutionsAdminBundle:Admin:setup }
     methods:  [GET]
 
+phpinfo:
+    pattern: /backoffice/phpinfo
+    defaults: { _controller: XvolutionsAdminBundle:Admin:phpinfo }
+    methods:  [GET]
+
 ### PAGES ###
 
 XvolutionsAdminBundle_pages:
