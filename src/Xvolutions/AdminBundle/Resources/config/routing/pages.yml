@@ -14,6 +14,6 @@ pagesoption:
     methods:  [DELETE]
 
 pages:
-    pattern: /
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages }
+    pattern: /{current_page}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages, current_page: 0 }
     methods:  [GET]
