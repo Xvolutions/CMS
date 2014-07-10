@@ -46,7 +46,6 @@ class Pagination {
         $this->total_pages = $total_pages;
         $this->boundaries = $boundaries;
         $this->around = $around;
-        $this->bootstrapPages();
     }
 
     /*
@@ -55,6 +54,7 @@ class Pagination {
     public function displayPagination() {
         $this->validation();
 
+        $this->bootstrapPages();
         $this->beginning();
         $this->current();
         $this->ending();
@@ -92,6 +92,9 @@ class Pagination {
         if (is_numeric($this->current_page) && is_numeric($this->total_pages) && is_numeric($this->boundaries) && is_numeric($this->around)) {
             if ($this->current_page < 1 || $this->current_page > $this->total_pages) {
                 $this->current_page = 1;
+            }
+            if ( $this->total_pages < 1) {
+                $this->total_pages = 1;
             }
         } else {
             throw new \ErrorException('InvalidArgumentException');
