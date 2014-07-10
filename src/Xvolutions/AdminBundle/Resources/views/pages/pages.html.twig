@@ -54,6 +54,7 @@
             <tr>
         {% endif %}
     </table>
+        <div style="text-align: center;">{{pagination|raw}}</div>
     <p>
         <a href="{{path('addpages')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar uma nova página"|trans }}</a>
         <a class="btn btn-danger btn-sm" name="{{path('pagesoption', {'option': 'removeselected'})}}" id="RemoveMany">{{ "Apagar"|trans }}</a>

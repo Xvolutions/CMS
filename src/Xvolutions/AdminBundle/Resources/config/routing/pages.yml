@@ -13,7 +13,12 @@ pagesoption:
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages, option: 0, id: 0 }
     methods:  [DELETE]
 
+current:
+    pattern: /{current_page}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages, current_page: 1 }
+    methods:  [GET]
+
 pages:
     pattern: /
-    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages }
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages, current_page: 1 }
     methods:  [GET]
