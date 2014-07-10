@@ -45,9 +45,8 @@ class PagesController extends AdminController
                 ->add('Guardar', 'submit')
         ;
 
-        $status = NULL;
-        $error = NULL;
-
+        $status = null;
+        $error = null;
         $form->handleRequest($request);
 
         $em = $this->getDoctrine()->getManager();
@@ -72,22 +71,16 @@ class PagesController extends AdminController
                 $em->flush();
 
                 $status = 'Página actualizada com sucesso';
-
-                // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
-                $em = $this->getDoctrine()->getManager();
-                $query = $em->createQuery(
-                        'SELECT p.id, p.title, p.date, l.language, s.section
-                    FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s, XvolutionsAdminBundle:Language l
-                    WHERE p.id_section = s.id AND p.id_language = l.id AND p.id != 1
-                    ORDER BY p.title ASC'
-                );
-
-                $pageList = $query->getResult();
-
+                $total = $this->numberOfPages($em);
+                $elementsPerPage = $this->container->getParameter('elements_per_page');
+                $current_page = 1;
+                $pagination = $this->paginatorHelper($total, $elementsPerPage, $current_page);
+                $pageList = $this->pageList($em, $current_page, $elementsPerPage);
                 return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                             'pageList' => $pageList,
                             'status' => $status,
-                            'error' => $error
+                            'error' => $error,
+                            'pagination' => $pagination
                 ));
             } else {
                 if ($alias[0]->getIdExternal() == $id) {
