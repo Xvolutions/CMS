@@ -154,7 +154,7 @@ class PagesController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the pages
      */
-    public function pagesAction($option = NULL, $id = NULL, $current_page = 0)
+    public function pagesAction($option = NULL, $id = NULL, $current_page = 1)
     {
         parent::verifyaccess();
 
@@ -199,13 +199,16 @@ class PagesController extends AdminController
         $render = new Render($current_page, $total_pages, $list);
         $pagination = $render->view();
 
+        $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
         // SELECT p.Title, s.section FROM page p, section s WHERE p.id_section = s.id
         $query = $em->createQuery(
                 'SELECT p.id, p.title, p.date, l.language, s.section
             FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s, XvolutionsAdminBundle:Language l
             WHERE p.id_section = s.id AND p.id_language = l.id AND p.id != 1
             ORDER BY p.title ASC'
-        );
+        )
+                ->setFirstResult($startPoint)
+                ->setMaxResults($elementsPerPage);
 
         $pageList = $query->getResult();
 
