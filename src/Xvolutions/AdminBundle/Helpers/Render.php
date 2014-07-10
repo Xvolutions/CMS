@@ -59,7 +59,7 @@ class Render {
      */
     private function beginning() {
         if ($this->current_page - 1 >= 1) {
-            return '<li><a href="' . $_SERVER['PHP_SELF'] . '?page=' . ($this->current_page - 1) . '">«</a></li>';
+            return '<li><a href="' . ($this->current_page - 1) . '">«</a></li>';
         } else {
             return '<li class="disabled"><a href="#">«</a></li>';
         }
@@ -75,7 +75,7 @@ class Render {
                 $output .= '<li class="active"><a href="#">' . $page . '</a></li>';
             } else {
                 if ($page != '...') {
-                    $output .= '<li><a href="' . $_SERVER['PHP_SELF'] . '?page=' . $page . '">' . $page . '</a></li>';
+                    $output .= '<li><a href="' . $page . '">' . $page . '</a></li>';
                 } else {
                     $output .= '<li><a href="#">' . $page . '</a></li>';
                 }
@@ -89,7 +89,7 @@ class Render {
      */
     private function ending() {
         if ($this->current_page + 1 <= $this->total_pages) {
-            return '<li><a href="' . $_SERVER['PHP_SELF'] . '?page=' . ($this->current_page + 1) . '">»</a></li>';
+            return '<li><a href="' . ($this->current_page + 1) . '">»</a></li>';
         } else {
             return '<li class="disabled"><a href="#">»</a></li>';
         }
