@@ -161,10 +161,10 @@ class PagesController extends AdminController
                 }
         }
 
-        if ($error != NULL) {
+        if ($error != null) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != NULL) {
+        if ($status != null) {
             return new Response($status, Response::HTTP_OK);
         }
 
