@@ -36,13 +36,13 @@ class PagesController extends AdminController
 
         $page = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->find($id);
         $form = $this->createForm($pageType, $page)
-                ->add(
-                        'url', 'text', array(
-                    'label' => 'URL',
-                    'attr' => array('class' => 'url')
-                        )
+            ->add(
+                'url', 'text', array(
+                'label' => 'URL',
+                'attr' => array('class' => 'url')
                 )
-                ->add('Guardar', 'submit')
+            )
+            ->add('Guardar', 'submit')
         ;
 
         $status = null;
@@ -167,14 +167,11 @@ class PagesController extends AdminController
         if ($status != null) {
             return new Response($status, Response::HTTP_OK);
         }
-
         $em = $this->getDoctrine()->getManager();
         $total = $this->numberOfPages($em);
         $elementsPerPage = $this->container->getParameter('elements_per_page');
         $pagination = $this->paginatorHelper($total, $elementsPerPage, $current_page);
-
         $pageList = $this->pageList($em, $current_page, $elementsPerPage);
-
         return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                     'pageList' => $pageList,
                     'status' => $status,
@@ -196,19 +193,16 @@ class PagesController extends AdminController
 
         $page = new Page();
         $pageType = new PageType();
-
         $form = $this->createForm($pageType, $page)
-                ->add(
-                        'url', 'text', array(
-                    'label' => 'URL',
-                    'attr' => array('class' => 'url')
-                        )
+            ->add(
+                'url', 'text', array(
+                'label' => 'URL',
+                'attr' => array('class' => 'url')
                 )
-                ->add('Criar', 'submit')
+            )
+            ->add('Criar', 'submit')
         ;
-
         $form->handleRequest($request);
-
         $error = null;
         $status = null;
         if ($form->isValid()) {

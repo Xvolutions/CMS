@@ -68,23 +68,6 @@ class AdminController extends Controller {
     }
 
     /**
-     * Controller responsible to show the phpinfo
-     * 
-     * @return type
-     */
-    public function phpinfoAction() {
-        ob_start();
-        phpinfo();
-        $phpinfo = ob_get_clean();
-        return $this->render(
-            'XvolutionsAdminBundle:phpinfo:phpinfo.html.twig', 
-            array(
-                'phpinfo' => $phpinfo
-            )
-        );
-    }
-
-    /**
      * This function is responsible to verify is the use with the
      * Role admin is authenticated
      * 
