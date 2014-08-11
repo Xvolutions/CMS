@@ -43,7 +43,7 @@ class BlogPostType extends AbstractType
                     ))
             ->add(
                     'tag', 
-                    'null', 
+                    null, 
                     array(
                         'label' => 'Tag'
                     )
