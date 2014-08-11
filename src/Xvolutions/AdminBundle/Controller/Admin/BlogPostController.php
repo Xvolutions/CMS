@@ -72,7 +72,7 @@ class BlogPostController extends AdminController
 
             $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
 
-            return $this->render('XvolutionsAdminBundle:blog:post/posts.html.twig', array(
+            return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(
                         'title' => 'Artigos',
                         'blogPostList' => $blogPostList,
                         'status' => $status,
@@ -80,7 +80,7 @@ class BlogPostController extends AdminController
             ));
         }
 
-        return $this->render('XvolutionsAdminBundle:blog:post/add_posts.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:blog:add_posts.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Adicionar um novo Artigo',
                     'status' => $status,
@@ -175,7 +175,7 @@ class BlogPostController extends AdminController
 
             $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
 
-            return $this->render('XvolutionsAdminBundle:blog:post/posts.html.twig', array(
+            return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(
                         'title' => 'Artigos',
                         'blogPostList' => $blogPostList,
                         'status' => $status,
@@ -183,7 +183,7 @@ class BlogPostController extends AdminController
             ));
         }
 
-        return $this->render('XvolutionsAdminBundle:blog:post/add_posts.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:blog:add_posts.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Editar um Artigo',
                     'status' => $status,
@@ -225,7 +225,7 @@ class BlogPostController extends AdminController
 
         $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:blog:post/posts.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(
                     'title' => 'Artigos',
                     'blogPostList' => $blogPostList,
                     'status' => $status,
