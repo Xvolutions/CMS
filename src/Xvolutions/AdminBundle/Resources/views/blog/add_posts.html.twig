@@ -1,0 +1,64 @@
+{% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
+
+{% block title %}{{title|trans}} - Artigos - Backoffice{% endblock %}
+
+{% block maincontent %}
+    <h1>{{ title|trans }}</h1>
+    {% if status %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ status|trans }}
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
+    {#{form(form)}#}
+
+    {{ form_start( form ) }}
+    <div id="xvolutions_adminbundle_blogpost">
+        <div>
+            <p>{{ "TÃ­tulo"|trans }}</p>
+            <p>{{ form_widget( form.title ) }}</p>
+        </div>
+        <div>
+            <p>{{ "URL"|trans }}</p>
+            <p>{{ form_widget( form.url ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Autor"|trans }}</p>
+            <p>{{ form_widget( form.author ) }}
+        </div>
+        <div>
+            <p>{{ "Texto"|trans }}</p>
+            <p>{{ form_widget( form.text ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Data"|trans }}</p>
+            <p>{{ form_widget( form.date ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Palavras-Chave"|trans }}</p>
+            <p>{{ form_widget( form.tag ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Categoria"|trans }}</p>
+            <p>{{ form_widget( form.category ) }}</p>
+        </div>
+        <div>
+            <p>{{ "SecÃ§Ã£o"|trans }}</p>
+            <p>{{ form_widget( form.id_section ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Ãdioma"|trans }}</p>
+            <p>{{ form_widget( form.id_language ) }}</p>
+        </div>
+        <br>
+            {{ form_end( form ) }}
+        <a href="{{path('blogposts')}}" class="btn btn-default btn-sm">{{ "Ver Artigos"|trans }}</a>
+    </div>
+
+{% endblock %}
