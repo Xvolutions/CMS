@@ -50,7 +50,7 @@ class BlogPostType extends AbstractType
             )
             ->add(
                     'category', 
-                    'null', 
+                    null, 
                     array(
                         'label' => 'Categoria'
                     )
