@@ -45,20 +45,14 @@ class BlogPostType extends AbstractType
                     'tag', 
                     'entity', 
                     array(
-                        'class' => 'Xvolutions\AdminBundle\Entity\Tag',
-                        'property' => 'tag',
-                        'multiple' => true,
-                        'expanded' => false
+                        'label' => 'Tag'
                     )
             )
             ->add(
                     'category', 
                     'entity', 
                     array(
-                        'class' => 'Xvolutions\AdminBundle\Entity\Category',
-                        'property' => 'category',
-                        'multiple' => true,
-                        'expanded' => false
+                        'label' => 'Categoria'
                     )
             )
             ->add(

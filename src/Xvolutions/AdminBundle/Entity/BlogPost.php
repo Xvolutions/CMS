@@ -51,14 +51,16 @@ class BlogPost
     private $date;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag")
+     * @var string
      *
+     * @ORM\Column(name="tag", type="string", length=255)
      */
     private $tag;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Category")
+     * @var string
      *
+     * @ORM\Column(name="category", type="string", length=255)
      */
     private $category;
 
@@ -208,25 +210,50 @@ class BlogPost
         return $this->date;
     }
 
-    public function setTag( $tag ) {
+/**
+     * Set tag
+     *
+     * @param string tag
+     * @return tag
+     */
+    public function setTag($tag)
+    {
         $this->tag = $tag;
 
         return $this;
     }
 
-    public function getTag() {
-        return $this->tag->toArray();
+    /**
+     * Get tag
+     *
+     * @return tag
+     */
+    public function getTag()
+    {
+        return $this->tag;
     }
 
-    
-    public function setCategory( $category ) {
+/**
+     * Set category
+     *
+     * @param string category
+     * @return BlogPost
+     */
+    public function setCategory($category)
+    {
         $this->category = $category;
 
         return $this;
     }
 
-    public function getCategory() {
-        return $this->category->toArray();
+    /**
+     * Get category
+     *
+     * @return category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     /**

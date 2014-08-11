@@ -45,8 +45,6 @@ class InitiateCommand extends ContainerAwareCommand
         $this->initiateRoles($output);
         $this->initiateUsers($output, $username, $name, $password, $email);
         $this->initiateSections($output);
-        $this->initiateCategories($output);
-        $this->initiateTags($output);
         $this->initiateLanguages($output);
         $this->initiatePages($output);
     }
@@ -67,44 +65,6 @@ class InitiateCommand extends ContainerAwareCommand
             $output->writeln('Secções Adicionadas');
         } catch (\ErrorException $ex) {
             $output->writeln("Erro ao adicionar as secções base -> $ex");
-        }
-    }
-
-    private function initiateCategories(&$output)
-    {
-        try {
-            $em = $this->getContainer()->get('doctrine')->getManager('default');
-
-            $categories = array('Geral', 'Desenvolvimento', 'Web');
-            foreach ($categories as $c)
-            {
-                $category = new Category();
-                $category->setCategory($c);
-                $em->persist($category);
-                $em->flush($category);
-            }
-            $output->writeln('Categorias Adicionadas');
-        } catch (\ErrorException $ex) {
-            $output->writeln("Erro ao adicionar as categorias base -> $ex");
-        }
-    }
-
-    private function initiateTags(&$output)
-    {
-        try {
-            $em = $this->getContainer()->get('doctrine')->getManager('default');
-
-            $tags = array('dev', 'web');
-            foreach ($tags as $t)
-            {
-                $tag = new Tag();
-                $tag->setTag($t);
-                $em->persist($tag);
-                $em->flush($tag);
-            }
-            $output->writeln('Palavras-Chave Adicionadas');
-        } catch (\ErrorException $ex) {
-            $output->writeln("Erro ao adicionar as palavras-chave base -> $ex");
         }
     }
 
