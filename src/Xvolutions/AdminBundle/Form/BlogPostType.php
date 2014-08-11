@@ -43,14 +43,14 @@ class BlogPostType extends AbstractType
                     ))
             ->add(
                     'tag', 
-                    'entity', 
+                    'null', 
                     array(
                         'label' => 'Tag'
                     )
             )
             ->add(
                     'category', 
-                    'entity', 
+                    'null', 
                     array(
                         'label' => 'Categoria'
                     )
