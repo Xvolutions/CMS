@@ -9,8 +9,7 @@ use Xvolutions\AdminBundle\Entity\Page;
 use Xvolutions\AdminBundle\Entity\Alias;
 use Xvolutions\AdminBundle\Form\PageType;
 use Symfony\Component\Debug\ErrorHandler;
-use Xvolutions\AdminBundle\Helpers\Pagination;
-use Xvolutions\AdminBundle\Helpers\Render;
+use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 
 /**
  * Description of PagesController
@@ -74,7 +73,7 @@ class PagesController extends AdminController
                 $total = $this->numberOfPages($em);
                 $elementsPerPage = $this->container->getParameter('elements_per_page');
                 $current_page = 1;
-                $pagination = $this->paginatorHelper($total, $elementsPerPage, $current_page);
+                $pagination = new PaginatorHelper($total, $elementsPerPage, $current_page);
                 $pageList = $this->pageList($em, $current_page, $elementsPerPage);
                 return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                             'pageList' => $pageList,
@@ -170,7 +169,10 @@ class PagesController extends AdminController
         $em = $this->getDoctrine()->getManager();
         $total = $this->numberOfPages($em);
         $elementsPerPage = $this->container->getParameter('elements_per_page');
-        $pagination = $this->paginatorHelper($total, $elementsPerPage, $current_page);
+        
+        $boundaries = $this->container->getParameter('boundaries');
+        $around = $this->container->getParameter('around');
+        $pagination = new PaginatorHelper($total, $elementsPerPage, $current_page, $boundaries, $around);
         $pageList = $this->pageList($em, $current_page, $elementsPerPage);
         return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                     'pageList' => $pageList,
@@ -211,7 +213,9 @@ class PagesController extends AdminController
             $total = $this->numberOfPages($em);
             $elementsPerPage = $this->container->getParameter('elements_per_page');
             $current_page = 1;
-            $pagination = $this->paginatorHelper($total, $elementsPerPage, $current_page);
+            $boundaries = $this->container->getParameter('boundaries');
+            $around = $this->container->getParameter('around');
+            $pagination = new PaginatorHelper($total, $elementsPerPage, $current_page, $boundaries, $around);
             $pageList = $this->pageList($em, $current_page, $elementsPerPage);
             return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                         'pageList' => $pageList,
@@ -299,28 +303,6 @@ class PagesController extends AdminController
         } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover a(s) página(s)";
         }
-    }
-
-    /**
-     * This function is reponsible to help the building of the paginator
-     * 
-     * @param type $total Total number of pages
-     * @param type $elementsPerPage Number of elements per page
-     * @param type $current_page The current page
-     * @return type The list of pages
-     */
-    private function paginatorHelper($total, $elementsPerPage, $current_page)
-    {
-        $total_pages = ceil($total[0][1] / $elementsPerPage);
-
-        $boundaries = $this->container->getParameter('boundaries');
-        $around = $this->container->getParameter('around');
-
-        $page = new Pagination($current_page, $total_pages, $boundaries, $around);
-        $list = $page->displayPagination();
-
-        $render = new Render($current_page, $total_pages, $list);
-        return $render->view();
     }
 
     /**
