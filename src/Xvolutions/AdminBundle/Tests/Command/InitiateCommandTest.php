@@ -31,10 +31,10 @@ class InitiateCommandTest extends WebTestCase {
                     'username' => 'admin', 
                     'name' => 'Administrator', 
                     'password' => 'adminpass', 
-                    'email' => 'admin@admin.net' 
+                    'email' => 'pedroresende@mail.resende.biz' 
                     ) 
                 );
-        $this->assertRegExp( '/Grupos Adicionados\\nUtilizadores Adicionados\\nSecções Adicionadas\\nCategorias Adicionadas\\nPalavras-Chave Adicionadas\\nÍdiomas Adicionados\\nPáginas Adicionadas\\n*/', $commandTester->getDisplay(), 'test passed' );
+        $this->assertRegExp( '/Grupos Adicionados\\nUtilizadores Adicionados\\nSecções Adicionadas\\nÍdiomas Adicionados\\nPáginas Adicionadas\\n*/', $commandTester->getDisplay(), 'test passed' );
     }
 
 }
