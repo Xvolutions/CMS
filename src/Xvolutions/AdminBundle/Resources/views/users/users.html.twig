@@ -57,6 +57,11 @@
             <tr>
         {% endif %}
     </table>
+    <div style="text-align: center;">
+        {% autoescape 'html' %}
+            {{pagination|raw}}
+        {% endautoescape %}
+    </div>
     <br>
     <p>
         <a href="{{path('addusers')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar um novo utilizador"|trans }}</a>
