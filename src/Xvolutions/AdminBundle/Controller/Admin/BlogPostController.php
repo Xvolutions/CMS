@@ -273,15 +273,13 @@ class BlogPostController extends AdminController
             $em = $this->getDoctrine()->getManager();
             $blogPost = $em->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
             if ($blogPost != 'empty') {
-                $em->remove($blogPost);
-                $em->flush();
-
                 $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $blogPost->getId()));
                 if(count($alias) > 0) {
                     $em->remove($alias[0]);
                     $em->flush();
                 }
-
+                $em->remove($blogPost);
+                $em->flush();
                 $status = 'Artigo removido com sucesso';
             } else {
                 $error = "Erro ao remover o artigo";
@@ -306,15 +304,13 @@ class BlogPostController extends AdminController
             {
                 $blogPost = $em->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
                 if ($blogPost != 'empty') {
-                    $em->remove($blogPost);
-                    $em->flush();
-
                     $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $blogPost->getId()));
                     if(count($alias) > 0) {
                         $em->remove($alias[0]);
                         $em->flush();
                     }
-
+                    $em->remove($blogPost);
+                    $em->flush();
                     $status = 'Artigo removido com sucesso';
                 } else {
                     $error = "Erro ao remover o(s) artigo(s)";
