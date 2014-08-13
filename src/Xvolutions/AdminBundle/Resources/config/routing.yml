@@ -59,18 +59,6 @@ XvolutionsAdminBundle_roles:
         resource: "@XvolutionsAdminBundle/Resources/config/routing/roles.yml"
         prefix:   /roles
 
-### BLOG CATEGORIES ###
-
-XvolutionsAdminBundle_categories:
-        resource: "@XvolutionsAdminBundle/Resources/config/routing/categories.yml"
-        prefix:   /blog/categories
-
-### BLOG TAGS ###
-
-XvolutionsAdminBundle_tags:
-        resource: "@XvolutionsAdminBundle/Resources/config/routing/tags.yml"
-        prefix:   /blog/tags
-
 ### BLOG POSTS ###
 
 XvolutionsAdminBundle_blog_posts:
