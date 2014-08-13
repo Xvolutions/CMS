@@ -52,6 +52,11 @@
             <tr>
         {% endif %}
     </table>
+    <div style="text-align: center;">
+        {% autoescape 'html' %}
+            {{pagination|raw}}
+        {% endautoescape %}
+    </div>
     <p>
         <a href="{{path('addblogposts')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar um novo artigo"|trans }}</a>
         <a class="btn btn-danger btn-sm" name="{{path('optionblogposts', {'option': 'removeselected'})}}" id="RemoveMany">{{ "Apagar"|trans }}</a>
