@@ -9,6 +9,7 @@ use Xvolutions\AdminBundle\Entity\BlogPost;
 use Xvolutions\AdminBundle\Form\BlogPostType;
 use Xvolutions\AdminBundle\Entity\Alias;
 use Symfony\Component\Debug\ErrorHandler;
+use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 
 /**
  * Description of BlogPostController
@@ -69,6 +70,14 @@ class BlogPostController extends AdminController
             } else {
                 $error = 'Já existe um artigo com esse endereço';
             }
+            $em = $this->getDoctrine()->getManager();
+            $elementsPerPage = $this->container->getParameter('elements_per_page');
+            $current_page = 1;
+            $boundaries = $this->container->getParameter('boundaries');
+            $around = $this->container->getParameter('around');
+            $select = 'SELECT COUNT(b.id)
+                        FROM XvolutionsAdminBundle:BlogPost b';
+            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
 
             $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
 
@@ -77,6 +86,7 @@ class BlogPostController extends AdminController
                         'blogPostList' => $blogPostList,
                         'status' => $status,
                         'error' => $error,
+                        'pagination' => $pagination
             ));
         }
 
@@ -172,6 +182,13 @@ class BlogPostController extends AdminController
                     $error = 'Já existe um artigo com esse endereço';
                 }
             }
+            $elementsPerPage = $this->container->getParameter('elements_per_page');
+            $current_page = 1;
+            $boundaries = $this->container->getParameter('boundaries');
+            $around = $this->container->getParameter('around');
+            $select = 'SELECT COUNT(b.id)
+                        FROM XvolutionsAdminBundle:BlogPost b';
+            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
 
             $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
 
@@ -180,6 +197,7 @@ class BlogPostController extends AdminController
                         'blogPostList' => $blogPostList,
                         'status' => $status,
                         'error' => $error,
+                        'pagination' => $pagination
             ));
         }
 
@@ -198,7 +216,7 @@ class BlogPostController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the blogPosts
      */
-    public function blogPostsAction($option = NULL, $id = NULL)
+    public function blogPostsAction($option = NULL, $id = NULL, $current_page = 1)
     {
         parent::verifyaccess();
 
@@ -223,6 +241,14 @@ class BlogPostController extends AdminController
             return new Response($status, Response::HTTP_OK);
         }
 
+        $em = $this->getDoctrine()->getManager();
+        $elementsPerPage = $this->container->getParameter('elements_per_page');
+        $boundaries = $this->container->getParameter('boundaries');
+        $around = $this->container->getParameter('around');
+        $select = 'SELECT COUNT(b.id)
+                    FROM XvolutionsAdminBundle:BlogPost b';
+        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
+
         $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
 
         return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(
@@ -230,6 +256,7 @@ class BlogPostController extends AdminController
                     'blogPostList' => $blogPostList,
                     'status' => $status,
                     'error' => $error,
+                    'pagination' => $pagination
         ));
     }
 
