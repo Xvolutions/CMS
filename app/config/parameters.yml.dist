@@ -17,3 +17,5 @@ parameters:
     elements_per_page: 10
     boundaries: 2
     around: 2
+
+    uploaded_files: %kernel.root_dir%/../web/files
