@@ -256,15 +256,13 @@ class PagesController extends AdminController
             $em = $this->getDoctrine()->getManager();
             $page = $em->getRepository('XvolutionsAdminBundle:Page')->find($id);
             if ($page != 'empty') {
-                $em->remove($page);
-                $em->flush();
-
                 $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $page->getId()));
                 if (count($alias) > 0) {
                     $em->remove($alias[0]);
                     $em->flush();
                 }
-
+                $em->remove($page);
+                $em->flush();
                 $status = 'Página removida com sucesso';
             } else {
                 $error = "Erro ao remover a página";
@@ -289,15 +287,13 @@ class PagesController extends AdminController
             {
                 $page = $em->getRepository('XvolutionsAdminBundle:Page')->find($id);
                 if ($page != 'empty') {
-                    $em->remove($page);
-                    $em->flush();
-
                     $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $page->getId()));
                     if (count($alias) > 0) {
                         $em->remove($alias[0]);
                         $em->flush();
                     }
-
+                    $em->remove($page);
+                    $em->flush();
                     $status = 'Página(s) removida(s) com sucesso';
                 } else {
                     $error = "Erro ao remover a(s) página(s)";
