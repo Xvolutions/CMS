@@ -25,8 +25,9 @@ class PaginatorHelper
      * @param integer $around
      * @return type The list of pages
      */
-    public function __construct($total, $elementsPerPage, $current_page, $boundaries, $around)
+    public function __construct($em, $select, $elementsPerPage, $current_page, $boundaries, $around)
     {
+        $total = $this->numberOfPages($em, $select);
         $total_pages = ceil($total[0][1] / $elementsPerPage);
 
         $page = new Pagination($current_page, $total_pages, $boundaries, $around);
@@ -34,6 +35,19 @@ class PaginatorHelper
 
         $render = new Render($current_page, $total_pages, $list);
         $this->render = $render->view();
+    }
+
+    /**
+     * Function responsible to count the number of pages
+     * 
+     * @param type $em Doctrine repository
+     * @return type array
+     */
+    private function numberOfPages($em, $select)
+    {
+        $queryTotal = $em->createQuery($select);
+
+        return $queryTotal->getResult();
     }
 
     public function __toString()

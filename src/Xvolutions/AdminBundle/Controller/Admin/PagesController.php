@@ -167,12 +167,13 @@ class PagesController extends AdminController
             return new Response($status, Response::HTTP_OK);
         }
         $em = $this->getDoctrine()->getManager();
-        $total = $this->numberOfPages($em);
         $elementsPerPage = $this->container->getParameter('elements_per_page');
-        
         $boundaries = $this->container->getParameter('boundaries');
         $around = $this->container->getParameter('around');
-        $pagination = new PaginatorHelper($total, $elementsPerPage, $current_page, $boundaries, $around);
+        $select = 'SELECT COUNT(p.id)
+                    FROM XvolutionsAdminBundle:Page p
+                    WHERE p.id <> 1 ';
+        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
         $pageList = $this->pageList($em, $current_page, $elementsPerPage);
         return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                     'pageList' => $pageList,
@@ -210,12 +211,14 @@ class PagesController extends AdminController
         if ($form->isValid()) {
             $this->addPagesValid($request, $page, $status, $error);
             $em = $this->getDoctrine()->getManager();
-            $total = $this->numberOfPages($em);
             $elementsPerPage = $this->container->getParameter('elements_per_page');
             $current_page = 1;
             $boundaries = $this->container->getParameter('boundaries');
             $around = $this->container->getParameter('around');
-            $pagination = new PaginatorHelper($total, $elementsPerPage, $current_page, $boundaries, $around);
+            $select = 'SELECT COUNT(p.id)
+            FROM XvolutionsAdminBundle:Page p
+            WHERE p.id <> 1 ';
+            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
             $pageList = $this->pageList($em, $current_page, $elementsPerPage);
             return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                         'pageList' => $pageList,
@@ -339,22 +342,6 @@ class PagesController extends AdminController
         } else {
             $error = 'Já existe uma página com esse endereço';
         }
-    }
-
-    /**
-     * Function responsible to count the number of pages
-     * 
-     * @param type $em Doctrine repository
-     * @return type array
-     */
-    private function numberOfPages($em)
-    {
-        $queryTotal = $em->createQuery(
-                'SELECT COUNT(p.id)
-            FROM XvolutionsAdminBundle:Page p
-            WHERE p.id <> 1 ');
-
-        return $queryTotal->getResult();
     }
 
     /**
