@@ -11,8 +11,6 @@ use Xvolutions\AdminBundle\Entity\Section;
 use Xvolutions\AdminBundle\Entity\Language;
 use Xvolutions\AdminBundle\Entity\User;
 use Xvolutions\AdminBundle\Entity\Role;
-use Xvolutions\AdminBundle\Entity\Category;
-use Xvolutions\AdminBundle\Entity\Tag;
 use Symfony\Component\Debug\ErrorHandler;
 
 /**
