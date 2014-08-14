@@ -1,0 +1,14 @@
+optionfiles:
+    pattern: /{option}/{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/File:list, option: 0, id: 0 }
+    methods:  [DELETE]
+
+files:
+    pattern: /{current_page}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/File:list, current_page: 1 }
+    methods:  [GET, POST]
+
+files_current:
+    pattern: /
+    defaults: { _controller: XvolutionsAdminBundle:Admin/File:list, current_page: 1 }
+    methods:  [GET, POST]

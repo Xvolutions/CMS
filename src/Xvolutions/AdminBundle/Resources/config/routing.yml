@@ -64,3 +64,9 @@ XvolutionsAdminBundle_roles:
 XvolutionsAdminBundle_blog_posts:
         resource: "@XvolutionsAdminBundle/Resources/config/routing/blogpost.yml"
         prefix:   /blog/posts
+
+### FILES ###
+
+XvolutionsAdminBundle_files:
+        resource: "@XvolutionsAdminBundle/Resources/config/routing/file.yml"
+        prefix:   /files
