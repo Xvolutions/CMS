@@ -19,6 +19,22 @@ use Xvolutions\AdminBundle\Form\FileType;
 class FileController extends AdminController
 {
 
+    public function imageListAction()
+    {
+        $files = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:File')->findAll();
+        $folder = $this->container->getParameter('files_location');
+        $arrayOfFiles = array();
+        foreach( $files as $file) 
+        {
+            $tempArray = ['title' => $file->getName(), 'value' => $folder . $file->getFileName()];
+            array_push($arrayOfFiles, $tempArray);
+        }
+        //var_dump($arrayOfFiles);
+        $jsonResponse = json_encode($arrayOfFiles);
+
+        return new Response($jsonResponse, '200');
+    }
+
     /**
      * Controller responsible to show the list of files and for handling the form
      * submission and the database insertion
