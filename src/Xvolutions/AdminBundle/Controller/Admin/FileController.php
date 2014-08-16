@@ -39,7 +39,7 @@ class FileController extends AdminController
         $fileType = new FileType();
 
         $form = $this->createForm($fileType, $file)
-                ->add('Guardar', 'submit')
+                ->add('Enviar', 'submit')
         ;
         $form->handleRequest($request);
 
