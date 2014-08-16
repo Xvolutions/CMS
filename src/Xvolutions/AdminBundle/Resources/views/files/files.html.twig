@@ -36,7 +36,7 @@
             {% for file in fileList %}
                 <tr class="tr{{file.id}}">
                     <td><input type="checkbox" id="{{file.id}}" onclick="SelectForRemoval('{{file.id}}');"></td>
-                    <td>{{file.Name}}</td>
+                    <td>{{file.name}}</td>
                     <td>{{file.date|date('d/m/Y H:m:s')}}</td>
                     <td>{{(file.size/1024)|number_format(2, '.', ',')}} Kbytes</td>
                     <td>
