@@ -36,6 +36,13 @@ class File
     private $fileName;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    private $type;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
@@ -104,6 +111,29 @@ class File
     public function getFileName()
     {
         return $this->fileName;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return File
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
