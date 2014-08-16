@@ -56,8 +56,14 @@ class FileController extends AdminController
             $this->addNewFile($request, $file, $status, $error);
         }
 
-        $pagination = $this->showPagination($current_page);
-        $fileList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:File')->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $elementsPerPage = $this->container->getParameter('elements_per_page');
+        $boundaries = $this->container->getParameter('boundaries');
+        $around = $this->container->getParameter('around');
+        $select = 'SELECT COUNT(f.id)
+                    FROM XvolutionsAdminBundle:File f';
+        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
+        $fileList = $this->pageList($em, $current_page, $elementsPerPage);
 
         return $this->render('XvolutionsAdminBundle:files:files.html.twig', array(
                     'title' => 'Ficheiros',
@@ -65,7 +71,7 @@ class FileController extends AdminController
                     'fileList' => $fileList,
                     'status' => $status,
                     'error' => $error,
-                    'pagination' => $pagination
+                    'pagination' => $pagination,
         ));
     }
 
@@ -210,4 +216,25 @@ class FileController extends AdminController
         }
     }
 
+    /**
+     * Function responsible to return the PageList
+     * 
+     * @param type $em Doctrine
+     * @param type $current_page The current page
+     * @param type $elementsPerPage The number of elements per page
+     * @return type Pagelist
+     */
+    private function pageList($em, $current_page, $elementsPerPage)
+    {
+        $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
+        $queryPage = $em->createQuery(
+                        'SELECT f.id, f.name, f.date, f.size
+            FROM XvolutionsAdminBundle:File f
+            ORDER BY f.name ASC'
+                )
+                ->setFirstResult($startPoint)
+                ->setMaxResults($elementsPerPage);
+
+        return $queryPage->getResult();
+    }
 }
