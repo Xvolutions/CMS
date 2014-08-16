@@ -18,7 +18,9 @@ blogposts:
     defaults: { _controller: XvolutionsAdminBundle:Admin/BlogPost:blogPosts, current_page: 1 }
     methods:  [GET]
 
-current:
+blogposts_current:
     pattern: /{current_page}
     defaults: { _controller: XvolutionsAdminBundle:Admin/BlogPost:blogPosts, current_page: 1 }
     methods:  [GET]
+    requirements:
+        current_page:  \d+
