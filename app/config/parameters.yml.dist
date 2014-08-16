@@ -19,3 +19,4 @@ parameters:
     around: 2
 
     uploaded_files: %kernel.root_dir%/../web/files
+    files_location: /files/
