@@ -34,10 +34,12 @@ class PagesController extends AdminController
         $pageType = new PageType();
 
         $page = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->find($id);
+        $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $page->getId(), 'type' => '1'));
         $form = $this->createForm($pageType, $page)
             ->add(
                 'url', 'text', array(
                 'label' => 'URL',
+                'data' => $alias[0]->getUrl(),
                 'attr' => array('class' => 'url')
                 )
             )
@@ -70,10 +72,13 @@ class PagesController extends AdminController
                 $em->flush();
 
                 $status = 'Página actualizada com sucesso';
-                $total = $this->numberOfPages($em);
-                $elementsPerPage = $this->container->getParameter('elements_per_page');
                 $current_page = 1;
-                $pagination = new PaginatorHelper($total, $elementsPerPage, $current_page);
+                $elementsPerPage = $this->container->getParameter('elements_per_page');
+                $boundaries = $this->container->getParameter('boundaries');
+                $around = $this->container->getParameter('around');
+                $select = 'SELECT COUNT(p.id)
+                            FROM XvolutionsAdminBundle:Page p';
+                $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
                 $pageList = $this->pageList($em, $current_page, $elementsPerPage);
                 return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                             'pageList' => $pageList,
