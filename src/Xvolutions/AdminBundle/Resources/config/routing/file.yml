@@ -6,7 +6,7 @@ optionfiles:
 files_current:
     pattern: /{current_page}
     defaults: { _controller: XvolutionsAdminBundle:Admin/File:list, current_page: 1 }
-    methods:  [GET]
+    methods:  [GET, POST]
     requirements:
         current_page:  \d+
 
