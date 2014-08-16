@@ -50,6 +50,7 @@ class FileController extends AdminController
 
         $status = null;
         $error = null;
+        $folder = $this->container->getParameter('files_location');
 
         $file = new File();
         $fileType = new FileType();
@@ -88,6 +89,7 @@ class FileController extends AdminController
                     'status' => $status,
                     'error' => $error,
                     'pagination' => $pagination,
+                    'host' => 'http://' . $_SERVER['HTTP_HOST'] . $folder
         ));
     }
 
@@ -107,16 +109,17 @@ class FileController extends AdminController
             $error = "Já existe um ficheiro com esse nome";
         } else {
             try {
-                $folder = $this->container->getParameter('uploaded_files');
                 $upload = new Upload();
-
+                $folder = $this->container->getParameter('uploaded_files');
                 $fileName = null;
                 $size = null;
-                $upload->upload($request, $folder, $fileName, $size);
+                $type = null;
+                $upload->upload($request, $folder, $fileName, $size, $type);
 
                 $datetime = new \DateTime('now');
                 $file->setDate($datetime);
                 $file->setFileName($fileName);
+                $file->setType($type);
                 $file->setSize($size);
 
                 $em = $this->getDoctrine()->getManager();
@@ -244,7 +247,7 @@ class FileController extends AdminController
     {
         $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
         $queryPage = $em->createQuery(
-                        'SELECT f.id, f.name, f.date, f.size
+                        'SELECT f.id, f.name, f.date, f.size, f.type, f.fileName
             FROM XvolutionsAdminBundle:File f
             ORDER BY f.name ASC'
                 )

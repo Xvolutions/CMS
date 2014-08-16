@@ -29,6 +29,7 @@
             <th></th>
             <th>{{ "Nome"|trans }}</th>
             <th>{{ "Data"|trans }}</th>
+            <th>{{ "Tipo"|trans }}</th>
             <th>{{ "Tamanho"|trans }}</th>
             <th>{{ "Opções"|trans }}</th>
         </tr>
@@ -36,8 +37,9 @@
             {% for file in fileList %}
                 <tr class="tr{{file.id}}">
                     <td><input type="checkbox" id="{{file.id}}" onclick="SelectForRemoval('{{file.id}}');"></td>
-                    <td>{{file.name}}</td>
+                    <td><a href="{{host}}{{file.fileName}}" target="_blank">{{file.name}}</a></td>
                     <td>{{file.date|date('d/m/Y H:m:s')}}</td>
+                    <td>{{file.type}}</td>
                     <td>{{(file.size/1024)|number_format(2, '.', ',')}} Kbytes</td>
                     <td>
                         <a href="{{path('editblogposts', {'id': file.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> 

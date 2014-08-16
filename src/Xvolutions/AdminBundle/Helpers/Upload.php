@@ -21,11 +21,12 @@ class Upload
      * @param string $fileName The new generated name
      * @param type $size Size of the uploaded file
      */
-    public function upload($request, $folder, &$fileName, &$size)
+    public function upload($request, $folder, &$fileName, &$size, &$type)
     {
         foreach ($request->files as $uploadedFile)
         {
-            $fileName = md5(time()) . '.' . $uploadedFile["fileName"]->guessClientExtension();
+            $type = $uploadedFile["fileName"]->guessClientExtension();
+            $fileName = md5(time()) . '.' . $type;
             $size = filesize($uploadedFile["fileName"]);
             $uploadedFile["fileName"]->move($folder, $fileName);
         }
