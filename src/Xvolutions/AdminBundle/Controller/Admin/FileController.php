@@ -29,7 +29,7 @@ class FileController extends AdminController
             $tempArray = ['title' => $file->getName(), 'value' => 'http://' . $_SERVER['HTTP_HOST'] . $folder . $file->getFileName()];
             array_push($arrayOfFiles, $tempArray);
         }
-        //var_dump($arrayOfFiles);
+
         $jsonResponse = json_encode($arrayOfFiles);
 
         return new Response($jsonResponse, '200');
