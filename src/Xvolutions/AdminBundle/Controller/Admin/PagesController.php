@@ -9,8 +9,7 @@ use Xvolutions\AdminBundle\Entity\Page;
 use Xvolutions\AdminBundle\Entity\Alias;
 use Xvolutions\AdminBundle\Form\PageType;
 use Symfony\Component\Debug\ErrorHandler;
-use Xvolutions\AdminBundle\Helpers\Pagination;
-use Xvolutions\AdminBundle\Helpers\Render;
+use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 
 /**
  * Description of PagesController
@@ -35,10 +34,12 @@ class PagesController extends AdminController
         $pageType = new PageType();
 
         $page = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->find($id);
+        $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $page->getId(), 'type' => '1'));
         $form = $this->createForm($pageType, $page)
             ->add(
                 'url', 'text', array(
                 'label' => 'URL',
+                'data' => $alias[0]->getUrl(),
                 'attr' => array('class' => 'url')
                 )
             )
@@ -71,10 +72,13 @@ class PagesController extends AdminController
                 $em->flush();
 
                 $status = 'Página actualizada com sucesso';
-                $total = $this->numberOfPages($em);
-                $elementsPerPage = $this->container->getParameter('elements_per_page');
                 $current_page = 1;
-                $pagination = $this->paginatorHelper($total, $elementsPerPage, $current_page);
+                $elementsPerPage = $this->container->getParameter('elements_per_page');
+                $boundaries = $this->container->getParameter('boundaries');
+                $around = $this->container->getParameter('around');
+                $select = 'SELECT COUNT(p.id)
+                            FROM XvolutionsAdminBundle:Page p';
+                $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
                 $pageList = $this->pageList($em, $current_page, $elementsPerPage);
                 return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                             'pageList' => $pageList,
@@ -161,16 +165,20 @@ class PagesController extends AdminController
                 }
         }
 
-        if ($error != NULL) {
+        if ($error != null) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != NULL) {
+        if ($status != null) {
             return new Response($status, Response::HTTP_OK);
         }
         $em = $this->getDoctrine()->getManager();
-        $total = $this->numberOfPages($em);
         $elementsPerPage = $this->container->getParameter('elements_per_page');
-        $pagination = $this->paginatorHelper($total, $elementsPerPage, $current_page);
+        $boundaries = $this->container->getParameter('boundaries');
+        $around = $this->container->getParameter('around');
+        $select = 'SELECT COUNT(p.id)
+                    FROM XvolutionsAdminBundle:Page p
+                    WHERE p.id <> 1 ';
+        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
         $pageList = $this->pageList($em, $current_page, $elementsPerPage);
         return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                     'pageList' => $pageList,
@@ -208,10 +216,14 @@ class PagesController extends AdminController
         if ($form->isValid()) {
             $this->addPagesValid($request, $page, $status, $error);
             $em = $this->getDoctrine()->getManager();
-            $total = $this->numberOfPages($em);
             $elementsPerPage = $this->container->getParameter('elements_per_page');
             $current_page = 1;
-            $pagination = $this->paginatorHelper($total, $elementsPerPage, $current_page);
+            $boundaries = $this->container->getParameter('boundaries');
+            $around = $this->container->getParameter('around');
+            $select = 'SELECT COUNT(p.id)
+            FROM XvolutionsAdminBundle:Page p
+            WHERE p.id <> 1 ';
+            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
             $pageList = $this->pageList($em, $current_page, $elementsPerPage);
             return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                         'pageList' => $pageList,
@@ -249,15 +261,13 @@ class PagesController extends AdminController
             $em = $this->getDoctrine()->getManager();
             $page = $em->getRepository('XvolutionsAdminBundle:Page')->find($id);
             if ($page != 'empty') {
-                $em->remove($page);
-                $em->flush();
-
                 $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $page->getId()));
                 if (count($alias) > 0) {
                     $em->remove($alias[0]);
                     $em->flush();
                 }
-
+                $em->remove($page);
+                $em->flush();
                 $status = 'Página removida com sucesso';
             } else {
                 $error = "Erro ao remover a página";
@@ -282,15 +292,13 @@ class PagesController extends AdminController
             {
                 $page = $em->getRepository('XvolutionsAdminBundle:Page')->find($id);
                 if ($page != 'empty') {
-                    $em->remove($page);
-                    $em->flush();
-
                     $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $page->getId()));
                     if (count($alias) > 0) {
                         $em->remove($alias[0]);
                         $em->flush();
                     }
-
+                    $em->remove($page);
+                    $em->flush();
                     $status = 'Página(s) removida(s) com sucesso';
                 } else {
                     $error = "Erro ao remover a(s) página(s)";
@@ -299,28 +307,6 @@ class PagesController extends AdminController
         } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover a(s) página(s)";
         }
-    }
-
-    /**
-     * This function is reponsible to help the building of the paginator
-     * 
-     * @param type $total Total number of pages
-     * @param type $elementsPerPage Number of elements per page
-     * @param type $current_page The current page
-     * @return type The list of pages
-     */
-    private function paginatorHelper($total, $elementsPerPage, $current_page)
-    {
-        $total_pages = ceil($total[0][1] / $elementsPerPage);
-
-        $boundaries = $this->container->getParameter('boundaries');
-        $around = $this->container->getParameter('around');
-
-        $page = new Pagination($current_page, $total_pages, $boundaries, $around);
-        $list = $page->displayPagination();
-
-        $render = new Render($current_page, $total_pages, $list);
-        return $render->view();
     }
 
     /**
@@ -357,22 +343,6 @@ class PagesController extends AdminController
         } else {
             $error = 'Já existe uma página com esse endereço';
         }
-    }
-
-    /**
-     * Function responsible to count the number of pages
-     * 
-     * @param type $em Doctrine repository
-     * @return type array
-     */
-    private function numberOfPages($em)
-    {
-        $queryTotal = $em->createQuery(
-                'SELECT COUNT(p.id)
-            FROM XvolutionsAdminBundle:Page p
-            WHERE p.id <> 1 ');
-
-        return $queryTotal->getResult();
     }
 
     /**

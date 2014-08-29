@@ -5,12 +5,12 @@ namespace Xvolutions\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * BlogComment
+ * File
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class BlogComment
+class File
 {
     /**
      * @var integer
@@ -22,14 +22,6 @@ class BlogComment
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="BlogPost")
-     * @ORM\JoinColumn(name="id_post", referencedColumnName="id")
-     */
-    private $id_post;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -39,16 +31,16 @@ class BlogComment
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="file_name", type="string", length=255)
      */
-    private $email;
+    private $fileName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text")
+     * @ORM\Column(name="type", type="string", length=255)
      */
-    private $comment;
+    private $type;
 
     /**
      * @var \DateTime
@@ -56,6 +48,13 @@ class BlogComment
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="size", type="integer")
+     */
+    private $size;
 
 
     /**
@@ -69,33 +68,10 @@ class BlogComment
     }
 
     /**
-     * Set id_post
-     *
-     * @param integer $id_post
-     * @return BlogComment
-     */
-    public function setIdPost($id_post)
-    {
-        $this->id_post = $id_post;
-
-        return $this;
-    }
-
-    /**
-     * Get id_post
-     *
-     * @return integer 
-     */
-    public function getIdPost()
-    {
-        return $this->id_post;
-    }
-
-    /**
      * Set name
      *
      * @param string $name
-     * @return BlogComment
+     * @return File
      */
     public function setName($name)
     {
@@ -115,56 +91,56 @@ class BlogComment
     }
 
     /**
-     * Set email
+     * Set fileName
      *
-     * @param string $email
-     * @return BlogComment
+     * @param string $fileName
+     * @return File
      */
-    public function setEmail($email)
+    public function setFileName($fileName)
     {
-        $this->email = $email;
+        $this->fileName = $fileName;
 
         return $this;
     }
 
     /**
-     * Get email
+     * Get fileName
      *
      * @return string 
      */
-    public function getEmail()
+    public function getFileName()
     {
-        return $this->email;
+        return $this->fileName;
     }
 
     /**
-     * Set comment
+     * Set type
      *
-     * @param string $comment
-     * @return BlogComment
+     * @param string $type
+     * @return File
      */
-    public function setComment($comment)
+    public function setType($type)
     {
-        $this->comment = $comment;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get comment
+     * Get type
      *
      * @return string 
      */
-    public function getComment()
+    public function getType()
     {
-        return $this->comment;
+        return $this->type;
     }
 
     /**
      * Set date
      *
      * @param \DateTime $date
-     * @return BlogComment
+     * @return File
      */
     public function setDate($date)
     {
@@ -181,5 +157,28 @@ class BlogComment
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set size
+     *
+     * @param integer $size
+     * @return File
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    /**
+     * Get size
+     *
+     * @return integer 
+     */
+    public function getSize()
+    {
+        return $this->size;
     }
 }

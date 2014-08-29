@@ -9,6 +9,7 @@ use Xvolutions\AdminBundle\Entity\BlogPost;
 use Xvolutions\AdminBundle\Form\BlogPostType;
 use Xvolutions\AdminBundle\Entity\Alias;
 use Symfony\Component\Debug\ErrorHandler;
+use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 
 /**
  * Description of BlogPostController
@@ -69,18 +70,27 @@ class BlogPostController extends AdminController
             } else {
                 $error = 'Já existe um artigo com esse endereço';
             }
+            $em = $this->getDoctrine()->getManager();
+            $elementsPerPage = $this->container->getParameter('elements_per_page');
+            $current_page = 1;
+            $boundaries = $this->container->getParameter('boundaries');
+            $around = $this->container->getParameter('around');
+            $select = 'SELECT COUNT(b.id)
+                        FROM XvolutionsAdminBundle:BlogPost b';
+            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
 
             $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
 
-            return $this->render('XvolutionsAdminBundle:blog:post/posts.html.twig', array(
+            return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(
                         'title' => 'Artigos',
                         'blogPostList' => $blogPostList,
                         'status' => $status,
                         'error' => $error,
+                        'pagination' => $pagination
             ));
         }
 
-        return $this->render('XvolutionsAdminBundle:blog:post/add_posts.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:blog:add_posts.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Adicionar um novo Artigo',
                     'status' => $status,
@@ -172,18 +182,26 @@ class BlogPostController extends AdminController
                     $error = 'Já existe um artigo com esse endereço';
                 }
             }
+            $elementsPerPage = $this->container->getParameter('elements_per_page');
+            $current_page = 1;
+            $boundaries = $this->container->getParameter('boundaries');
+            $around = $this->container->getParameter('around');
+            $select = 'SELECT COUNT(b.id)
+                        FROM XvolutionsAdminBundle:BlogPost b';
+            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
 
             $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
 
-            return $this->render('XvolutionsAdminBundle:blog:post/posts.html.twig', array(
+            return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(
                         'title' => 'Artigos',
                         'blogPostList' => $blogPostList,
                         'status' => $status,
                         'error' => $error,
+                        'pagination' => $pagination
             ));
         }
 
-        return $this->render('XvolutionsAdminBundle:blog:post/add_posts.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:blog:add_posts.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Editar um Artigo',
                     'status' => $status,
@@ -198,7 +216,7 @@ class BlogPostController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the blogPosts
      */
-    public function blogPostsAction($option = NULL, $id = NULL)
+    public function blogPostsAction($option = NULL, $id = NULL, $current_page = 1)
     {
         parent::verifyaccess();
 
@@ -223,13 +241,22 @@ class BlogPostController extends AdminController
             return new Response($status, Response::HTTP_OK);
         }
 
+        $em = $this->getDoctrine()->getManager();
+        $elementsPerPage = $this->container->getParameter('elements_per_page');
+        $boundaries = $this->container->getParameter('boundaries');
+        $around = $this->container->getParameter('around');
+        $select = 'SELECT COUNT(b.id)
+                    FROM XvolutionsAdminBundle:BlogPost b';
+        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
+
         $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
 
-        return $this->render('XvolutionsAdminBundle:blog:post/posts.html.twig', array(
+        return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(
                     'title' => 'Artigos',
                     'blogPostList' => $blogPostList,
                     'status' => $status,
                     'error' => $error,
+                    'pagination' => $pagination
         ));
     }
 
@@ -246,15 +273,13 @@ class BlogPostController extends AdminController
             $em = $this->getDoctrine()->getManager();
             $blogPost = $em->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
             if ($blogPost != 'empty') {
-                $em->remove($blogPost);
-                $em->flush();
-
                 $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $blogPost->getId()));
                 if(count($alias) > 0) {
                     $em->remove($alias[0]);
                     $em->flush();
                 }
-
+                $em->remove($blogPost);
+                $em->flush();
                 $status = 'Artigo removido com sucesso';
             } else {
                 $error = "Erro ao remover o artigo";
@@ -279,15 +304,13 @@ class BlogPostController extends AdminController
             {
                 $blogPost = $em->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
                 if ($blogPost != 'empty') {
-                    $em->remove($blogPost);
-                    $em->flush();
-
                     $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $blogPost->getId()));
                     if(count($alias) > 0) {
                         $em->remove($alias[0]);
                         $em->flush();
                     }
-
+                    $em->remove($blogPost);
+                    $em->flush();
                     $status = 'Artigo removido com sucesso';
                 } else {
                     $error = "Erro ao remover o(s) artigo(s)";

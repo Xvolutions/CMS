@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class TagType extends AbstractType
+class FileType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,7 +15,20 @@ class TagType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('tag')
+            ->add(
+                    'name',
+                    'text',
+                    array(
+                        'label' => 'Nome do ficheiro'
+                    )
+            )
+            ->add('fileName',
+                    'file', 
+                    array(
+                        'label' => 'Ficheiro',
+                        'required' => true
+                    )
+            )
         ;
     }
     
@@ -25,7 +38,7 @@ class TagType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Xvolutions\AdminBundle\Entity\Tag'
+            'data_class' => 'Xvolutions\AdminBundle\Entity\File'
         ));
     }
 
@@ -34,6 +47,6 @@ class TagType extends AbstractType
      */
     public function getName()
     {
-        return 'xvolutions_adminbundle_tag';
+        return 'xvolutions_adminbundle_file';
     }
 }
