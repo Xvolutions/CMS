@@ -20,7 +20,7 @@ class SectionsController extends AdminController
     /**
      * Controller responsible to add a new section for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new section
      */
@@ -73,7 +73,7 @@ class SectionsController extends AdminController
     /**
      * Controller responsible to edit a new section for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param type $id the id of an existing section
      * @return type the template for editing a section
@@ -131,12 +131,12 @@ class SectionsController extends AdminController
     /**
      * Function responsible for handling the section removal and the section
      * removal array
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param type $option This option might be a 'remove' for a single section and
      * 'removeselected' to remove an array of id's
      * @param type $id The id, or id's, of the section(s) to be removed
-     * @return type call the controller to handle 
+     * @return type call the controller to handle
      */
     public function sectionsAction($option = NULL, $id = NULL)
     {
@@ -174,7 +174,7 @@ class SectionsController extends AdminController
 
     /**
      * This is function is repsonsible to remove a section
-     * 
+     *
      * @param type $id the id of the section to be removed
      * @return string with the information message
      */
@@ -196,7 +196,7 @@ class SectionsController extends AdminController
             } else {
                 $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
                 $em->remove($section);
-                $em->flush();
+                $em->flush($section);
                 $status = 'Secção removida com sucesso';
             }
         } catch (\ErrorException $ex) {
@@ -206,7 +206,7 @@ class SectionsController extends AdminController
 
     /**
      * This function is responsible to remove a list of sections
-     * 
+     *
      * @param type $ids array containing the id's of the sections to be removed
      * @return string With the message
      */
@@ -231,7 +231,7 @@ class SectionsController extends AdminController
                 } else {
                     $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
                     $em->remove($section);
-                    $em->flush();
+                    $em->flush($section);
                     $status = 'Secção(ões) removida(s) com sucesso';
                 }
             }

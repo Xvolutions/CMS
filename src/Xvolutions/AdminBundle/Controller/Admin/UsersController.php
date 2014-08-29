@@ -21,7 +21,7 @@ class UsersController extends AdminController
     /**
      * Controller responsible to add a new user for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new user
      */
@@ -85,7 +85,7 @@ class UsersController extends AdminController
     /**
      * Controller responsible to edit an existing user for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param type $id the id of an existing user
      * @return type the template for editing a user
@@ -159,11 +159,11 @@ class UsersController extends AdminController
     /**
      * Function responsible for handling the user removal and the user
      * removal array as well has the list of users
-     * 
+     *
      * @param type $option This option might be a 'remove' for a single user and
      * 'removeselected' to remove an array of id's
      * @param type $id The id, or id's, of the user(s) to be removed
-     * @return type call the controller to handle 
+     * @return type call the controller to handle
      */
     public function usersAction($option = null, $id = null, $current_page = 1)
     {
@@ -210,7 +210,7 @@ class UsersController extends AdminController
 
     /**
      * This is function is repsonsible to remove a user
-     * 
+     *
      * @param type $id the id of the user to be removed
      * @return string with the information message
      */
@@ -221,7 +221,7 @@ class UsersController extends AdminController
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository('XvolutionsAdminBundle:User')->find($id);
             $em->remove($user);
-            $em->flush();
+            $em->flush($user);
             $status = 'Utilizador removido com sucesso';
         } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover um utilizador";
@@ -230,7 +230,7 @@ class UsersController extends AdminController
 
     /**
      * This function is responsible to remove a list of users
-     * 
+     *
      * @param type $ids array containing the id's of the users to be removed
      * @return string With the message
      */
