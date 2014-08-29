@@ -20,7 +20,7 @@ class RolesController extends AdminController
     /**
      * Controller responsible to add a new role for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new role
      */
@@ -66,7 +66,7 @@ class RolesController extends AdminController
     /**
      * Controller responsible to edit an existing role for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param type $id the id of an existing role
      * @return type the template for editing a role
@@ -114,7 +114,7 @@ class RolesController extends AdminController
     /**
      * Controller responsible to show the roles for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the roles
      */
@@ -154,7 +154,7 @@ class RolesController extends AdminController
 
     /**
      * This is function is repsonsible to remove a group
-     * 
+     *
      * @param type $id the id of the group to be removed
      * @return string with the information message
      */
@@ -179,7 +179,7 @@ class RolesController extends AdminController
                 }
                 if ($found == FALSE) {
                     $em->remove($role);
-                    $em->flush();
+                    $em->flush($role);
                     $status = 'Grupo removido com sucesso';
                 } else {
                     $error = 'Erro ao remover o grupo, tem utilizadores associados';
@@ -194,7 +194,7 @@ class RolesController extends AdminController
 
     /**
      * This function is responsible to remove a list of groups
-     * 
+     *
      * @param type $ids array containing the id's of the groups to be removed
      * @return string with the message
      */
@@ -221,7 +221,7 @@ class RolesController extends AdminController
                     }
                     if ($found == FALSE) {
                         $em->remove($role);
-                        $em->flush();
+                        $em->flush($role);
                         $status = 'Grupo removido com sucesso';
                     } else {
                         $error = 'Erro ao remover o grupo, tem utilizadores associados';

@@ -22,7 +22,7 @@ class BlogPostController extends AdminController
     /**
      * Controller responsible to add a new blog post for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new blog post
      */
@@ -35,7 +35,7 @@ class BlogPostController extends AdminController
 
         $form = $this->createForm($blogPostType, $blogPost)
                 ->add(
-                    'url', 
+                    'url',
                     'text',
                     array(
                         'label' => 'URL',
@@ -57,7 +57,7 @@ class BlogPostController extends AdminController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($blogPost);
                 $em->flush();
-                
+
                 $alias = new Alias();
                 $alias->setUrl($formValues['url']);
                 $alias->setType(2);
@@ -101,7 +101,7 @@ class BlogPostController extends AdminController
     /**
      * Controller responsible to edit an existing blog post for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param type $id the id of an existing blog post
      * @return type the template for editing a blog post
@@ -124,7 +124,7 @@ class BlogPostController extends AdminController
                         )
                 )
                 ->add(
-                    'url', 
+                    'url',
                     'text',
                     array(
                         'label' => 'URL',
@@ -149,10 +149,10 @@ class BlogPostController extends AdminController
             if(count($alias)==0) {
                 $oldAlias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $id));
                 $em->remove($oldAlias[0]);
-                
+
                 $em->persist($blogPost);
                 $em->flush();
-                
+
                 $alias = new Alias();
                 $alias->setUrl($formValues['url']);
                 $alias->setType(2);
@@ -212,7 +212,7 @@ class BlogPostController extends AdminController
     /**
      * Controller responsible to show the blog post for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the blogPosts
      */
@@ -262,7 +262,7 @@ class BlogPostController extends AdminController
 
     /**
      * This is function is repsonsible to remove a blog post
-     * 
+     *
      * @param type $id the id of the blog post to be removed
      * @return string with the information message
      */
@@ -291,7 +291,7 @@ class BlogPostController extends AdminController
 
     /**
      * This function is responsible to remove a list of blog posts
-     * 
+     *
      * @param type $ids array containing the id's of the blog posts to be removed
      * @return string with the message
      */
@@ -307,10 +307,10 @@ class BlogPostController extends AdminController
                     $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $blogPost->getId()));
                     if(count($alias) > 0) {
                         $em->remove($alias[0]);
-                        $em->flush();
+                        $em->flush($alias[0]);
                     }
                     $em->remove($blogPost);
-                    $em->flush();
+                    $em->flush($blogPost);
                     $status = 'Artigo removido com sucesso';
                 } else {
                     $error = "Erro ao remover o(s) artigo(s)";

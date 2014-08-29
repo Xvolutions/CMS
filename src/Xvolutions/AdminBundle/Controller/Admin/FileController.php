@@ -24,7 +24,7 @@ class FileController extends AdminController
         $files = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:File')->findAll();
         $folder = $this->container->getParameter('files_location');
         $arrayOfFiles = array();
-        foreach( $files as $file) 
+        foreach( $files as $file)
         {
             $tempArray = ['title' => $file->getName(), 'value' => 'http://' . $_SERVER['HTTP_HOST'] . $folder . $file->getFileName()];
             array_push($arrayOfFiles, $tempArray);
@@ -38,7 +38,7 @@ class FileController extends AdminController
     /**
      * Controller responsible to show the list of files and for handling the form
      * submission and the database insertion
-     * 
+     *
      * @param string $option can be remove of removeselected
      * @param integer $id of the file to be removed
      * @param integer $current_page a página actual da lista dos ficheiros
@@ -94,9 +94,9 @@ class FileController extends AdminController
     }
 
     /**
-     * This function is responsible for verifying if the file with the same name 
+     * This function is responsible for verifying if the file with the same name
      * already exists on the database and to handle the new files
-     * 
+     *
      * @param type $request
      * @param \Xvolutions\AdminBundle\Entity\File $file
      * @param string $status Status message
@@ -133,7 +133,7 @@ class FileController extends AdminController
     }
 
     /**
-     * 
+     *
      * @param string $option remove or removeselected
      * @param integer $id id of the file, or files, to be removed
      * @param string $status If everything went ok
@@ -157,7 +157,7 @@ class FileController extends AdminController
 
     /**
      * Function responsible for rendering the pagination
-     * 
+     *
      * @param integer $current_page The current page
      * @return \Xvolutions\AdminBundle\Helpers\PaginatorHelper
      */
@@ -174,7 +174,7 @@ class FileController extends AdminController
 
     /**
      * This function is responsible for deleting a file
-     * 
+     *
      * @param integer $id the id of the file to be removed
      * @param string $status with the information message
      * @param string $error with the information message
@@ -204,7 +204,7 @@ class FileController extends AdminController
 
     /**
      * This function is responsible to remove a list of files
-     * 
+     *
      * @param array $id the array of id of the files to be removed
      * @param string $status with the information message
      * @param string $error with the information message
@@ -221,7 +221,7 @@ class FileController extends AdminController
                     $folder = $this->container->getParameter('uploaded_files');
                     if (unlink($folder . '/' . $file->getFileName())) {
                         $em->remove($file);
-                        $em->flush();
+                        $em->flush($file);
                         $status = 'Ficheiro removido com sucesso';
                     } else {
                         $error = "Erro ao remover o ficheiro";
@@ -237,7 +237,7 @@ class FileController extends AdminController
 
     /**
      * Function responsible to return the PageList
-     * 
+     *
      * @param type $em Doctrine
      * @param type $current_page The current page
      * @param type $elementsPerPage The number of elements per page

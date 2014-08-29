@@ -22,7 +22,7 @@ class PagesController extends AdminController
     /**
      * Controller responsible to edit a new section for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param type $id the id of an existing section
      * @return type the template for editing a section
@@ -111,21 +111,21 @@ class PagesController extends AdminController
         $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
         $languageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findAll();
         $query = $em->createQuery(
-                        'SELECT 
-                p.id, 
-                p.title, 
-                p.date, 
-                s.section, 
+                        'SELECT
+                p.id,
+                p.title,
+                p.date,
+                s.section,
                 l.language
-            FROM 
-                XvolutionsAdminBundle:Page p, 
-                XvolutionsAdminBundle:Section s, 
+            FROM
+                XvolutionsAdminBundle:Page p,
+                XvolutionsAdminBundle:Section s,
                 XvolutionsAdminBundle:Language l
-            WHERE 
-                p.id_language = l.id AND 
-                p.id_section = s.id AND 
+            WHERE
+                p.id_language = l.id AND
+                p.id_section = s.id AND
                 p.id != :id
-            ORDER BY 
+            ORDER BY
                 p.title ASC'
                 )->setParameter('id', $id);
 
@@ -145,7 +145,7 @@ class PagesController extends AdminController
     /**
      * Controller responsible to show the pages for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the pages
      */
@@ -191,7 +191,7 @@ class PagesController extends AdminController
     /**
      * Controller responsible to add a new page for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new page
      */
@@ -250,7 +250,7 @@ class PagesController extends AdminController
 
     /**
      * This is function is responsible to remove a page
-     * 
+     *
      * @param type $id the id of the page to be removed
      * @return string with the information message
      */
@@ -264,10 +264,10 @@ class PagesController extends AdminController
                 $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $page->getId()));
                 if (count($alias) > 0) {
                     $em->remove($alias[0]);
-                    $em->flush();
+                    $em->flush($alias[0]);
                 }
                 $em->remove($page);
-                $em->flush();
+                $em->flush($page);
                 $status = 'Página removida com sucesso';
             } else {
                 $error = "Erro ao remover a página";
@@ -279,7 +279,7 @@ class PagesController extends AdminController
 
     /**
      * This function is responsible to remove a list of pages
-     * 
+     *
      * @param type $ids array containing the id's of the pages to be removed
      * @return string with the message
      */
@@ -295,10 +295,10 @@ class PagesController extends AdminController
                     $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $page->getId()));
                     if (count($alias) > 0) {
                         $em->remove($alias[0]);
-                        $em->flush();
+                        $em->flush($alias[0]);
                     }
                     $em->remove($page);
-                    $em->flush();
+                    $em->flush($page);
                     $status = 'Página(s) removida(s) com sucesso';
                 } else {
                     $error = "Erro ao remover a(s) página(s)";
@@ -311,12 +311,12 @@ class PagesController extends AdminController
 
     /**
      * Function responsible to save on the DB a new page, if the form is valid.
-     * 
+     *
      * @param type $request Request...
      * @param type $page page entity
      * @param string $status to add the status message
      * @param string $error to add the error message
-     * @return type 
+     * @return type
      */
     private function addPagesValid($request, $page, &$status, &$error)
     {
@@ -347,7 +347,7 @@ class PagesController extends AdminController
 
     /**
      * Function responsible to return the PageList
-     * 
+     *
      * @param type $em Doctrine
      * @param type $current_page The current page
      * @param type $elementsPerPage The number of elements per page

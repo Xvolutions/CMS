@@ -26,7 +26,7 @@ class LanguagesController extends AdminController
     /**
      * Controller responsible to add a new language for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new language
      */
@@ -81,7 +81,7 @@ class LanguagesController extends AdminController
     /**
      * Controller responsible to edit a langyage for and handling the form
      * submission and the database insertion
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param type $id the id of an existing language
      * @return type the template for editing a language
@@ -142,12 +142,12 @@ class LanguagesController extends AdminController
     /**
      * Function responsible for handling the languages removal and the languages
      * removal array
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param type $option This option might be a 'remove' for a single language and
      * 'removeselected' to remove an array of id's
      * @param type $id The id, or id's, of the language(s) to be removed
-     * @return type call the controller to handle 
+     * @return type call the controller to handle
      */
     public function languagesAction($option = NULL, $id = NULL)
     {
@@ -189,7 +189,7 @@ class LanguagesController extends AdminController
 
     /**
      * This is function is repsonsible to remove a language
-     * 
+     *
      * @param type $id the id of the language to be removed
      * @return string with the information message
      */
@@ -213,7 +213,7 @@ class LanguagesController extends AdminController
 
     /**
      * This function is responsible to remove a list of languages
-     * 
+     *
      * @param type $ids array containing the id's of the languages to be removed
      * @return string with the message
      */
@@ -227,7 +227,7 @@ class LanguagesController extends AdminController
                 $language = $em->getRepository('XvolutionsAdminBundle:Language')->find($id);
                 if ($language != 'empty') {
                     $em->remove($language);
-                    $em->flush();
+                    $em->flush($language);
                     $status = 'Ídioma(s) removido(s) com sucesso';
                 } else {
                     $error = "Erro ao remover o(s) ídioma(s)";
