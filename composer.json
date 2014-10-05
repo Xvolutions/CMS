@@ -4,7 +4,7 @@
     "type": "project",
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
-        "psr-0": { "": "src/", "SymfonyStandard": "app/" }
+        "psr-0": { "": "src/", "SymfonyStandard": "xvolutionscms/" }
     },
     "require": {
         "php": ">=5.3.3",
@@ -49,10 +49,10 @@
         "bin-dir": "bin"
     },
     "extra": {
-        "symfony-app-dir": "app",
+        "symfony-app-dir": "xvolutionscms",
         "symfony-web-dir": "web",
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
+            "file": "xvolutionscms/config/parameters.yml"
         },
         "branch-alias": {
             "dev-master": "2.5-dev"
