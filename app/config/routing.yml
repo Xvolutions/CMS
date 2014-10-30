@@ -1,3 +1,0 @@
-xvolutions_admin:
-    resource: "@XvolutionsAdminBundle/Resources/config/routing.yml"
-    prefix:   /admin/
