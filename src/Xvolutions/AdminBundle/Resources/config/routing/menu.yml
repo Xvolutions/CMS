@@ -1,0 +1,4 @@
+menu:
+    pattern: /
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Menu:menu }
+    methods:  [GET]

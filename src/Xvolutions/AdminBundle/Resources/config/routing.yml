@@ -70,3 +70,9 @@ XvolutionsAdminBundle_blog_posts:
 XvolutionsAdminBundle_files:
         resource: "@XvolutionsAdminBundle/Resources/config/routing/file.yml"
         prefix:   /files
+
+### MENU ###
+
+XvolutionsAdminBundle_menu:
+        resource: "@XvolutionsAdminBundle/Resources/config/routing/menu.yml"
+        prefix:   /menu
