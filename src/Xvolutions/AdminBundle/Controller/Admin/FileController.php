@@ -26,7 +26,7 @@ class FileController extends AdminController
         $arrayOfFiles = array();
         foreach( $files as $file)
         {
-            $tempArray = ['title' => $file->getName(), 'value' => 'http://' . $_SERVER['HTTP_HOST'] . $folder . $file->getFileName()];
+            $tempArray = ['title' => $file->getName(), 'value' => $folder . $file->getFileName()];
             array_push($arrayOfFiles, $tempArray);
         }
 
