@@ -15,6 +15,11 @@ files:
     defaults: { _controller: XvolutionsAdminBundle:Admin/File:list, current_page: 1 }
     methods:  [GET, POST]
 
+newfile:
+    pattern: /add
+    defaults: { _controller: XvolutionsAdminBundle:Admin/File:newFile, current_page: 1 }
+    methods:  [GET, POST]
+
 images_tinymce:
     pattern: /imagelist
     defaults: { _controller: XvolutionsAdminBundle:Admin/File:imageList }

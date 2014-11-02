@@ -1,8 +1,8 @@
 /vendor/
-/app/cache/*
-/app/logs/*
+/xvolutionscms/cache/*
+/xvolutionscms/logs/*
 /nbproject/private/
 /web/bundles
 /build/
 /bin/
-/app/config/parameters.yml
+/xvolutionscms/config/parameters.yml
