@@ -9,7 +9,6 @@ use Symfony\Component\Debug\ErrorHandler;
 use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 use Xvolutions\AdminBundle\Helpers\Upload;
 use Xvolutions\AdminBundle\Entity\File;
-use Xvolutions\AdminBundle\Form\FileType;
 
 /**
  * Description of FileController
@@ -41,10 +40,12 @@ class FileController extends AdminController
      *
      * @param string $option can be remove of removeselected
      * @param integer $id of the file to be removed
-     * @param integer $current_page a página actual da lista dos ficheiros
+     * @param integer $current_page the actual page
+     * @param string $status if the removal or adition has been done correctly
+     * @param string $error if the removal or adition had errors
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request, $option = null, $id = null, $current_page = 1, $status = null, $error = null)
+    public function listAction($option = null, $id = null, $current_page = 1, $status = null, $error = null)
     {
         parent::verifyaccess();
 
@@ -78,6 +79,13 @@ class FileController extends AdminController
         ));
     }
 
+    /**
+     * Controller responsible to add a new file
+     * 
+     * @param Request $request The request to be processed
+     * @param type $current_page the actual page
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function newFileAction(Request $request, $current_page = 1)
     {
         parent::verifyaccess();
@@ -125,14 +133,6 @@ class FileController extends AdminController
         $files_location = $this->container->getParameter('files_location');
 
         return $this->redirect($this->generateUrl('files'));
-        return $this->render('XvolutionsAdminBundle:files:files.html.twig', array(
-                    'title' => 'Ficheiros',
-                    'fileList' => $fileList,
-                    'status' => $status,
-                    'error' => $error,
-                    'pagination' => $pagination,
-                    'files_location' => $files_location
-        ));
     }
 
     /**
