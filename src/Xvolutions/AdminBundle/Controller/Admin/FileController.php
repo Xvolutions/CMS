@@ -44,21 +44,9 @@ class FileController extends AdminController
      * @param integer $current_page a página actual da lista dos ficheiros
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request, $option = null, $id = null, $current_page = 1)
+    public function listAction(Request $request, $option = null, $id = null, $current_page = 1, $status = null, $error = null)
     {
         parent::verifyaccess();
-
-        $status = null;
-        $error = null;
-        $folder = $this->container->getParameter('files_location');
-
-        $file = new File();
-        $fileType = new FileType();
-
-        $form = $this->createForm($fileType, $file)
-                ->add('Enviar', 'submit')
-        ;
-        $form->handleRequest($request);
 
         $this->options($option, $id, $status, $error);
 
@@ -67,10 +55,6 @@ class FileController extends AdminController
         }
         if ($status != null) {
             return new Response($status, Response::HTTP_OK);
-        }
-
-        if ($form->isValid()) {
-            $this->addNewFile($request, $file, $status, $error);
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -82,43 +66,41 @@ class FileController extends AdminController
         $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
         $fileList = $this->pageList($em, $current_page, $elementsPerPage);
 
+        $files_location = $this->container->getParameter('files_location');
+
         return $this->render('XvolutionsAdminBundle:files:files.html.twig', array(
                     'title' => 'Ficheiros',
-                    'form' => $form->createView(),
                     'fileList' => $fileList,
                     'status' => $status,
                     'error' => $error,
                     'pagination' => $pagination,
-                    'host' => 'http://' . $_SERVER['HTTP_HOST'] . $folder
+                    'files_location' => $files_location
         ));
     }
 
-    /**
-     * This function is responsible for verifying if the file with the same name
-     * already exists on the database and to handle the new files
-     *
-     * @param type $request
-     * @param \Xvolutions\AdminBundle\Entity\File $file
-     * @param string $status Status message
-     * @param string $error Error message
-     */
-    private function addNewFile($request, File $file, &$status, &$error)
+    public function newFileAction(Request $request, $current_page = 1)
     {
-        $name = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:File')->findBy(array('name' => $file->getName()));
-        if (count($name) > 0) {
-            $error = "Já existe um ficheiro com esse nome";
-        } else {
-            try {
-                $upload = new Upload();
-                $folder = $this->container->getParameter('uploaded_files');
-                $fileName = null;
-                $size = null;
-                $type = null;
-                $upload->upload($request, $folder, $fileName, $size, $type);
+        parent::verifyaccess();
 
+        $upload = new Upload();
+        $folder = $this->container->getParameter('uploaded_files');
+        $fileName = null;
+        $originalFileName = null;
+        $size = null;
+        $type = null;
+        $status = null;
+        $error = null;
+        if ( $upload->upload($request, $folder, $fileName, $originalFileName, $size, $type) ) {
+            $name = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:File')->findBy(array('name' => $originalFileName));
+            if (count($name) > 0) {
+                @unlink( $folder . '/' . $fileName);
+                $error = "Já existe um ficheiro com esse nome";
+            } else {
+                $file = new File();
                 $datetime = new \DateTime('now');
                 $file->setDate($datetime);
                 $file->setFileName($fileName);
+                $file->setName($originalFileName);
                 $file->setType($type);
                 $file->setSize($size);
 
@@ -126,10 +108,31 @@ class FileController extends AdminController
                 $em->persist($file);
                 $em->flush();
                 $status = 'Ficheiro adicionado com sucesso';
-            } catch (Exception $e) {
-                $error = $e;
             }
+        } else {
+            $error = "Impossível enviar o ficheiro";
         }
+
+        $em = $this->getDoctrine()->getManager();
+        $elementsPerPage = $this->container->getParameter('elements_per_page');
+        $boundaries = $this->container->getParameter('boundaries');
+        $around = $this->container->getParameter('around');
+        $select = 'SELECT COUNT(f.id)
+                    FROM XvolutionsAdminBundle:File f';
+        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
+        $fileList = $this->pageList($em, $current_page, $elementsPerPage);
+
+        $files_location = $this->container->getParameter('files_location');
+
+        return $this->redirect($this->generateUrl('files'));
+        return $this->render('XvolutionsAdminBundle:files:files.html.twig', array(
+                    'title' => 'Ficheiros',
+                    'fileList' => $fileList,
+                    'status' => $status,
+                    'error' => $error,
+                    'pagination' => $pagination,
+                    'files_location' => $files_location
+        ));
     }
 
     /**
