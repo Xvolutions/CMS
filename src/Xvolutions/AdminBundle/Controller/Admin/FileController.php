@@ -201,7 +201,11 @@ class FileController extends AdminController
                 $error = "Erro ao remover o ficheiro";
             }
         } catch (\ErrorException $ex) {
-            $error = "Erro $ex ao remover o ficheiro";
+            if(!is_file($folder . '/' . $file->getFileName()) ) {
+                $em->remove($file);
+                $em->flush();
+                $error = "Inconsistencia encontrada na base de dados. Esta foi reparada";
+            }
         }
     }
 
