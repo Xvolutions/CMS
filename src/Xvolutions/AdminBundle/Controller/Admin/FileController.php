@@ -103,6 +103,7 @@ class FileController extends AdminController
             if (count($name) > 0) {
                 @unlink( $folder . '/' . $fileName);
                 $error = "Já existe um ficheiro com esse nome";
+                return New Response($error, Response::HTTP_NOT_ACCEPTABLE);
             } else {
                 $file = new File();
                 $datetime = new \DateTime('now');
@@ -116,23 +117,12 @@ class FileController extends AdminController
                 $em->persist($file);
                 $em->flush();
                 $status = 'Ficheiro adicionado com sucesso';
+                return New Response($status, Response::HTTP_CREATED);
             }
         } else {
             $error = "Impossível enviar o ficheiro";
+            return New Response($error, Response::HTTP_NOT_ACCEPTABLE);
         }
-
-        $em = $this->getDoctrine()->getManager();
-        $elementsPerPage = $this->container->getParameter('elements_per_page');
-        $boundaries = $this->container->getParameter('boundaries');
-        $around = $this->container->getParameter('around');
-        $select = 'SELECT COUNT(f.id)
-                    FROM XvolutionsAdminBundle:File f';
-        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-        $fileList = $this->pageList($em, $current_page, $elementsPerPage);
-
-        $files_location = $this->container->getParameter('files_location');
-
-        return $this->redirect($this->generateUrl('files'));
     }
 
     /**
