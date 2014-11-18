@@ -20,6 +20,8 @@ class FileController extends AdminController
 
     public function imageListAction()
     {
+        parent::verifyaccess();
+
         $files = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:File')->findAll();
         $folder = $this->container->getParameter('files_location');
         $arrayOfFiles = array();
