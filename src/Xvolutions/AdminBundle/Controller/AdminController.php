@@ -4,6 +4,7 @@ namespace Xvolutions\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Debug\ErrorHandler;
 
 /**
@@ -65,6 +66,22 @@ class AdminController extends Controller {
                 'gravatar' => $gravatar
             )
         );
+    }
+
+    /**
+     * Displays the PHP info.
+     *
+     * @return Response A Response instance
+     *
+     * @throws NotFoundHttpException
+     */
+    public function phpinfoAction()
+    {
+        ob_start();
+        phpinfo();
+        $phpinfo = ob_get_clean();
+
+        return new Response($phpinfo, 200, array('Content-Type' => 'text/html'));
     }
 
     /**
