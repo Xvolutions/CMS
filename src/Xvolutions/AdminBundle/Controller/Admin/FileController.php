@@ -22,13 +22,18 @@ class FileController extends AdminController
     {
         parent::verifyaccess();
 
+        $imageTypes = array('gif','jpeg','png','tiff','bmp');
         $files = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:File')->findAll();
         $folder = $this->container->getParameter('files_location');
         $arrayOfFiles = array();
-        foreach( $files as $file)
+        foreach($files as $file)
         {
-            $tempArray = ['title' => $file->getName(), 'value' => $folder . $file->getFileName()];
-            array_push($arrayOfFiles, $tempArray);
+            $type = $file->getType();
+
+            if(in_array($type, $imageTypes)) {
+                $tempArray = ['title' => $file->getName(), 'value' => $folder . $file->getFileName()];
+                array_push($arrayOfFiles, $tempArray);   
+            }
         }
 
         $jsonResponse = json_encode($arrayOfFiles);
