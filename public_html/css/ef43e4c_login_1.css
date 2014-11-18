@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 8, 2014, 10:13:53 AM
+    Author     : Pedro Resende <pedroresende@mail.resende.biz>
+*/
+/* line 10, /Users/pedroresende/Sites/Symfony/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/Symfony\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000310}}
+html,
+body {
+  background-color: #eee !important;
+  background: url('../bundles/xvolutionsadmin/images/login_bg.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+/* line 19, /Users/pedroresende/Sites/Symfony/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/Symfony\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000319}}
+.top-20 {
+  margin-top: 20%;
+}
+/* line 23, /Users/pedroresende/Sites/Symfony/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/Symfony\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000323}}
+.login-form {
+  background-color: #ffffff;
+  margin-left: auto;
+  width: 100%;
+  padding: 20px;
+  margin: auto;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  -webkit-box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+}
+/* line 36, /Users/pedroresende/Sites/Symfony/src/Xvolutions/AdminBundle/Resources/public/less/login.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/pedroresende\/Sites\/Symfony\/src\/Xvolutions\/AdminBundle\/Resources\/public\/less\/login\.less}line{font-family:\0000336}}
+.login-form h2 {
+  text-align: center;
+}
