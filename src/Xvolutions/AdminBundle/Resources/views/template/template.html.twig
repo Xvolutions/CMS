@@ -18,6 +18,7 @@
         {% endimage %}
         {% stylesheets 
             '@XvolutionsAdminBundle/Resources/public/css/bootstrap.min.css'
+            output ='css/bootstrap.min.css'
         %}
         <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
         {% endstylesheets %}
@@ -44,6 +45,7 @@
                     '@XvolutionsAdminBundle/Resources/public/js/hide_alerts.min.js' 
                     '@XvolutionsAdminBundle/Resources/public/js/seturl.min.js' 
                     '@XvolutionsAdminBundle/Resources/public/js/dropzone.min.js' 
+                    output ='js/main.js'
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}

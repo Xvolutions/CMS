@@ -50,7 +50,7 @@
     },
     "extra": {
         "symfony-app-dir": "xvolutionscms",
-        "symfony-web-dir": "web",
+        "symfony-web-dir": "public_html",
         "incenteev-parameters": {
             "file": "xvolutionscms/config/parameters.yml"
         },

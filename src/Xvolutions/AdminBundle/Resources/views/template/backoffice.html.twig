@@ -3,12 +3,11 @@
 {% block title %}Backoffice{% endblock %}
 
 {% block styles %}
-    {#% stylesheets 
-        'bundles/xvolutionsadmin/css/backoffice.css' filter="yui_css"
-    %#}
-    <link href="{#{ asset_url }#}" rel="stylesheet" type="text/css" />
-    {#% endstylesheets %#}
-    <link href="/bundles/xvolutionsadmin/css/backoffice.css" rel="stylesheet" type="text/css" />
+    {% stylesheets 
+        'bundles/xvolutionsadmin/css/backoffice.css' filter="cssrewrite,yui_css" output='css/backoffice.css'
+    %}
+    <link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
+    {% endstylesheets %}
 {% endblock %}
 {% block menu %}
         <div class="container-fluid">

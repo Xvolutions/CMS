@@ -18,5 +18,5 @@ parameters:
     boundaries: 2
     around: 2
 
-    uploaded_files: %kernel.root_dir%/../web/files
+    uploaded_files: %kernel.root_dir%/../public_html/files
     files_location: /files/
