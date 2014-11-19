@@ -18,6 +18,12 @@ use Xvolutions\AdminBundle\Entity\File;
 class FileController extends AdminController
 {
 
+    /**
+     * Controller responsible to return the list of images uploaded to the database
+     * to be used by TinyMCE
+     * 
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function imageListAction()
     {
         parent::verifyaccess();
