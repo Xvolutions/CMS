@@ -126,7 +126,13 @@ class UsersController extends AdminController
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $status = 'Utilizador actualizado com sucesso';
-
+            $current_page= 1;
+            $elementsPerPage = $this->container->getParameter('elements_per_page');
+            $boundaries = $this->container->getParameter('boundaries');
+            $around = $this->container->getParameter('around');
+            $select = 'SELECT COUNT(u.id)
+                        FROM XvolutionsAdminBundle:User u';
+            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
             $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
             return $this->render('XvolutionsAdminBundle:users:users.html.twig', array(
@@ -134,6 +140,7 @@ class UsersController extends AdminController
                         'userlist' => $userList,
                         'status' => $status,
                         'error' => $error,
+                        'pagination' => $pagination
             ));
         }
         $em = $this->getDoctrine()->getManager();
