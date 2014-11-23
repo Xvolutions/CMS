@@ -32,6 +32,13 @@ class BlogPost
     /**
      * @var string
      *
+     * @ORM\Column(name="subtitle", type="string", length=255)
+     */
+    private $subtitle;    
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="author", type="string", length=255)
      */
     private $author;
@@ -119,6 +126,29 @@ class BlogPost
     public function getTitle()
     {
         return $this->title;
+    }
+    
+    /**
+     * Set subtitle
+     *
+     * @param string $subtitle
+     * @return BlogPost
+     */
+    public function setSubTitle($subtitle)
+    {
+        $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    /**
+     * Get subtitle
+     *
+     * @return string 
+     */
+    public function getSubTitle()
+    {
+        return $this->subtitle;
     }
 
     /**
