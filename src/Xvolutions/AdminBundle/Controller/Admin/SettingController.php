@@ -40,7 +40,7 @@ class SettingController extends AdminController {
                 $em->flush();
                 $status = 'Configurações actualizadas com sucesso';
             } else {
-                $error = 'Erro !!!';
+                $error = 'Erro ao actualizar as configurações';
             }
         }
 
