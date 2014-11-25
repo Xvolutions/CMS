@@ -70,3 +70,10 @@ XvolutionsAdminBundle_blog_posts:
 XvolutionsAdminBundle_files:
         resource: "@XvolutionsAdminBundle/Resources/config/routing/file.yml"
         prefix:   /files
+
+### SETTINGS ###
+
+XvolutionsAdminBundle_settings:
+        resource: "@XvolutionsAdminBundle/Resources/config/routing/setting.yml"
+        prefix:   /settings
+        
