@@ -6,3 +6,7 @@
 /build/
 /bin/
 /xvolutionscms/config/parameters.yml
+/src/*
+/src/*/
+!/src/Xvolutions/
+!/src/.htaccess
