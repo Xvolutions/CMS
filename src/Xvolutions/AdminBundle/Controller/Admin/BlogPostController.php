@@ -119,9 +119,8 @@ class BlogPostController extends AdminController
                 ->add(
                     'author', null, array(
                     'label' => 'Autor',
-                    'disabled' => true,
                     'data' => parent::getUsername()
-                        )
+                    )
                 )
                 ->add(
                     'url',

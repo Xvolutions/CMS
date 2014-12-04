@@ -24,6 +24,11 @@ setup:
     defaults: { _controller: XvolutionsAdminBundle:Admin:setup }
     methods:  [GET]
 
+phpinfo:
+    pattern: /phpinfo
+    defaults: { _controller: XvolutionsAdminBundle:Admin:phpinfo }
+    methods:  [GET]
+
 ### PAGES ###
 
 XvolutionsAdminBundle_pages:
@@ -65,3 +70,13 @@ XvolutionsAdminBundle_blog_posts:
 XvolutionsAdminBundle_files:
         resource: "@XvolutionsAdminBundle/Resources/config/routing/file.yml"
         prefix:   /files
+<<<<<<< HEAD
+=======
+
+### SETTINGS ###
+
+XvolutionsAdminBundle_settings:
+        resource: "@XvolutionsAdminBundle/Resources/config/routing/setting.yml"
+        prefix:   /settings
+        
+>>>>>>> 3d415289722e7be126833b21cc8ddc504bd660ad

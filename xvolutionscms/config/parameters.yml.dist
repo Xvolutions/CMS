@@ -6,8 +6,9 @@ parameters:
     database_user:     root
     database_password: ~
 
+    mailer_port:       25
     mailer_transport:  smtp
-    mailer_host:       127.0.0.1
+    mailer_host:       localhost
     mailer_user:       ~
     mailer_password:   ~
 
@@ -18,5 +19,5 @@ parameters:
     boundaries: 2
     around: 2
 
-    uploaded_files: %kernel.root_dir%/../web/files
+    uploaded_files: %kernel.root_dir%/../public_html/files
     files_location: /files/
