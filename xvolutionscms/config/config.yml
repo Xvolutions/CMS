@@ -38,6 +38,7 @@ twig:
 
 # Assetic Configuration
 assetic:
+    read_from: "%kernel.root_dir%/../public_html"
     debug:          "%kernel.debug%"
     use_controller: false
     bundles:        [ XvolutionsAdminBundle ]
@@ -71,6 +72,12 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
+    spool:
+        type: file
+        path:  "%kernel.cache_dir%/spool"
+    encryption: ~
+    auth_mode:  ~
+    port:      "%mailer_port%"
     transport: "%mailer_transport%"
     host:      "%mailer_host%"
     username:  "%mailer_user%"

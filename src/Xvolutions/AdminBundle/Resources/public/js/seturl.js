@@ -66,7 +66,7 @@ $(document).ready(function()
         }
         ;
         title=str_array.join('');
-        var url = '/' + title + '/';
+        var url = title;
 
         $('.url').val(url);
     });
