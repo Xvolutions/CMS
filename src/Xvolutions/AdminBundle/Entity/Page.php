@@ -68,7 +68,7 @@ class Page
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="Alias")
+     * @ORM\OneToOne(targetEntity="Alias",cascade={"persist", "remove"})
      */
     private $id_alias;
 
@@ -109,26 +109,6 @@ class Page
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set URL
-     *
-     * @return null
-     */
-    public function setUrl($url)
-    {
-        return null;
-    }
-
-    /**
-     * Get URL
-     *
-     * @return null 
-     */
-    public function getUrl()
-    {
-        return null;
     }
 
     /**
