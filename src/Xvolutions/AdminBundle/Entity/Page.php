@@ -53,14 +53,6 @@ class Page
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Page", inversedBy="id")
-     * @ORM\Column(name="id_parent", type="integer", nullable=true)
-     */
-    private $id_parent;
-
-    /**
-     * @var integer
-     *
      * @ORM\ManyToOne(targetEntity="Language")
      */
     private $id_language;
@@ -181,29 +173,6 @@ class Page
     }
 
     /**
-     * Get id_parent
-     *
-     * @return integer 
-     */
-    public function getIdparent()
-    {
-        return $this->id_parent;
-    }
-
-    /**
-     * Set id_parent
-     *
-     * @param integer id_parent
-     * @return Page Parent ID
-     */
-    public function setIdparent($id_parent)
-    {
-        $this->id_parent = $id_parent;
-
-        return $this;
-    }
-
-    /**
      * Get id_language
      *
      * @return integer 
@@ -247,5 +216,26 @@ class Page
         $this->id_alias = $id_alias;
 
         return $this;
+    }
+
+    
+    /**
+     * Set URL
+     *
+     * @return null
+     */
+    public function setUrl($url)
+    {
+        return null;
+    }
+
+    /**
+     * Get URL
+     *
+     * @return null 
+     */
+    public function getUrl()
+    {
+        return null;
     }
 }
