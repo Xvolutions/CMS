@@ -11,6 +11,7 @@ use Xvolutions\AdminBundle\Entity\Section;
 use Xvolutions\AdminBundle\Entity\Language;
 use Xvolutions\AdminBundle\Entity\User;
 use Xvolutions\AdminBundle\Entity\Role;
+use Xvolutions\AdminBundle\Entity\Alias;
 use Symfony\Component\Debug\ErrorHandler;
 
 /**
@@ -81,6 +82,10 @@ class InitiateCommand extends ContainerAwareCommand
                 $page->setIdparent(0);
                 $page->setIdlanguage($languageList[0]);
                 $page->setIdsection($sectionList[0]);
+                $alias = new Alias();
+                $alias->setType(1);
+                $alias->setUrl('-----');
+                $page->setIdalias($alias);
                 $datetime = new \DateTime('now');
                 $page->setDate($datetime);
                 $em->persist($page);
