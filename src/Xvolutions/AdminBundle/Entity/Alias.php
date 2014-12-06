@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Alias
-{
+class Alias {
+
     /**
      * @var integer
      *
@@ -37,20 +37,12 @@ class Alias
      */
     private $type;
 
-        /**
-     * @var integer
-     *
-     * @ORM\Column(name="id_external", type="integer")
-     */
-    private $id_external;
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -60,8 +52,7 @@ class Alias
      * @param string $url
      * @return Alias
      */
-    public function setUrl($url)
-    {
+    public function setUrl($url) {
         $this->url = $url;
 
         return $this;
@@ -72,8 +63,7 @@ class Alias
      *
      * @return string 
      */
-    public function getUrl()
-    {
+    public function getUrl() {
         return $this->url;
     }
 
@@ -83,8 +73,7 @@ class Alias
      * @param string $type
      * @return Type
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->type = $type;
 
         return $this;
@@ -95,31 +84,8 @@ class Alias
      *
      * @return string 
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
-    /**
-     * Set id_external
-     *
-     * @param string $id_external
-     * @return id_external
-     */
-    public function setIdExternal($id_external)
-    {
-        $this->id_external = $id_external;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getIdExternal()
-    {
-        return $this->id_external;
-    }
 }
