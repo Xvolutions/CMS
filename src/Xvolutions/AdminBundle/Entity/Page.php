@@ -3,6 +3,7 @@
 namespace Xvolutions\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Page
@@ -46,7 +47,6 @@ class Page
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="Section")
-     * @ORM\JoinColumn(name="id_section", referencedColumnName="id")
      */
     private $id_section;
 
@@ -62,9 +62,21 @@ class Page
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="Language")
-     * @ORM\JoinColumn(name="id_language", referencedColumnName="id")
      */
     private $id_language;
+
+    /**
+     * @var integer
+     *
+     * @ORM\OneToOne(targetEntity="Alias")
+     */
+    private $id_alias;
+
+    public function __construct() {
+        $this->id_language = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->id_section = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->id_alias = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -230,6 +242,29 @@ class Page
     public function setIdlanguage($id_language)
     {
         $this->id_language = $id_language;
+
+        return $this;
+    }
+
+    /**
+     * Get id_alias
+     *
+     * @return integer 
+     */
+    public function getIdalias()
+    {
+        return $this->id_alias;
+    }
+
+    /**
+     * Set id_alias
+     *
+     * @param integer id_alias
+     * @return Page's Alias ID
+     */
+    public function setIdalias($id_alias)
+    {
+        $this->id_alias = $id_alias;
 
         return $this;
     }

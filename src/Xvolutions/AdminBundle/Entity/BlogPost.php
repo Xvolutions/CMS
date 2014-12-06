@@ -34,7 +34,7 @@ class BlogPost
      *
      * @ORM\Column(name="subtitle", type="string", length=255)
      */
-    private $subtitle;    
+    private $subtitle;
     
     /**
      * @var string
@@ -75,7 +75,6 @@ class BlogPost
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="Language")
-     * @ORM\JoinColumn(name="id_language", referencedColumnName="id")
      */
     private $id_language;
 
@@ -83,16 +82,23 @@ class BlogPost
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="Section")
-     * @ORM\JoinColumn(name="id_section", referencedColumnName="id")
      */
     private $id_section;
+
+    /**
+     * @var integer
+     *
+     * @ORM\OneToOne(targetEntity="Alias")
+     */
+    private $id_alias;
 
     public function __construct()
     {
         $this->tag = new ArrayCollection();
         $this->category = new ArrayCollection();
-        $this->section = new ArrayCollection();
-        $this->language = new ArrayCollection();
+        $this->id_section = new ArrayCollection();
+        $this->id_language = new ArrayCollection();
+        $this->id_alias = new ArrayCollection();
     }
 
     /**
@@ -149,26 +155,6 @@ class BlogPost
     public function getSubTitle()
     {
         return $this->subtitle;
-    }
-
-    /**
-     * Set URL
-     *
-     * @return null
-     */
-    public function setUrl($url)
-    {
-        return null;
-    }
-
-    /**
-     * Get URL
-     *
-     * @return null 
-     */
-    public function getUrl()
-    {
-        return null;
     }
 
     /**
@@ -328,6 +314,29 @@ class BlogPost
     public function setIdlanguage($id_language)
     {
         $this->id_language = $id_language;
+
+        return $this;
+    }
+
+    /**
+     * Get id_alias
+     *
+     * @return integer 
+     */
+    public function getIdalias()
+    {
+        return $this->id_alias;
+    }
+
+    /**
+     * Set id_alias
+     *
+     * @param integer id_alias
+     * @return Page's Alias ID
+     */
+    public function setIdalias($id_alias)
+    {
+        $this->id_alias = $id_alias;
 
         return $this;
     }
