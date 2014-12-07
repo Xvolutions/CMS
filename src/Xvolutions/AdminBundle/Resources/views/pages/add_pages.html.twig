@@ -24,7 +24,7 @@
         </div>
         <div>
             <p>{{ "URL"|trans }}</p>
-            <p>{{ form_widget( form.url ) }}
+            <p>{{ form_widget( form.idalias ) }}</p>
         </div>
         <div>
             <p>{{ "Texto"|trans }}</p>
@@ -37,10 +37,6 @@
         <div>
             <p>{{ "Secção"|trans }}</p>
             <p>{{ form_widget( form.id_section ) }}</p>
-        </div>
-        <div>
-            <p>{{ "Página Superior"|trans }}</p>
-            <p>{{ form_widget( form.id_parent ) }}</p>
         </div>
         <br>
             {{ form_end( form ) }}
