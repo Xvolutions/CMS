@@ -6,6 +6,7 @@ use Xvolutions\AdminBundle\Controller\AdminController;
 use Xvolutions\AdminBundle\Entity\Setting;
 use Xvolutions\AdminBundle\Form\SettingType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Description of SettingController
@@ -52,6 +53,20 @@ class SettingController extends AdminController {
                     'title' => 'Configurações',
                     'form' => $form->createView(),
         ));
+    }
+
+    public function menuAction()
+    {
+        parent::verifyaccess();
+
+        $setting = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Setting')->find(1);
+        if ($setting == null) {
+            $blog = false;
+        } else {
+            $blog = $setting->getBlog();
+        }
+
+        return new Response((string)$blog);
     }
 
 }

@@ -3,6 +3,7 @@
 namespace Xvolutions\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Page
@@ -46,25 +47,28 @@ class Page
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="Section")
-     * @ORM\JoinColumn(name="id_section", referencedColumnName="id")
      */
     private $id_section;
 
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Page", inversedBy="id")
-     * @ORM\Column(name="id_parent", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Language")
      */
-    private $id_parent;
+    private $id_language;
 
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Language")
-     * @ORM\JoinColumn(name="id_language", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Alias",cascade={"all"})
      */
-    private $id_language;
+    private $id_alias;
+
+    public function __construct() {
+        $this->id_language = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->id_section = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->id_alias = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -97,26 +101,6 @@ class Page
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set URL
-     *
-     * @return null
-     */
-    public function setUrl($url)
-    {
-        return null;
-    }
-
-    /**
-     * Get URL
-     *
-     * @return null 
-     */
-    public function getUrl()
-    {
-        return null;
     }
 
     /**
@@ -189,29 +173,6 @@ class Page
     }
 
     /**
-     * Get id_parent
-     *
-     * @return integer 
-     */
-    public function getIdparent()
-    {
-        return $this->id_parent;
-    }
-
-    /**
-     * Set id_parent
-     *
-     * @param integer id_parent
-     * @return Page Parent ID
-     */
-    public function setIdparent($id_parent)
-    {
-        $this->id_parent = $id_parent;
-
-        return $this;
-    }
-
-    /**
      * Get id_language
      *
      * @return integer 
@@ -232,5 +193,49 @@ class Page
         $this->id_language = $id_language;
 
         return $this;
+    }
+
+    /**
+     * Get id_alias
+     *
+     * @return integer 
+     */
+    public function getIdalias()
+    {
+        return $this->id_alias;
+    }
+
+    /**
+     * Set id_alias
+     *
+     * @param integer id_alias
+     * @return Page's Alias ID
+     */
+    public function setIdalias($id_alias)
+    {
+        $this->id_alias = $id_alias;
+
+        return $this;
+    }
+
+    
+    /**
+     * Set URL
+     *
+     * @return null
+     */
+    public function setUrl($url)
+    {
+        return null;
+    }
+
+    /**
+     * Get URL
+     *
+     * @return null 
+     */
+    public function getUrl()
+    {
+        return null;
     }
 }

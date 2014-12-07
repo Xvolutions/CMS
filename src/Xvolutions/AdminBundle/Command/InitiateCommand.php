@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Xvolutions\AdminBundle\Entity\Page;
 use Xvolutions\AdminBundle\Entity\Section;
 use Xvolutions\AdminBundle\Entity\Language;
 use Xvolutions\AdminBundle\Entity\User;
@@ -44,7 +43,6 @@ class InitiateCommand extends ContainerAwareCommand
         $this->initiateUsers($output, $username, $name, $password, $email);
         $this->initiateSections($output);
         $this->initiateLanguages($output);
-        $this->initiatePages($output);
     }
 
     private function initiateSections(&$output)
@@ -63,32 +61,6 @@ class InitiateCommand extends ContainerAwareCommand
             $output->writeln('Secções Adicionadas');
         } catch (\ErrorException $ex) {
             $output->writeln("Erro ao adicionar as secções base -> $ex");
-        }
-    }
-
-    private function initiatePages(&$output)
-    {
-        try {
-            $em = $this->getContainer()->get('doctrine')->getManager('default');
-            $sectionList = $this->getContainer()->get('doctrine')->getRepository('XvolutionsAdminBundle:Section')->find(0);
-            $languageList = $this->getContainer()->get('doctrine')->getRepository('XvolutionsAdminBundle:Language')->find(0);
-            $pages = array('-----');
-            foreach ($pages as $p)
-            {
-                $page = new Page();
-                $page->setTitle($p);
-                $page->setUrl($p);
-                $page->setIdparent(0);
-                $page->setIdlanguage($languageList[0]);
-                $page->setIdsection($sectionList[0]);
-                $datetime = new \DateTime('now');
-                $page->setDate($datetime);
-                $em->persist($page);
-                $em->flush($page);
-            }
-            $output->writeln('Páginas Adicionadas');
-        } catch (\ErrorException $ex) {
-            $output->writeln("Erro ao adicionar as páginas base -> $ex");
         }
     }
 

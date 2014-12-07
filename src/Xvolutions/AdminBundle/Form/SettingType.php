@@ -19,6 +19,7 @@ class SettingType extends AbstractType
             ->add('description')
             ->add('keywords')
             ->add('author')
+            ->add('blog')
         ;
     }
     

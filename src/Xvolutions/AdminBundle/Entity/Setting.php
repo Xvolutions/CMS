@@ -49,6 +49,13 @@ class Setting
      */
     private $author;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="blog", type="boolean", nullable=true)
+     */
+    private $blog;
+
 
     /**
      * Get id
@@ -150,5 +157,28 @@ class Setting
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set blog
+     *
+     * @param string $blog
+     * @return Setting
+     */
+    public function setBlog($blog)
+    {
+        $this->blog = $blog;
+
+        return $this;
+    }
+
+    /**
+     * Get blog
+     *
+     * @return string 
+     */
+    public function getBlog()
+    {
+        return $this->blog;
     }
 }
