@@ -60,7 +60,7 @@ class Page
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="Alias",cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Alias",cascade={"all"})
      */
     private $id_alias;
 
