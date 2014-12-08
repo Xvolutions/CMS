@@ -60,6 +60,13 @@ class Page
     /**
      * @var integer
      *
+     * @ORM\ManyToOne(targetEntity="Status")
+     */
+    private $id_status;
+
+    /**
+     * @var integer
+     *
      * @ORM\OneToOne(targetEntity="Alias",cascade={"all"})
      */
     private $id_alias;
@@ -67,6 +74,7 @@ class Page
     public function __construct() {
         $this->id_language = new \Doctrine\Common\Collections\ArrayCollection();
         $this->id_section = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->id_status = new \Doctrine\Common\Collections\ArrayCollection();
         $this->id_alias = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -191,6 +199,29 @@ class Page
     public function setIdlanguage($id_language)
     {
         $this->id_language = $id_language;
+
+        return $this;
+    }
+
+    /**
+     * Get id_status
+     *
+     * @return integer 
+     */
+    public function getIdstatus()
+    {
+        return $this->id_status;
+    }
+
+    /**
+     * Set id_status
+     *
+     * @param integer id_status
+     * @return Page's Status ID
+     */
+    public function setIdstatus($id_status)
+    {
+        $this->id_status = $id_status;
 
         return $this;
     }

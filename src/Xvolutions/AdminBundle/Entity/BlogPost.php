@@ -92,12 +92,20 @@ class BlogPost {
      */
     private $id_alias;
 
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="Status")
+     */
+    private $id_status;
+
     public function __construct() {
         $this->tag = new ArrayCollection();
         $this->category = new ArrayCollection();
         $this->id_section = new ArrayCollection();
         $this->id_language = new ArrayCollection();
         $this->id_alias = new ArrayCollection();
+        $this->id_status = new ArrayCollection();
     }
 
     /**
@@ -315,6 +323,29 @@ class BlogPost {
      */
     public function setIdalias($id_alias) {
         $this->id_alias = $id_alias;
+
+        return $this;
+    }
+
+    /**
+     * Get id_status
+     *
+     * @return integer 
+     */
+    public function getIdstatus()
+    {
+        return $this->id_status;
+    }
+
+    /**
+     * Set id_status
+     *
+     * @param integer id_status
+     * @return Page's Status ID
+     */
+    public function setIdstatus($id_status)
+    {
+        $this->id_status = $id_status;
 
         return $this;
     }

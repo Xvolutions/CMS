@@ -42,6 +42,16 @@ class PageType extends AbstractType
                         'expanded' => false
                     )
             )
+            ->add(
+                    'id_status', 
+                    'entity', 
+                    array(
+                        'class' => 'Xvolutions\AdminBundle\Entity\Status',
+                        'property' => 'status',
+                        'multiple' => false,
+                        'expanded' => false
+                    )
+            )
         ;
     }
     

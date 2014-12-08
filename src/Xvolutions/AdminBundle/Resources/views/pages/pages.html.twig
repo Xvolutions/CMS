@@ -29,7 +29,8 @@
             <th></th>
             <th>{{ "Nome da Página"|trans }}</th>
             <th>{{ "Secção"| trans }}</th>
-            <th>{{ "Language"| trans }}</th>
+            <th>{{ "Estado"| trans }}</th>
+            <th>{{ "Ídioma"| trans }}</th>
             <th>{{ "Data de criação"| trans }}</th>
             <th>{{ "Opções"|trans }}</th>
         </tr>
@@ -40,6 +41,7 @@
                     <td><input type="checkbox" id="{{page.id}}" onclick="SelectForRemoval('{{page.id}}');"></td>
                     <td>{{page.title}}</td>
                     <td>{{page.idsection.section}}</td>
+                    <td>{{page.idstatus.status}}</td>
                     <td>{{page.idlanguage.language}}</td>
                     <td>{{page.date|date('d/m/Y H:m:s') }}</td>
                     <td>

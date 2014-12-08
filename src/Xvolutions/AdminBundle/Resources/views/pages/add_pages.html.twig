@@ -38,6 +38,10 @@
             <p>{{ "Secção"|trans }}</p>
             <p>{{ form_widget( form.id_section ) }}</p>
         </div>
+        <div>
+            <p>{{ "Estado"|trans }}</p>
+            <p>{{ form_widget( form.id_status ) }}</p>
+        </div>
         <br>
             {{ form_end( form ) }}
             <a href="{{path('pages')}}" class="btn btn-default btn-sm">{{ "Ver Páginas"|trans }}</a>

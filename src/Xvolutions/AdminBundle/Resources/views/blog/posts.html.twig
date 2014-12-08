@@ -28,6 +28,7 @@
         <tr>
             <th></th>
             <th>{{ "Artigos"|trans }}</th>
+            <th>{{ "Estado"|trans }}</th>
             <th>{{ "Autor"|trans }}</th>
             <th>{{ "Data de Publicação"|trans }}</th>
             <th>{{ "Opções"|trans }}</th>
@@ -38,6 +39,7 @@
                 <tr class="tr{{blogPost.id}}">
                     <td><input type="checkbox" id="{{blogPost.id}}" onclick="SelectForRemoval('{{blogPost.id}}');"></td>
                     <td>{{blogPost.title}}</td>
+                    <td>{{blogPost.idstatus.status}}</td>
                     <td>{{blogPost.author}}</td>
                     <td>{{blogPost.date|date('d/m/Y H:m:s')}}</td>
                     <td>

@@ -52,11 +52,11 @@ class InitiateCommand extends ContainerAwareCommand
         try {
             $em = $this->getContainer()->get('doctrine')->getManager('default');
 
-            $status = array('Rascunho', 'Publicado', 'Arquivo');
+            $status = array('Rascunho', 'Publicado', 'Arquivado');
             foreach ($status as $s)
             {
-                $status = new Section();
-                $status->setSection($s);
+                $status = new Status();
+                $status->setStatus($s);
                 $em->persist($status);
                 $em->flush($status);
             }
