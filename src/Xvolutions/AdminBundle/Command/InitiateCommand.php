@@ -10,6 +10,7 @@ use Xvolutions\AdminBundle\Entity\Section;
 use Xvolutions\AdminBundle\Entity\Language;
 use Xvolutions\AdminBundle\Entity\User;
 use Xvolutions\AdminBundle\Entity\Role;
+use Xvolutions\AdminBundle\Entity\Status;
 use Symfony\Component\Debug\ErrorHandler;
 
 /**
@@ -43,6 +44,26 @@ class InitiateCommand extends ContainerAwareCommand
         $this->initiateUsers($output, $username, $name, $password, $email);
         $this->initiateSections($output);
         $this->initiateLanguages($output);
+        $this->initiateStatus($output);
+    }
+
+    private function initiateStatus(&$output)
+    {
+        try {
+            $em = $this->getContainer()->get('doctrine')->getManager('default');
+
+            $status = array('Rascunho', 'Publicado', 'Arquivo');
+            foreach ($status as $s)
+            {
+                $status = new Section();
+                $status->setSection($s);
+                $em->persist($status);
+                $em->flush($status);
+            }
+            $output->writeln('Status Adicionadas');
+        } catch (\ErrorException $ex) {
+            $output->writeln("Erro ao adicionar as status base -> $ex");
+        }
     }
 
     private function initiateSections(&$output)
