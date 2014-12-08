@@ -53,7 +53,7 @@ class PagesController extends AdminController {
             $requestPage = $request->request->get('xvolutions_adminbundle_page');
             $duplicateAlias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $requestPage['idalias']));
 
-            if ($duplicateAlias == null) {
+            if ($duplicateAlias == null || $duplicateAlias[0]->getId() == $aliasid) {
                 $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->find($aliasid);
                 $alias->setUrl($requestPage['idalias']);
 
@@ -184,6 +184,7 @@ class PagesController extends AdminController {
             $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
             $pageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->findAll();
             $languageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findAll();
+            $statusList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Status')->findAll();
 
             return $this->render('XvolutionsAdminBundle:pages:add_pages.html.twig', array(
                         'form' => $form->createView(),
@@ -191,6 +192,7 @@ class PagesController extends AdminController {
                         'sectionList' => $sectionList,
                         'pageList' => $pageList,
                         'languageList' => $languageList,
+                        'statusList' => $statusList,
                         'status' => $status,
                         'error' => $error
             ));

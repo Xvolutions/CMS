@@ -59,9 +59,13 @@
             <p>{{ "Ídioma"|trans }}</p>
             <p>{{ form_widget( form.id_language ) }}</p>
         </div>
+        <div>
+            <p>{{ "Estado"|trans }}</p>
+            <p>{{ form_widget( form.id_status ) }}</p>
+        </div>
         <br>
             {{ form_end( form ) }}
-        <a href="{{path('blogposts')}}" class="btn btn-default btn-sm">{{ "Ver Artigos"|trans }}</a>
+            <a href="{{path('blogposts')}}" class="btn btn-default btn-sm">{{ "Ver Artigos"|trans }}</a>
     </div>
 
 {% endblock %}

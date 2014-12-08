@@ -143,7 +143,7 @@ class BlogPostController extends AdminController
 
             $duplicateAlias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['idalias']));
 
-            if ($duplicateAlias == null) {
+            if ($duplicateAlias[0]->getId() == $aliasid || $duplicateAlias == null) {
                 $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->find($aliasid);
                 $alias->setUrl($formValues['idalias']);
 

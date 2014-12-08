@@ -3,6 +3,7 @@
     "type": "project",
     "description": "Xvolutions CMS",
     "homepage": "http://www.xvolutions.com",
+    "license": "MIT",
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "xvolutionscms/" }
     },

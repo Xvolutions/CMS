@@ -84,6 +84,16 @@ class BlogPostType extends AbstractType
                         'label' => 'Language'
                     )
             )
+            ->add(
+                    'id_status', 
+                    'entity', 
+                    array(
+                        'class' => 'Xvolutions\AdminBundle\Entity\Status',
+                        'property' => 'status',
+                        'multiple' => false,
+                        'expanded' => false
+                    )
+            )
         ;
     }
     
