@@ -34,7 +34,7 @@ class InitiateCommandTest extends WebTestCase {
                     'email' => 'pedroresende@mail.resende.biz' 
                     ) 
                 );
-        $this->assertRegExp( '/Grupos Adicionados\\nUtilizadores Adicionados\\nSecções Adicionadas\\nÍdiomas Adicionados\\nPáginas Adicionadas\\n*/', $commandTester->getDisplay(), 'test passed' );
+        $this->assertRegExp( '/Grupos Adicionados\\nUtilizadores Adicionados\\nSecções Adicionadas\\nÍdiomas Adicionados\\nStatus Adicionadas\\n*/', $commandTester->getDisplay(), 'test passed' );
     }
 
 }

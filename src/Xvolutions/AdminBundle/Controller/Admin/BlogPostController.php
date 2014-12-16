@@ -57,7 +57,7 @@ class BlogPostController extends AdminController
             $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['idalias']));
             if ($alias == null) {
                 $alias = new Alias();
-                $alias->setType(1);
+                $alias->setType(2);
                 $alias->setUrl($formValues['idalias']);
                 $blogPost->setIdalias($alias);
 
