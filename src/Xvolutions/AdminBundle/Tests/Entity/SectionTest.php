@@ -14,6 +14,7 @@ class SectionTest extends \PHPUnit_Framework_TestCase {
     public function testsection() {
         $section = new Section();
         $section->setSection("Test");
+        $this->assertTrue($section->getSection() == "Test");
     }
 
 }
