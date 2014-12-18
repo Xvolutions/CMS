@@ -1,0 +1,29 @@
+language: php
+
+# run tests on php 5.5 only and let unit / integration tests deal with php differences
+php:
+  - 5.5
+
+# test only master (+ Pull requests)
+branches:
+  only:
+    - master
+
+# install packages
+before_install:
+  - bin/travis/prepare_system.sh
+
+before_script:
+  - bin/travis/prepare_environment.sh
+
+# execute behat as the script command
+script:
+  - php bin/phpunit -c xvolutionscms/
+
+# disable mail notifications
+notification:
+  email: false
+
+# reduce depth (history) of git checkout
+git:
+  depth: 30
