@@ -87,7 +87,7 @@ class AdminControllerTest extends WebTestCase {
                 Response::HTTP_OK, $this->client->getResponse()->getStatusCode()
         );
 
-        $this->assertGreaterThan(0, $crawler->filter('html:contains("HTTP Headers Information")')->count());
+        $this->assertRegExp('/PHP Version/', $this->client->getResponse()->getContent());
     }
 
 }
