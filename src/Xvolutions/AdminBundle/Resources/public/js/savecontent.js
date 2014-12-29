@@ -1,16 +1,3 @@
-//var allTags = document.body.getElementsByTagName('xvolutions_adminbundle_*');
-//var tmp = document.body.document.getElementsByTagName("input");
-//var ids = [];
-//for (var tg = 0; tg< allTags.length; tg++) {
-//    var tag = allTags[tg];
-//    if (tag.id) {
-//        ids[tag.id] = document.getElementById(tag.id).value;
-//     }
-//}
-//console.log(tmp);
-//document.getElementById('save').name = document.getElementById('save').name + '/' + (JSON.stringify(ids));
-
-
 $(document).ready(function()
 {
     $('a.btn.btn-info.btn-sm.save').click(function()
@@ -26,7 +13,7 @@ $(document).ready(function()
         }
         for (var i = 0; i < textareas.length; i++)
         {
-            data[textareas[i].id.replace('xvolutions_adminbundle_page_','')] = textareas[i].value;
+            data[textareas[i].id.replace('xvolutions_adminbundle_page_','')] = tinyMCE.get(textareas[i].id).getContent();
         }
         for (var i = 0; i < selects.length; i++)
         {
