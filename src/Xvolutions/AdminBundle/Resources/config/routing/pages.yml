@@ -11,7 +11,7 @@ addpages:
 pagesoption:
     pattern: /{option}/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages, option: 0, id: 0 }
-    methods:  [DELETE]
+    methods:  [DELETE,POST]
 
 pages:
     pattern: /
