@@ -121,7 +121,6 @@ class PagesController extends AdminController
                     break;
                 }
             case 'save': {
-                    $status = 'RECEIVED';
                     $received = json_decode($request->getContent());
                     $page = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->find($id);
                     $aliasid = $page->getIdalias()->getId();
