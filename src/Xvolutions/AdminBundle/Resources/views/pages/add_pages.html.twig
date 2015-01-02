@@ -43,8 +43,11 @@
             <p>{{ form_widget( form.id_status ) }}</p>
         </div>
         <br>
-            {{ form_end( form ) }}
-            <a href="{{path('pages')}}" class="btn btn-default btn-sm">{{ "Ver Páginas"|trans }}</a>
+        {{ form_end( form ) }}
+        {% if id is defined %}
+            <a name="{{path('pagesoption',{'option': 'save', 'id':id})}}" class="btn btn-info btn-sm save">{{ "Guardar Página"|trans }}</a>
+        {% endif %}
+        <a href="{{path('pages')}}" class="btn btn-default btn-sm">{{ "Ver Páginas"|trans }}</a>
     </div>
 </form>
 {% endblock %}

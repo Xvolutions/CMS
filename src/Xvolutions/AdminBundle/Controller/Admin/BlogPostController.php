@@ -129,6 +129,13 @@ class BlogPostController extends AdminController
                         'data' => $alias->getUrl()
                     )
                 )
+                ->add(
+                    'date', 
+                    null,
+                    array(
+                        'label' => 'Data',
+                        'data' => $blogPost->getDate()
+                    ))
                 ->add('Guardar', 'submit')
         ;
 
@@ -181,6 +188,7 @@ class BlogPostController extends AdminController
                     'form' => $form->createView(),
                     'title' => 'Editar um Artigo',
                     'status' => $status,
+                    'id' => $id,
                     'error' => $error
         ));
     }
@@ -192,7 +200,7 @@ class BlogPostController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the blogPosts
      */
-    public function blogPostsAction($option = NULL, $id = NULL, $current_page = 1)
+    public function blogPostsAction(Request $request, $option = NULL, $id = NULL, $current_page = 1)
     {
         parent::verifyaccess();
 
@@ -207,6 +215,41 @@ class BlogPostController extends AdminController
                     $ids = json_decode($id);
                     $this->removeSelectedBlogPosts($ids, $status, $error);
                     break;
+                }
+            case 'save': {
+                    $received = json_decode($request->getContent());
+                    $blogPost = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
+                    $aliasid = $blogPost->getIdalias()->getId();
+
+                    $blogPost->setTitle($received->title);
+                    $blogPost->setSubTitle($received->subtitle);
+                    $blogPost->setText($received->text);
+                    $dateAndTime = new \DateTime($received->date_date_year . '/' . $received->date_date_month . "/" . $received->date_date_day ." " .$received->date_time_hour . ":" . $received->date_time_minute);
+                    $dateAndTime->format("Y/m/d H:i:s");
+                    $blogPost->setDate($dateAndTime);
+                    $blogPost->setIdlanguage($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->find($received->id_language));
+                    $blogPost->setIdsection($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->find($received->id_section));
+                    $blogPost->setIdstatus($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Status')->find($received->id_status));
+
+                    $duplicateAlias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $received->idalias));
+                    $em = $this->getDoctrine()->getManager();
+                    if ($duplicateAlias == null || $duplicateAlias[0]->getId() == $aliasid) {
+                        $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->find($aliasid);
+                        $alias->setUrl($received->idalias);
+
+                        $blogPost->setIdalias($alias);
+
+                        $em->persist($blogPost);
+                        $em->flush();
+
+                        $status = 'Artigo actualizado com sucesso';
+                    } else {
+                        $error = 'Já existe uma artigo com esse endereço';
+                    }
+
+                    $response = new Response();
+                    $response->setContent($status);
+                    return $response;
                 }
         }
 
