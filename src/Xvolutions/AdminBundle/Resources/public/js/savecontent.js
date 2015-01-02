@@ -9,15 +9,27 @@ $(document).ready(function()
         var data = {};
         for (var i = 0; i < inputs.length; i++)
         {
-            data[inputs[i].id.replace('xvolutions_adminbundle_page_','')] = inputs[i].value;
+            if(inputs[i].id.match('xvolutions_adminbundle_page_')) {
+                data[inputs[i].id.replace('xvolutions_adminbundle_page_','')] = inputs[i].value;
+            } else {
+                data[inputs[i].id.replace('xvolutions_adminbundle_blogpost_','')] = inputs[i].value;
+            }
         }
         for (var i = 0; i < textareas.length; i++)
         {
-            data[textareas[i].id.replace('xvolutions_adminbundle_page_','')] = tinyMCE.get(textareas[i].id).getContent();
+            if(textareas[i].id.match('xvolutions_adminbundle_page_')) {
+                data[textareas[i].id.replace('xvolutions_adminbundle_page_','')] = tinyMCE.get(textareas[i].id).getContent();
+            } else {
+                data[textareas[i].id.replace('xvolutions_adminbundle_blogpost_','')] = tinyMCE.get(textareas[i].id).getContent();
+            }
         }
         for (var i = 0; i < selects.length; i++)
         {
-            data[selects[i].id.replace('xvolutions_adminbundle_page_','')] = selects[i].value;
+            if(selects[i].id.match('xvolutions_adminbundle_page_')) {
+                data[selects[i].id.replace('xvolutions_adminbundle_page_','')] = selects[i].value;
+            } else {
+                data[selects[i].id.replace('xvolutions_adminbundle_blogpost_','')] = selects[i].value;
+            }
         }
         $.ajax(
         {
