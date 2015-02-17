@@ -64,8 +64,11 @@
             <p>{{ form_widget( form.id_status ) }}</p>
         </div>
         <br>
-            {{ form_end( form ) }}
-            <a href="{{path('blogposts')}}" class="btn btn-default btn-sm">{{ "Ver Artigos"|trans }}</a>
+        {{ form_end( form ) }}
+        {% if id is defined %}
+            <a name="{{path('optionblogposts',{'option': 'save', 'id':id})}}" class="btn btn-info btn-sm save">{{ "Guardar Artigo"|trans }}</a>
+        {% endif %}
+        <a href="{{path('blogposts')}}" class="btn btn-default btn-sm">{{ "Ver Artigos"|trans }}</a>
     </div>
 
 {% endblock %}

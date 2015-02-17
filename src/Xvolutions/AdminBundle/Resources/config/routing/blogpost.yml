@@ -11,7 +11,7 @@ addblogposts:
 optionblogposts:
     pattern: /{option}/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/BlogPost:blogPosts, option: 0, id: 0 }
-    methods:  [DELETE]
+    methods:  [DELETE,POST]
 
 blogposts:
     pattern: /
