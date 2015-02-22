@@ -53,22 +53,7 @@ class UsersController extends AdminController
             $em->flush();
             $status = 'Utilizador adicionado com sucesso';
 
-            $current_page= 1;
-            $elementsPerPage = $this->container->getParameter('elements_per_page');
-            $boundaries = $this->container->getParameter('boundaries');
-            $around = $this->container->getParameter('around');
-            $select = 'SELECT COUNT(u.id)
-                        FROM XvolutionsAdminBundle:User u';
-            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-            $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
-
-            return $this->render('XvolutionsAdminBundle:users:users.html.twig', array(
-                        'title' => 'Utilizadores',
-                        'userlist' => $userList,
-                        'status' => $status,
-                        'error' => $error,
-                        'pagination' => $pagination
-            ));
+            return $this->forward('XvolutionsAdminBundle:Admin/Users:users', array('status' => $status, 'error' => $error));
         }
 
         $rolesList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
@@ -126,22 +111,8 @@ class UsersController extends AdminController
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $status = 'Utilizador actualizado com sucesso';
-            $current_page= 1;
-            $elementsPerPage = $this->container->getParameter('elements_per_page');
-            $boundaries = $this->container->getParameter('boundaries');
-            $around = $this->container->getParameter('around');
-            $select = 'SELECT COUNT(u.id)
-                        FROM XvolutionsAdminBundle:User u';
-            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-            $userList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:User')->findAll();
 
-            return $this->render('XvolutionsAdminBundle:users:users.html.twig', array(
-                        'title' => 'Utilizadores',
-                        'userlist' => $userList,
-                        'status' => $status,
-                        'error' => $error,
-                        'pagination' => $pagination
-            ));
+            return $this->forward('XvolutionsAdminBundle:Admin/Users:users', array('status' => $status, 'error' => $error));
         }
         $em = $this->getDoctrine()->getManager();
         $current_page= 1;
@@ -191,12 +162,13 @@ class UsersController extends AdminController
                 }
         }
 
-        if ($error != null) {
+        if ($error != null && ($option == 'remove' || $option =='removeselected')) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != null) {
+        if ($status != null && ($option == 'remove' || $option =='removeselected')) {
             return new Response($status, Response::HTTP_OK);
         }
+
         $em = $this->getDoctrine()->getManager();
         $elementsPerPage = $this->container->getParameter('elements_per_page');
         $boundaries = $this->container->getParameter('boundaries');
