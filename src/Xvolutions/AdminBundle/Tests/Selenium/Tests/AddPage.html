@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8000/" />
+<title>AddPage</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddPage</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/admin/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=username</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=password</td>
+	<td>adminpass</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=button.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>Backoffice | Consola de Gestão</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=CMS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Páginas</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Criar uma nova página</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=xvolutions_adminbundle_page_title</td>
+	<td>teste selenium</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=xvolutions_adminbundle_page_idalias</td>
+	<td>test-selenium</td>
+</tr>
+<tr>
+	<td>runScript</td>
+	<td>tinyMCE.activeEditor.setContent('Test Selenium')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=xvolutions_adminbundle_page_id_language</td>
+	<td>label=Português</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=xvolutions_adminbundle_page_id_section</td>
+	<td>label=Pública</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=xvolutions_adminbundle_page_id_status</td>
+	<td>label=Publicado</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=xvolutions_adminbundle_page_Criar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>css=table.table.table-hover.1.1</td>
+	<td>teste selenium</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
