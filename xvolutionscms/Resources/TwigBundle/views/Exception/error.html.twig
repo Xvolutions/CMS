@@ -1,0 +1,18 @@
+{% extends "XvolutionsAdminBundle:template:template.html.twig" %}
+
+{% block title %}An Error Occurred: {{ status_text }}{% endblock %}
+
+{% block styles %}
+        <link rel="stylesheet" type="text/css" href="bundles/xvolutionsadmin/css/bootstrap.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-1 col-sm-1 col-xs-2"></div>
+    <div class="col-md-10 col-sm-10 col-xs-8">
+        <h1 style="text-align: center;">Oops, page not found!</h1>
+        <img src="bundles/xvolutionsadmin/images/404.jpg" alt="404" style="margin: auto; display:block;">
+        <h3 style="text-align: center;">The page you were looking for appears to have been moved, deleted or does not exist.</h3>
+    </div>
+    <div class="col-md-1 col-sm-1 col-xs-2"></div>
+</div>
+{% endblock %}
