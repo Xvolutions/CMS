@@ -21,7 +21,7 @@ class Upload
      * @param string $fileName The new generated name
      * @param type $size Size of the uploaded file
      */
-    public function upload($request, $folder, &$fileName, &$originalFileName, &$size, &$type)
+    public function upload(Request $request, $folder, &$fileName, &$originalFileName, &$size, &$type)
     {
         $status = true;
         foreach ($request->files as $uploadedFile)
