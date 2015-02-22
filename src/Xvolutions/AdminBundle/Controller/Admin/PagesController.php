@@ -142,6 +142,13 @@ class PagesController extends AdminController
                 }
         }
 
+        if ($error != null && ($option == 'remove' || $option =='removeselected')) {
+            return new Response($error, Response::HTTP_BAD_REQUEST);
+        }
+        if ($status != null && ($option == 'remove' || $option =='removeselected')) {
+            return new Response($status, Response::HTTP_OK);
+        }
+
         $em = $this->getDoctrine()->getManager();
         $elementsPerPage = $this->container->getParameter('elements_per_page');
         $boundaries = $this->container->getParameter('boundaries');
