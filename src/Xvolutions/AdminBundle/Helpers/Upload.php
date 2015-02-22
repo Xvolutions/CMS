@@ -3,6 +3,7 @@
 namespace Xvolutions\AdminBundle\Helpers;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Description of Upload
