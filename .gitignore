@@ -10,3 +10,6 @@
 !/src/Xvolutions/
 !/src/.htaccess
 /public_html/bundles
+/public_html/css
+/public_html/js
+/public_html/images
