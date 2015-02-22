@@ -68,23 +68,7 @@ class BlogPostController extends AdminController
                 $error = 'Já existe um artigo com esse endereço';
             }
 
-            $elementsPerPage = $this->container->getParameter('elements_per_page');
-            $current_page = 1;
-            $boundaries = $this->container->getParameter('boundaries');
-            $around = $this->container->getParameter('around');
-            $select = 'SELECT COUNT(b.id)
-                        FROM XvolutionsAdminBundle:BlogPost b';
-            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-
-            $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
-
-            return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(
-                        'title' => 'Artigos',
-                        'blogPostList' => $blogPostList,
-                        'status' => $status,
-                        'error' => $error,
-                        'pagination' => $pagination
-            ));
+            return $this->forward('XvolutionsAdminBundle:Admin/BlogPost:blogPosts', array('error' => $error, 'status' => $status));
         }
 
         return $this->render('XvolutionsAdminBundle:blog:add_posts.html.twig', array(
@@ -164,24 +148,7 @@ class BlogPostController extends AdminController
                 $error = 'Já existe um artigo com esse endereço';
             }
 
-            $elementsPerPage = $this->container->getParameter('elements_per_page');
-            $current_page = 1;
-            $boundaries = $this->container->getParameter('boundaries');
-            $around = $this->container->getParameter('around');
-
-            $select = 'SELECT COUNT(b.id)
-                        FROM XvolutionsAdminBundle:BlogPost b';
-            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-
-            $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
-
-            return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(
-                        'title' => 'Artigos',
-                        'blogPostList' => $blogPostList,
-                        'status' => $status,
-                        'error' => $error,
-                        'pagination' => $pagination
-            ));
+            return $this->forward('XvolutionsAdminBundle:Admin/BlogPost:blogPosts', array('error' => $error, 'status' => $status));
         }
 
         return $this->render('XvolutionsAdminBundle:blog:add_posts.html.twig', array(
@@ -253,10 +220,10 @@ class BlogPostController extends AdminController
                 }
         }
 
-        if ($error != null) {
+        if ($error != null && $option == 'remove' || $option =='removeselected') {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != null) {
+        if ($status != null && $option == 'remove' || $option =='removeselected') {
             return new Response($status, Response::HTTP_OK);
         }
 

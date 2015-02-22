@@ -20,8 +20,7 @@ use Symfony\Component\Debug\ErrorHandler;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class LanguagesController extends AdminController
-{
+class LanguagesController extends AdminController {
 
     /**
      * Controller responsible to add a new language for and handling the form
@@ -30,8 +29,7 @@ class LanguagesController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new language
      */
-    public function addlanguagesAction(Request $request)
-    {
+    public function addlanguagesAction(Request $request) {
         parent::verifyaccess();
 
         $language = new Language();
@@ -57,17 +55,11 @@ class LanguagesController extends AdminController
                 $em->persist($language);
                 $em->flush();
                 $status = 'Ídioma inserido com sucesso';
-
-                $languageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findAll();
-
-                return $this->render('XvolutionsAdminBundle:languages:languages.html.twig', array(
-                            'languageList' => $languageList,
-                            'status' => $status,
-                            'error' => $error
-                ));
             } else {
                 $error = 'Um ídioma com esse nome ou esse código já existe';
             }
+
+            return $this->forward('XvolutionsAdminBundle:Admin/Languages:languages', array('error' => $error, 'status' => $status));
         }
 
         return $this->render('XvolutionsAdminBundle:languages:add_languages.html.twig', array(
@@ -86,8 +78,7 @@ class LanguagesController extends AdminController
      * @param type $id the id of an existing language
      * @return type the template for editing a language
      */
-    public function editlanguagesAction(Request $request, $id)
-    {
+    public function editlanguagesAction(Request $request, $id) {
         parent::verifyaccess();
 
         $languageType = new LanguageType();
@@ -118,17 +109,11 @@ class LanguagesController extends AdminController
                 $em->persist($language[0]);
                 $em->flush();
                 $status = 'Ídioma actualizado com sucesso';
-
-                $languageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->findAll();
-
-                return $this->render('XvolutionsAdminBundle:languages:languages.html.twig', array(
-                            'languageList' => $languageList,
-                            'status' => $status,
-                            'error' => $error
-                ));
             } else {
                 $error = 'Um ídioma com esse nome, ou código, já existe';
             }
+
+            return $this->forward('XvolutionsAdminBundle:Admin/Languages:languages', array('error' => $error, 'status' => $status));
         }
 
         return $this->render('XvolutionsAdminBundle:languages:add_languages.html.twig', array(
@@ -149,8 +134,7 @@ class LanguagesController extends AdminController
      * @param type $id The id, or id's, of the language(s) to be removed
      * @return type call the controller to handle
      */
-    public function languagesAction($option = NULL, $id = NULL)
-    {
+    public function languagesAction($option = NULL, $id = NULL) {
         parent::verifyaccess();
 
         $status = NULL;
@@ -171,10 +155,10 @@ class LanguagesController extends AdminController
                 }
         }
 
-        if ($error != NULL) {
+        if ($error != null && ($option == 'remove' || $option =='removeselected')) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != NULL) {
+        if ($status != null && ($option == 'remove' || $option =='removeselected')) {
             return new Response($status, Response::HTTP_OK);
         }
 
@@ -193,8 +177,7 @@ class LanguagesController extends AdminController
      * @param type $id the id of the language to be removed
      * @return string with the information message
      */
-    private function removeLanguage($id, &$status, &$error)
-    {
+    private function removeLanguage($id, &$status, &$error) {
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
@@ -217,13 +200,11 @@ class LanguagesController extends AdminController
      * @param type $ids array containing the id's of the languages to be removed
      * @return string with the message
      */
-    private function removeSelectedLanguages($ids, &$status, &$error)
-    {
+    private function removeSelectedLanguages($ids, &$status, &$error) {
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
-            foreach ($ids as $id)
-            {
+            foreach ($ids as $id) {
                 $language = $em->getRepository('XvolutionsAdminBundle:Language')->find($id);
                 if ($language != 'empty') {
                     $em->remove($language);

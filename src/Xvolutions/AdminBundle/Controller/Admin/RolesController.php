@@ -45,14 +45,7 @@ class RolesController extends AdminController
             $em->flush();
             $status = 'Grupo adicionado com sucesso';
 
-            $roleList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
-
-            return $this->render('XvolutionsAdminBundle:roles:roles.html.twig', array(
-                        'title' => 'Grupos',
-                        'roleList' => $roleList,
-                        'status' => $status,
-                        'error' => $error,
-            ));
+            return $this->forward('XvolutionsAdminBundle:Admin/Roles:roles', array('status' => $status, 'error' => $error));
         }
 
         return $this->render('XvolutionsAdminBundle:roles:add_roles.html.twig', array(
@@ -93,14 +86,7 @@ class RolesController extends AdminController
             $em->flush();
             $status = 'Grupo actualizado com sucesso';
 
-            $roleList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
-
-            return $this->render('XvolutionsAdminBundle:roles:roles.html.twig', array(
-                        'title' => 'Grupos',
-                        'roleList' => $roleList,
-                        'status' => $status,
-                        'error' => $error,
-            ));
+            return $this->forward('XvolutionsAdminBundle:Admin/Roles:roles', array('status' => $status, 'error' => $error));
         }
 
         return $this->render('XvolutionsAdminBundle:roles:add_roles.html.twig', array(
@@ -136,10 +122,10 @@ class RolesController extends AdminController
                 }
         }
 
-        if ($error != NULL) {
+        if ($error != null && ($option == 'remove' || $option =='removeselected')) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != NULL) {
+        if ($status != null && ($option == 'remove' || $option =='removeselected')) {
             return new Response($status, Response::HTTP_OK);
         }
 
