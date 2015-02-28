@@ -34,7 +34,7 @@ class FileController extends AdminController {
             $type = $file->getType();
 
             if (in_array($type, $imageTypes)) {
-                $tempArray = ['title' => $file->getName(), 'value' => $folder . $file->getFileName()];
+                $tempArray = array('title' => $file->getName(), 'value' => $folder . $file->getFileName());
                 array_push($arrayOfFiles, $tempArray);
             }
         }
