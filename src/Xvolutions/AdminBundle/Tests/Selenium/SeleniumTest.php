@@ -17,7 +17,5 @@ class SeleniumTest extends PHPUnit_Extensions_SeleniumTestCase
     protected function setUp() {
         $this->setBrowser("*firefox");
         $this->setBrowserUrl("http://localhost:8000/");
-        $this->setHost('192.168.1.114');
-        $this->setPort(4444);
     }
 }
