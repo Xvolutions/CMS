@@ -85,7 +85,6 @@ class PagesSeleniumTest extends SeleniumTest
         $this->assertEquals("Editar Apagar", $this->getTable("css=table.table.table-hover.1.6"));
         $this->assertEquals("Editar Apagar", $this->getTable("css=table.table.table-hover.1.6"));
         $this->click("link=Apagar");
-        $this->assertEquals("Página removida com sucesso", $this->getText("id=text"));
         $this->assertFalse($this->isTextPresent("css=table.table.table-hover.1.1"));
         $this->clickAt("link=Bem-vindo, Administrator", "");
         $this->click("link=Logout");
