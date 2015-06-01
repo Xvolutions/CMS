@@ -32,16 +32,15 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         version: "v. 2.0 alpha"
-    form:
-        resources:
-            - 'XvolutionsAdminBundle:form:fields.html.twig'
+    form_themes:
+        - 'XvolutionsAdminBundle:form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
     read_from: "%kernel.root_dir%/../public_html"
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ XvolutionsAdminBundle ]
+    bundles:        [ XvolutionsAdminBundle, PedroResendeSiteBundle ]
     java: /usr/bin/java
     filters:
         cssrewrite: ~
