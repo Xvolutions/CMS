@@ -3,6 +3,7 @@
 namespace Xvolutions\AdminBundle\Helpers;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Description of Upload
@@ -16,12 +17,12 @@ class Upload
     /**
      * This function is responsible to deal with the uploaded file
      * 
-     * @param type $request
+     * @param Request $request
      * @param type $folder The destination folder
      * @param string $fileName The new generated name
      * @param type $size Size of the uploaded file
      */
-    public function upload($request, $folder, &$fileName, &$originalFileName, &$size, &$type)
+    public function upload(Request $request, $folder, &$fileName, &$originalFileName, &$size, &$type)
     {
         $status = true;
         foreach ($request->files as $uploadedFile)

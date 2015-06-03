@@ -1,79 +1,79 @@
 login:
-    pattern:  /
+    path:  /
     defaults: { _controller: XvolutionsAdminBundle:Security:login }
     methods:  [GET,POST]
 
 login_check:
-    pattern: /login_check
+    path: /login_check
     
 logout:
-   pattern:   /logout
+   path:   /logout
 
 recover:
-    pattern:  /recover
+    path:  /recover
     defaults: { _controller: XvolutionsAdminBundle:Security:recover }
     methods:  [GET,POST]
 
 backoffice:
-    pattern: /backoffice
+    path: /backoffice
     defaults: { _controller: XvolutionsAdminBundle:Admin:backoffice }
     methods:  [GET]
 
 setup:
-    pattern: /setup
+    path: /setup
     defaults: { _controller: XvolutionsAdminBundle:Admin:setup }
     methods:  [GET]
 
 phpinfo:
-    pattern: /phpinfo
+    path: /phpinfo
     defaults: { _controller: XvolutionsAdminBundle:Admin:phpinfo }
     methods:  [GET]
 
 ### PAGES ###
 
 XvolutionsAdminBundle_pages:
-        resource: "@XvolutionsAdminBundle/Resources/config/routing/pages.yml"
-        prefix:   /pages
+    resource: "@XvolutionsAdminBundle/Resources/config/routing/pages.yml"
+    prefix:   /pages
 
 ### SECTIONS ###
 
 XvolutionsAdminBundle_sections:
-        resource: "@XvolutionsAdminBundle/Resources/config/routing/sections.yml"
-        prefix:   /sections
+    resource: "@XvolutionsAdminBundle/Resources/config/routing/sections.yml"
+    prefix:   /sections
 
 ### LANGUAGES ###
 
 XvolutionsAdminBundle_languages:
-        resource: "@XvolutionsAdminBundle/Resources/config/routing/languages.yml"
-        prefix:   /languages
+    resource: "@XvolutionsAdminBundle/Resources/config/routing/languages.yml"
+    prefix:   /languages
 
 ### USERS ###
 
 XvolutionsAdminBundle_users:
-        resource: "@XvolutionsAdminBundle/Resources/config/routing/users.yml"
-        prefix:   /users
+    resource: "@XvolutionsAdminBundle/Resources/config/routing/users.yml"
+    prefix:   /users
 
 ### ROLES ###
 
 XvolutionsAdminBundle_roles:
-        resource: "@XvolutionsAdminBundle/Resources/config/routing/roles.yml"
-        prefix:   /roles
+    resource: "@XvolutionsAdminBundle/Resources/config/routing/roles.yml"
+    prefix:   /roles
 
 ### BLOG POSTS ###
 
 XvolutionsAdminBundle_blog_posts:
-        resource: "@XvolutionsAdminBundle/Resources/config/routing/blogpost.yml"
-        prefix:   /blog/posts
+    resource: "@XvolutionsAdminBundle/Resources/config/routing/blogpost.yml"
+    prefix:   /blog/posts
 
 ### FILES ###
 
 XvolutionsAdminBundle_files:
-        resource: "@XvolutionsAdminBundle/Resources/config/routing/file.yml"
-        prefix:   /files
+    resource: "@XvolutionsAdminBundle/Resources/config/routing/file.yml"
+    prefix:   /files
 
 ### SETTINGS ###
 
 XvolutionsAdminBundle_settings:
-        resource: "@XvolutionsAdminBundle/Resources/config/routing/setting.yml"
-        prefix:   /settings
+    resource: "@XvolutionsAdminBundle/Resources/config/routing/setting.yml"
+    prefix:   /settings
         

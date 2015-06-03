@@ -49,17 +49,11 @@ class SectionsController extends AdminController
                 $em->persist($section);
                 $em->flush();
                 $status = 'Secção inserida com sucesso';
-
-                $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
-
-                return $this->render('XvolutionsAdminBundle:sections:sections.html.twig', array(
-                            'sectionList' => $sectionList,
-                            'status' => $status,
-                            'error' => $error
-                ));
             } else {
                 $error = 'Uma secção com esse nome já existe';
             }
+
+            return $this->forward('XvolutionsAdminBundle:Admin/Sections:sections', array('status' => $status, 'error' => $error));
         }
 
         return $this->render('XvolutionsAdminBundle:sections:add_sections.html.twig', array(
@@ -107,17 +101,11 @@ class SectionsController extends AdminController
                 $em->persist($section[0]);
                 $em->flush();
                 $status = 'Secção actualizada com sucesso';
-
-                $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
-
-                return $this->render('XvolutionsAdminBundle:sections:sections.html.twig', array(
-                            'sectionList' => $sectionList,
-                            'status' => $status,
-                            'error' => $error
-                ));
             } else {
                 $error = 'Uma secção com esse nome já existe';
             }
+
+            return $this->forward('XvolutionsAdminBundle:Admin/Sections:sections', array('status' => $status, 'error' => $error));
         }
 
         return $this->render('XvolutionsAdminBundle:sections:add_sections.html.twig', array(
@@ -156,10 +144,10 @@ class SectionsController extends AdminController
                 }
         }
 
-        if ($error != NULL) {
+        if ($error != null && ($option == 'remove' || $option =='removeselected')) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != NULL) {
+        if ($status != null && ($option == 'remove' || $option =='removeselected')) {
             return new Response($status, Response::HTTP_OK);
         }
 

@@ -69,18 +69,7 @@ class PagesController extends AdminController
                 $error = 'Já existe uma página com esse endereço';
             }
 
-            $elementsPerPage = $this->container->getParameter('elements_per_page');
-            $boundaries = $this->container->getParameter('boundaries');
-            $around = $this->container->getParameter('around');
-            $select = 'SELECT COUNT(p.id) FROM XvolutionsAdminBundle:Page p';
-            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, 1, $boundaries, $around);
-            $pageList = $this->pageList($em, 1, $elementsPerPage);
-            return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
-                        'pageList' => $pageList,
-                        'status' => $status,
-                        'error' => $error,
-                        'pagination' => $pagination
-            ));
+            return $this->forward('XvolutionsAdminBundle:Admin/Pages:pages', array('error' => $error, 'status' => $status));
         }
 
         $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
@@ -153,12 +142,13 @@ class PagesController extends AdminController
                 }
         }
 
-        if ($error != null) {
+        if ($error != null && ($option == 'remove' || $option =='removeselected')) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != null) {
+        if ($status != null && ($option == 'remove' || $option =='removeselected')) {
             return new Response($status, Response::HTTP_OK);
         }
+
         $em = $this->getDoctrine()->getManager();
         $elementsPerPage = $this->container->getParameter('elements_per_page');
         $boundaries = $this->container->getParameter('boundaries');
@@ -201,20 +191,7 @@ class PagesController extends AdminController
         $status = null;
         if ($form->isValid()) {
             $this->addPagesValid($request, $page, $status, $error);
-            $em = $this->getDoctrine()->getManager();
-            $elementsPerPage = $this->container->getParameter('elements_per_page');
-            $current_page = 1;
-            $boundaries = $this->container->getParameter('boundaries');
-            $around = $this->container->getParameter('around');
-            $select = 'SELECT COUNT(p.id) FROM XvolutionsAdminBundle:Page p';
-            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-            $pageList = $this->pageList($em, $current_page, $elementsPerPage);
-            return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
-                        'pageList' => $pageList,
-                        'status' => $status,
-                        'error' => $error,
-                        'pagination' => $pagination
-            ));
+            return $this->forward('XvolutionsAdminBundle:Admin/Pages:pages', array('error' => $error, 'status' => $status));
         } else {
             $sectionList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->findAll();
             $pageList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Page')->findAll();

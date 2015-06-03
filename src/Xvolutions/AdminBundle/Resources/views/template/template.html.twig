@@ -18,14 +18,15 @@
         {% endimage %}
         {% stylesheets 
             '@XvolutionsAdminBundle/Resources/public/css/bootstrap.min.css'
-            output ='css/bootstrap.min.css'
+            '@XvolutionsAdminBundle/Resources/public/css/animsition.min.css'
+            output ='css/bootstrapsmooth.min.css'
         %}
         <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
         {% endstylesheets %}
     {% block styles %}{% endblock %}
 </head>
 <body>
-    <div id="wrapper">
+    <div id="wrapper" class="animsition">
         {% block menu %}{% endblock %}
         <div class="container-fluid">
             <div class="content">
@@ -39,6 +40,8 @@
 <!-- Javascript -->
 {% javascripts 
                     '@XvolutionsAdminBundle/Resources/public/js/jquery-1.11.0.min.js' 
+                    '@XvolutionsAdminBundle/Resources/public/js/jquery.animsition.min.js' 
+                    '@XvolutionsAdminBundle/Resources/public/js/animsition.start.js' 
                     '@XvolutionsAdminBundle/Resources/public/js/bootstrap.min.js' 
                     '@XvolutionsAdminBundle/Resources/public/js/selectforremoval.min.js' 
                     '@XvolutionsAdminBundle/Resources/public/js/delete.min.js' 

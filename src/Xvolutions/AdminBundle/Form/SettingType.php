@@ -16,8 +16,8 @@ class SettingType extends AbstractType
     {
         $builder
             ->add('sitename')
-            ->add('description')
-            ->add('keywords')
+            ->add('description', 'textarea')
+            ->add('keywords', 'textarea')
             ->add('author')
             ->add('blog')
         ;
