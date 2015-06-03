@@ -4,8 +4,6 @@ namespace Xvolutions\AdminBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\BrowserKit\Cookie;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
  * Description of AdminControllerTest
@@ -21,7 +19,7 @@ class AdminControllerTest extends WebTestCase {
     }
 
     public function testFailBackoffice() {
-        $crawler = $this->client->request('GET', '/admin/backoffice', array(), array(), array(
+        $this->client->request('GET', '/admin/backoffice', array(), array(), array(
         ));
 
         $this->assertEquals(
