@@ -38,11 +38,11 @@
                 <tr class="tr{{file.id}}">
                     <td><input type="checkbox" id="{{file.id}}" onclick="SelectForRemoval('{{file.id}}');"></td>
                     <td><a href="{{files_location}}{{file.fileName}}" target="_blank">{{file.name}}</a></td>
-                    <td>{{file.date|date('d/m/Y H:m:s')}}</td>
+                    <td>{{file.date|date('d/m/Y H:i:s')}}</td>
                     <td>{{file.type}}</td>
                     <td>{{(file.size/1024)|number_format(2, '.', ',')}} Kbytes</td>
                     <td>
-                        <a href="{{path('editblogposts', {'id': file.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> 
+                        <a href="{{path('editblogposts', {'id': file.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a>
                         <a class="btn btn-danger btn-xs" name="{{path('optionfiles', {'option': 'remove','id': file.id})}}">{{ "Apagar"|trans }}</a>
                     </td>
                 </tr>
