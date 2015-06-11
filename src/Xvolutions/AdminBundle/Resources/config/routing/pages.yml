@@ -1,25 +1,25 @@
 editpages:
-    pattern: /edit/{id}
+    path: /edit/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:editpages }
     methods:  [GET,POST]
 
 addpages:
-    pattern: /add
+    path: /add
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:addpages }
     methods:  [GET,POST]
 
 pagesoption:
-    pattern: /{option}/{id}
+    path: /{option}/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages, option: 0, id: 0 }
     methods:  [DELETE,POST]
 
 pages:
-    pattern: /
+    path: /
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages, current_page: 1 }
     methods:  [GET]
 
 pages_current:
-    pattern: /{current_page}
+    path: /{current_page}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Pages:pages, current_page: 1 }
     methods:  [GET]
     requirements:

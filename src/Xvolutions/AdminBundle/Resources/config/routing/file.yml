@@ -1,26 +1,26 @@
 optionfiles:
-    pattern: /{option}/{id}
+    path: /{option}/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/File:list, option: 0, id: 0 }
     methods:  [DELETE]
 
 files_current:
-    pattern: /{current_page}
+    path: /{current_page}
     defaults: { _controller: XvolutionsAdminBundle:Admin/File:list, current_page: 1 }
     methods:  [GET, POST]
     requirements:
         current_page:  \d+
 
 files:
-    pattern: /
+    path: /
     defaults: { _controller: XvolutionsAdminBundle:Admin/File:list, current_page: 1 }
     methods:  [GET, POST]
 
 newfile:
-    pattern: /add
+    path: /add
     defaults: { _controller: XvolutionsAdminBundle:Admin/File:newFile, current_page: 1 }
     methods:  [GET, POST]
 
 images_tinymce:
-    pattern: /imagelist
+    path: /imagelist
     defaults: { _controller: XvolutionsAdminBundle:Admin/File:imageList }
     methods:  [GET]
