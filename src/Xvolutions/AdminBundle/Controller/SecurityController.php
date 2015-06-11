@@ -15,17 +15,23 @@ use Xvolutions\AdminBundle\Entity\User;
 class SecurityController extends Controller
 {
 
-    public function loginAction()
+    public function loginAction(Request $request)
     {
         $helper = $this->get('security.authentication_utils');
 
-        return $this->render(
+        $response = $this->render(
             'XvolutionsAdminBundle::login.html.twig', 
             array(
                 'last_username' => $helper->getLastUsername(),
                 'error' => $helper->getLastAuthenticationError(),
             )
         );
+
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic();
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     public function recoverAction(Request $request)
