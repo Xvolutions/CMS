@@ -24,8 +24,12 @@
             <p>{{ form_widget( form.title ) }}</p>
         </div>
         <div>
+            <p>{{ "Sub-título"|trans }}</p>
+            <p>{{ form_widget( form.subtitle ) }}</p>
+        </div>
+        <div>
             <p>{{ "URL"|trans }}</p>
-            <p>{{ form_widget( form.url ) }}</p>
+            <p>{{ form_widget( form.idalias ) }}</p>
         </div>
         <div>
             <p>{{ "Autor"|trans }}</p>
@@ -55,8 +59,15 @@
             <p>{{ "Ídioma"|trans }}</p>
             <p>{{ form_widget( form.id_language ) }}</p>
         </div>
+        <div>
+            <p>{{ "Estado"|trans }}</p>
+            <p>{{ form_widget( form.id_status ) }}</p>
+        </div>
         <br>
-            {{ form_end( form ) }}
+        {{ form_end( form ) }}
+        {% if id is defined %}
+            <a name="{{path('optionblogposts',{'option': 'save', 'id':id})}}" class="btn btn-info btn-sm save">{{ "Guardar Artigo"|trans }}</a>
+        {% endif %}
         <a href="{{path('blogposts')}}" class="btn btn-default btn-sm">{{ "Ver Artigos"|trans }}</a>
     </div>
 

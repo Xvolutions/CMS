@@ -23,6 +23,13 @@ class BlogPostType extends AbstractType
                         'attr' => array('class' => 'title')
                     ))
             ->add(
+                    'subtitle', 
+                    null,
+                    array(
+                        'label' => 'Sub-Título',
+                        'attr' => array('class' => 'title')
+                    ))
+            ->add(
                     'author', 
                     null,
                     array(
@@ -75,6 +82,16 @@ class BlogPostType extends AbstractType
                         'multiple' => false,
                         'expanded' => false,
                         'label' => 'Language'
+                    )
+            )
+            ->add(
+                    'id_status', 
+                    'entity', 
+                    array(
+                        'class' => 'Xvolutions\AdminBundle\Entity\Status',
+                        'property' => 'status',
+                        'multiple' => false,
+                        'expanded' => false
                     )
             )
         ;

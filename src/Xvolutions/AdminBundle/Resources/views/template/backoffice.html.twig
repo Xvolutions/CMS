@@ -4,7 +4,7 @@
 
 {% block styles %}
     {% stylesheets 
-        'bundles/xvolutionsadmin/css/backoffice.css' filter="yui_css"
+        'bundles/xvolutionsadmin/css/backoffice.css' filter="cssrewrite,yui_css" output='css/backoffice.css'
     %}
     <link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
     {% endstylesheets %}

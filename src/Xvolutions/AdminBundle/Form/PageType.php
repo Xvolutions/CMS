@@ -43,11 +43,11 @@ class PageType extends AbstractType
                     )
             )
             ->add(
-                    'id_parent', 
+                    'id_status', 
                     'entity', 
                     array(
-                        'class' => 'Xvolutions\AdminBundle\Entity\Page',
-                        'property' => 'title',
+                        'class' => 'Xvolutions\AdminBundle\Entity\Status',
+                        'property' => 'status',
                         'multiple' => false,
                         'expanded' => false
                     )

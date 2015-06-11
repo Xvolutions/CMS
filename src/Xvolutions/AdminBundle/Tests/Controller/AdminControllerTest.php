@@ -3,8 +3,7 @@
 namespace Xvolutions\AdminBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\DomCrawler\Form;
-use Symfony\Component\DomCrawler\FormFieldRegistry;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Description of AdminControllerTest
@@ -13,40 +12,80 @@ use Symfony\Component\DomCrawler\FormFieldRegistry;
  */
 class AdminControllerTest extends WebTestCase {
 
-    public function testbackoffice() {
-        $client = static::createClient();
+    private $client = null;
 
-        $crawler = $client->request('GET', '/admin/backoffice');
+    public function setUp() {
+        $this->client = static::createClient();
+    }
 
-        $this->assertTrue( $client->getResponse()->isRedirect('http://localhost/admin/') );
+    public function testFailBackoffice() {
+        $this->client->request('GET', '/admin/backoffice', array(), array(), array(
+        ));
 
-        $this->assertFalse($crawler->filter('html:contains("Consola de Gestão")')->count() == 1);
+        $this->assertEquals(
+                Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode()
+        );
+    }
 
-        $dom = new \DOMDocument();
+    public function testBackoffice() {
+        $crawler = $this->client->request('GET', '/admin/backoffice', array(), array(), array(
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW' => 'adminpass',
+        ));
 
-        $dom->loadHTML('<form method="post" action="/AdminBundle/web/app.php/admin/login_check">
-                    <h2>Consola de Gestão</h2>
-                                            <br><br>
-                                        <div class="form-group">
-                        <input type="text" placeholder="Username" value="" name="_username" id="username" class="form-control">
-                    </div>
+        $this->assertEquals(
+                Response::HTTP_OK, $this->client->getResponse()->getStatusCode()
+        );
 
-                    <div class="form-group">
-                        <input type="password" name="_password" placeholder="Password" id="password" class="form-control">
-                    </div>
-                    <input type="hidden" value="xx6ZlEJ-ZuO2mS9u5ameRXnKAJDfNOZ5FDxUrVfhgVY" name="_csrf_token">
-                                        <button class="btn btn-primary" type="submit">login</button>
-                    <button class="btn btn-bg" type="reset">reset</button>
-                </form>');
+        $this->assertGreaterThan(0, $crawler->filter('html:contains("Consola de Gestão")')->count());
 
-        $nodes = $dom->getElementsByTagName( 'form' );
-        $form = new Form($nodes->item(0), 'http://localhost/AdminBundle/web/app.php/admin/login_check');
+        $this->client->request('GET', '/admin/logout');
 
-        $form->setValues(array('_username' => 'admin', '_password' => 'adminpass'));
+        $this->assertEquals(
+                Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode()
+        );
+    }
 
-        $form = $client->submit($form);
-//        var_dump( $client->getResponse() );
-//        $this->assertTrue( $client->getResponse()->isRedirect('http://localhost/AdminBundle/web/app.php/admin/backoffice') );
+    public function testSetup() {
+        $crawler = $this->client->request('GET', '/admin/backoffice', array(), array(), array(
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW' => 'adminpass',
+        ));
+
+        $this->assertEquals(
+                Response::HTTP_OK, $this->client->getResponse()->getStatusCode()
+        );
+
+        $this->assertGreaterThan(0, $crawler->filter('html:contains("Consola de Gestão")')->count());
+
+        $this->client->request('GET', '/admin/setup');
+
+        $this->assertEquals(
+                Response::HTTP_OK, $this->client->getResponse()->getStatusCode()
+        );
+
+        $this->assertGreaterThan(0, $crawler->filter('html:contains("Setup")')->count());
+    }
+
+    public function testPhpinfo() {
+        $crawler = $this->client->request('GET', '/admin/backoffice', array(), array(), array(
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW' => 'adminpass',
+        ));
+
+        $this->assertEquals(
+                Response::HTTP_OK, $this->client->getResponse()->getStatusCode()
+        );
+
+        $this->assertGreaterThan(0, $crawler->filter('html:contains("Consola de Gestão")')->count());
+
+        $this->client->request('GET', '/admin/phpinfo');
+
+        $this->assertEquals(
+                Response::HTTP_OK, $this->client->getResponse()->getStatusCode()
+        );
+
+        $this->assertRegExp('/PHP Version/', $this->client->getResponse()->getContent());
     }
 
 }

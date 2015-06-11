@@ -37,12 +37,12 @@
             {% for file in fileList %}
                 <tr class="tr{{file.id}}">
                     <td><input type="checkbox" id="{{file.id}}" onclick="SelectForRemoval('{{file.id}}');"></td>
-                    <td><a href="{{host}}{{file.fileName}}" target="_blank">{{file.name}}</a></td>
-                    <td>{{file.date|date('d/m/Y H:m:s')}}</td>
+                    <td><a href="{{files_location}}{{file.fileName}}" target="_blank">{{file.name}}</a></td>
+                    <td>{{file.date|date('d/m/Y H:i:s')}}</td>
                     <td>{{file.type}}</td>
                     <td>{{(file.size/1024)|number_format(2, '.', ',')}} Kbytes</td>
                     <td>
-                        <a href="{{path('editblogposts', {'id': file.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> 
+                        <a href="{{path('editblogposts', {'id': file.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a>
                         <a class="btn btn-danger btn-xs" name="{{path('optionfiles', {'option': 'remove','id': file.id})}}">{{ "Apagar"|trans }}</a>
                     </td>
                 </tr>
@@ -62,17 +62,5 @@
         <a class="btn btn-danger btn-sm" name="{{path('optionfiles', {'option': 'removeselected'})}}" id="RemoveMany">{{ "Apagar"|trans }}</a>
     </p>
     <hr>
-    {{ form_start( form ) }}
-    <div id="xvolutions_adminbundle_blogpost">
-        <div>
-            <p>{{ "Nome do Ficheiro"|trans }}</p>
-            <p>{{ form_widget( form.name ) }}</p>
-        </div>
-        <div>
-            <p>{{ "Ficheiro"|trans }}</p>
-            <p>{{ form_widget( form.fileName ) }}</p>
-        </div>
-        <br>
-            {{ form_end( form ) }}
-    </div>
+    <form id="my-awesome-dropzone" action="{{path('newfile')}}" class="dropzone"></form>
 {% endblock %}

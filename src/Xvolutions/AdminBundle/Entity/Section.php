@@ -3,7 +3,6 @@
 namespace Xvolutions\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Section
@@ -25,15 +24,9 @@ class Section
     /**
      * @var string
      *
-     * @ORM\Column(name="section", type="string", unique=true, length=255)
-     * @ORM\OneToMany(targetEntity="Page", mappedBy="id_section")
+     * @ORM\Column(name="Section", type="string", unique=true, length=255)
      */
     protected $section;
-
-    public function __construct()
-    {
-        $this->page = new ArrayCollection();
-    }
 
     /**
      * Get id

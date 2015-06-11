@@ -1,0 +1,45 @@
+{% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
+
+{% block title %}{{ title|trans }} - Backoffice{% endblock %}
+
+{% block maincontent %}
+    <h1>{{ title|trans }}</h1>
+    {% if status %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ status|trans }}
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
+
+    {{ form_start( form ) }}
+    <div id="xvolutions_adminbundle_blogpost">
+        <div>
+            <p>{{ "Nome do Site"|trans }}</p>
+            <p>{{ form_widget( form.sitename ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Descição"|trans }}</p>
+            <p>{{ form_widget( form.description ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Keywords"|trans }}</p>
+            <p>{{ form_widget( form.keywords ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Autor do site"|trans }}</p>
+            <p>{{ form_widget( form.author ) }}</p>
+        </div>
+        <div>
+            <p>{{ "Blog ?"|trans }} {{ form_widget( form.blog ) }}</p>
+        </div>
+        <br>
+            {{ form_end( form ) }}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,4 @@
+settings:
+    path: /{id}
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Setting:editSetting, id: 1 }
+    methods:  [GET,POST]

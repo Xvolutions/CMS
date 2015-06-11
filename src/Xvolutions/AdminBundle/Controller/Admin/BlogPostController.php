@@ -35,7 +35,7 @@ class BlogPostController extends AdminController
 
         $form = $this->createForm($blogPostType, $blogPost)
                 ->add(
-                    'url',
+                    'idalias',
                     'text',
                     array(
                         'label' => 'URL',
@@ -51,43 +51,24 @@ class BlogPostController extends AdminController
 
         $status = null;
         $error = null;
+        $em = $this->getDoctrine()->getManager();
         if ($form->isValid()) {
             $formValues = $request->request->get('xvolutions_adminbundle_blogpost');
-            if($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['url'], 'type' => 2)) == null) {
-                $em = $this->getDoctrine()->getManager();
+            $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['idalias']));
+            if ($alias == null) {
+                $alias = new Alias();
+                $alias->setType(2);
+                $alias->setUrl($formValues['idalias']);
+                $blogPost->setIdalias($alias);
+
                 $em->persist($blogPost);
                 $em->flush();
-
-                $alias = new Alias();
-                $alias->setUrl($formValues['url']);
-                $alias->setType(2);
-                $alias->setIdExternal($blogPost->getId());
-
-                $em->persist($alias);
-                $em->flush();
-
                 $status = 'Artigo adicionado com sucesso';
             } else {
                 $error = 'Já existe um artigo com esse endereço';
             }
-            $em = $this->getDoctrine()->getManager();
-            $elementsPerPage = $this->container->getParameter('elements_per_page');
-            $current_page = 1;
-            $boundaries = $this->container->getParameter('boundaries');
-            $around = $this->container->getParameter('around');
-            $select = 'SELECT COUNT(b.id)
-                        FROM XvolutionsAdminBundle:BlogPost b';
-            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
 
-            $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
-
-            return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(
-                        'title' => 'Artigos',
-                        'blogPostList' => $blogPostList,
-                        'status' => $status,
-                        'error' => $error,
-                        'pagination' => $pagination
-            ));
+            return $this->forward('XvolutionsAdminBundle:Admin/BlogPost:blogPosts', array('error' => $error, 'status' => $status));
         }
 
         return $this->render('XvolutionsAdminBundle:blog:add_posts.html.twig', array(
@@ -113,25 +94,32 @@ class BlogPostController extends AdminController
         $blogPostType = new BlogPostType();
 
         $blogPost = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
-        $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $id));
+        $aliasid = $blogPost->getIdalias()->getId();
+        $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->find($aliasid);
 
         $form = $this->createForm($blogPostType, $blogPost)
                 ->add(
                     'author', null, array(
                     'label' => 'Autor',
-                    'disabled' => true,
                     'data' => parent::getUsername()
-                        )
+                    )
                 )
                 ->add(
-                    'url',
+                    'idalias',
                     'text',
                     array(
                         'label' => 'URL',
                         'attr' => array('class' => 'url'),
-                        'data' => $alias[0]->getUrl()
+                        'data' => $alias->getUrl()
                     )
                 )
+                ->add(
+                    'date', 
+                    null,
+                    array(
+                        'label' => 'Data',
+                        'data' => $blogPost->getDate()
+                    ))
                 ->add('Guardar', 'submit')
         ;
 
@@ -142,69 +130,32 @@ class BlogPostController extends AdminController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-
             $formValues = $request->request->get('xvolutions_adminbundle_blogpost');
-            $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['url'], 'type' => 2));
 
-            if(count($alias)==0) {
-                $oldAlias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $id));
-                $em->remove($oldAlias[0]);
+            $duplicateAlias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $formValues['idalias']));
+
+            if ($duplicateAlias[0]->getId() == $aliasid || $duplicateAlias == null) {
+                $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->find($aliasid);
+                $alias->setUrl($formValues['idalias']);
+
+                $blogPost->setIdalias($alias);
 
                 $em->persist($blogPost);
                 $em->flush();
 
-                $alias = new Alias();
-                $alias->setUrl($formValues['url']);
-                $alias->setType(2);
-                $alias->setIdExternal($blogPost->getId());
-
-                $em->persist($alias);
-                $em->flush();
-
                 $status = 'Artigo actualizado com sucesso';
             } else {
-                if ($alias[0]->getIdExternal() == $id) {
-                    $em->remove($alias[0]);
-                    $em->flush();
-
-                    $em->persist($blogPost);
-                    $em->flush();
-
-                    $alias = new Alias();
-                    $alias->setUrl($formValues['url']);
-                    $alias->setType(2);
-                    $alias->setIdExternal($blogPost->getId());
-
-                    $em->persist($alias);
-                    $em->flush();
-                    $status = 'Artigo actualizado com sucesso';
-                } else {
-                    $error = 'Já existe um artigo com esse endereço';
-                }
+                $error = 'Já existe um artigo com esse endereço';
             }
-            $elementsPerPage = $this->container->getParameter('elements_per_page');
-            $current_page = 1;
-            $boundaries = $this->container->getParameter('boundaries');
-            $around = $this->container->getParameter('around');
-            $select = 'SELECT COUNT(b.id)
-                        FROM XvolutionsAdminBundle:BlogPost b';
-            $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
 
-            $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
-
-            return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(
-                        'title' => 'Artigos',
-                        'blogPostList' => $blogPostList,
-                        'status' => $status,
-                        'error' => $error,
-                        'pagination' => $pagination
-            ));
+            return $this->forward('XvolutionsAdminBundle:Admin/BlogPost:blogPosts', array('error' => $error, 'status' => $status));
         }
 
         return $this->render('XvolutionsAdminBundle:blog:add_posts.html.twig', array(
                     'form' => $form->createView(),
                     'title' => 'Editar um Artigo',
                     'status' => $status,
+                    'id' => $id,
                     'error' => $error
         ));
     }
@@ -216,7 +167,7 @@ class BlogPostController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the blogPosts
      */
-    public function blogPostsAction($option = NULL, $id = NULL, $current_page = 1)
+    public function blogPostsAction(Request $request, $option = NULL, $id = NULL, $current_page = 1)
     {
         parent::verifyaccess();
 
@@ -232,12 +183,47 @@ class BlogPostController extends AdminController
                     $this->removeSelectedBlogPosts($ids, $status, $error);
                     break;
                 }
+            case 'save': {
+                    $received = json_decode($request->getContent());
+                    $blogPost = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
+                    $aliasid = $blogPost->getIdalias()->getId();
+
+                    $blogPost->setTitle($received->title);
+                    $blogPost->setSubTitle($received->subtitle);
+                    $blogPost->setText($received->text);
+                    $dateAndTime = new \DateTime($received->date_date_year . '/' . $received->date_date_month . "/" . $received->date_date_day ." " .$received->date_time_hour . ":" . $received->date_time_minute);
+                    $dateAndTime->format("Y/m/d H:i:s");
+                    $blogPost->setDate($dateAndTime);
+                    $blogPost->setIdlanguage($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->find($received->id_language));
+                    $blogPost->setIdsection($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Section')->find($received->id_section));
+                    $blogPost->setIdstatus($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Status')->find($received->id_status));
+
+                    $duplicateAlias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('url' => $received->idalias));
+                    $em = $this->getDoctrine()->getManager();
+                    if ($duplicateAlias == null || $duplicateAlias[0]->getId() == $aliasid) {
+                        $alias = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Alias')->find($aliasid);
+                        $alias->setUrl($received->idalias);
+
+                        $blogPost->setIdalias($alias);
+
+                        $em->persist($blogPost);
+                        $em->flush();
+
+                        $status = 'Artigo actualizado com sucesso';
+                    } else {
+                        $error = 'Já existe uma artigo com esse endereço';
+                    }
+
+                    $response = new Response();
+                    $response->setContent($status);
+                    return $response;
+                }
         }
 
-        if ($error != null) {
+        if ($error != null && $option == 'remove' || $option =='removeselected') {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != null) {
+        if ($status != null && $option == 'remove' || $option =='removeselected') {
             return new Response($status, Response::HTTP_OK);
         }
 
@@ -273,11 +259,6 @@ class BlogPostController extends AdminController
             $em = $this->getDoctrine()->getManager();
             $blogPost = $em->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
             if ($blogPost != 'empty') {
-                $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $blogPost->getId()));
-                if(count($alias) > 0) {
-                    $em->remove($alias[0]);
-                    $em->flush();
-                }
                 $em->remove($blogPost);
                 $em->flush();
                 $status = 'Artigo removido com sucesso';
@@ -304,11 +285,6 @@ class BlogPostController extends AdminController
             {
                 $blogPost = $em->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
                 if ($blogPost != 'empty') {
-                    $alias = $em->getRepository('XvolutionsAdminBundle:Alias')->findBy(array('id_external' => $blogPost->getId()));
-                    if(count($alias) > 0) {
-                        $em->remove($alias[0]);
-                        $em->flush($alias[0]);
-                    }
                     $em->remove($blogPost);
                     $em->flush($blogPost);
                     $status = 'Artigo removido com sucesso';

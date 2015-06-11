@@ -1,25 +1,25 @@
 editblogposts:
-    pattern: /edit/{id}
+    path: /edit/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/BlogPost:editBlogPosts }
     methods:  [GET,POST]
 
 addblogposts:
-    pattern: /add
+    path: /add
     defaults: { _controller: XvolutionsAdminBundle:Admin/BlogPost:addBlogPosts }
     methods:  [GET,POST]
 
 optionblogposts:
-    pattern: /{option}/{id}
+    path: /{option}/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/BlogPost:blogPosts, option: 0, id: 0 }
-    methods:  [DELETE]
+    methods:  [DELETE,POST]
 
 blogposts:
-    pattern: /
+    path: /
     defaults: { _controller: XvolutionsAdminBundle:Admin/BlogPost:blogPosts, current_page: 1 }
     methods:  [GET]
 
 blogposts_current:
-    pattern: /{current_page}
+    path: /{current_page}
     defaults: { _controller: XvolutionsAdminBundle:Admin/BlogPost:blogPosts, current_page: 1 }
     methods:  [GET]
     requirements:

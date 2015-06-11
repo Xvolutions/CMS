@@ -24,7 +24,7 @@
         </div>
         <div>
             <p>{{ "URL"|trans }}</p>
-            <p>{{ form_widget( form.url ) }}
+            <p>{{ form_widget( form.idalias ) }}</p>
         </div>
         <div>
             <p>{{ "Texto"|trans }}</p>
@@ -39,12 +39,15 @@
             <p>{{ form_widget( form.id_section ) }}</p>
         </div>
         <div>
-            <p>{{ "Página Superior"|trans }}</p>
-            <p>{{ form_widget( form.id_parent ) }}</p>
+            <p>{{ "Estado"|trans }}</p>
+            <p>{{ form_widget( form.id_status ) }}</p>
         </div>
         <br>
-            {{ form_end( form ) }}
-            <a href="{{path('pages')}}" class="btn btn-default btn-sm">{{ "Ver Páginas"|trans }}</a>
+        {{ form_end( form ) }}
+        {% if id is defined %}
+            <a name="{{path('pagesoption',{'option': 'save', 'id':id})}}" class="btn btn-info btn-sm save">{{ "Guardar Página"|trans }}</a>
+        {% endif %}
+        <a href="{{path('pages')}}" class="btn btn-default btn-sm">{{ "Ver Páginas"|trans }}</a>
     </div>
 </form>
 {% endblock %}

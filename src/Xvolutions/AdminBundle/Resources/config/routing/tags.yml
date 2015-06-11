@@ -1,19 +1,19 @@
 edittags:
-    pattern: /edit/{id}
+    path: /edit/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Tag:edittags }
     methods:  [GET,POST]
 
 addtags:
-    pattern: /add
+    path: /add
     defaults: { _controller: XvolutionsAdminBundle:Admin/Tag:addtags }
     methods:  [GET,POST]
 
 optiontags:
-    pattern: /{option}/{id}
+    path: /{option}/{id}
     defaults: { _controller: XvolutionsAdminBundle:Admin/Tag:tags, option: 0, id: 0 }
     methods:  [DELETE]
 
 tags:
-    pattern: /
+    path: /
     defaults: { _controller: XvolutionsAdminBundle:Admin/Tag:tags }
     methods:  [GET]

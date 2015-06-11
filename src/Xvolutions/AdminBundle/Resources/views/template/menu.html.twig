@@ -18,35 +18,39 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">CMS <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{path('pages')}}">Páginas</a></li>
-                            <li><a href="#">Menus</a></li>
-                            <li><a href="{{path('files')}}">Gestor de Ficheiros</a></li>
+                            <li><a href="{{path('pages')}}" class="animsition-link">Páginas</a></li>
+                            <li><a href="#" class="animsition-link">Menus</a></li>
+                            <li><a href="{{path('files')}}" class="animsition-link">Gestor de Ficheiros</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{path('blogposts')}}">Artigos</a></li>
-                        </ul>
-                    </li>
+                    {% if render(controller('XvolutionsAdminBundle:Admin/Setting:menu')) %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{path('blogposts')}}">Artigos</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="{{path('setup')}}" class="dropdown-toggle" data-toggle="dropdown">Setup <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{path('sections')}}">Secções</a></li>
-                            <li><a href="{{path('languages')}}">Ídiomas</a></li>
+                            <li><a href="{{path('sections')}}" class="animsition-link">Secções</a></li>
+                            <li><a href="{{path('languages')}}" class="animsition-link">Ídiomas</a></li>
                             <li class="divider"></li>
-                            <li><a href="{{path('users')}}">Utilizadores</a></li>
-                            <li><a href="{{path('roles')}}">Grupos</a></li>
+                            <li><a href="{{path('users')}}" class="animsition-link">Utilizadores</a></li>
+                            <li><a href="{{path('roles')}}" class="animsition-link">Grupos</a></li>
                             <li class="divider"></li>
-                            <li><a href="{{path('_profiler_phpinfo')}}">PhpInfo</a></li>
+                            <li><a href="{{path('settings')}}" class="animsition-link">Configurações</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{path('phpinfo')}}" class="animsition-link">PhpInfo</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ render(controller('XvolutionsAdminBundle:Admin:gravatar')) }} Bem-vindo, {{ render(controller('XvolutionsAdminBundle:Admin:username')) }}<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{path('logout')}}">Logout</a></li>
+                            <li><a href="{{path('logout')}}" class="animsition-link">Logout</a></li>
                         </ul>
                     </li>
                 </ul>

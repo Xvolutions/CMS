@@ -29,21 +29,23 @@
             <th></th>
             <th>{{ "Nome da Página"|trans }}</th>
             <th>{{ "Secção"| trans }}</th>
-            <th>{{ "Language"| trans }}</th>
+            <th>{{ "Estado"| trans }}</th>
+            <th>{{ "Ídioma"| trans }}</th>
             <th>{{ "Data de criação"| trans }}</th>
             <th>{{ "Opções"|trans }}</th>
         </tr>
         {% if pageList|length > 0 %}
- 
+
             {% for page in pageList %}
                 <tr class="tr{{page.id}}">
                     <td><input type="checkbox" id="{{page.id}}" onclick="SelectForRemoval('{{page.id}}');"></td>
                     <td>{{page.title}}</td>
-                    <td>{{page.section}}</td>
-                    <td>{{page.language}}</td>
-                    <td>{{page.date|date('d/m/Y H:m:s') }}</td>
+                    <td>{{page.idsection.section}}</td>
+                    <td>{{page.idstatus.status}}</td>
+                    <td>{{page.idlanguage.language}}</td>
+                    <td>{{page.date|date('d/m/Y H:i:s') }}</td>
                     <td>
-                        <a href="{{path('editpages', {'id': page.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a> 
+                        <a href="{{path('editpages', {'id': page.id})}}" type="submit" class="btn btn-primary btn-xs">{{ "Editar"|trans }}</a>
                         <a class="btn btn-danger btn-xs" name="{{path('pagesoption', {'option': 'remove','id': page.id})}}">{{ "Apagar"|trans }}</a>
                     </td>
                 </tr>
@@ -62,5 +64,5 @@
     <p>
         <a href="{{path('addpages')}}" type="submit" class="btn btn-primary btn-sm">{{ "Criar uma nova página"|trans }}</a>
         <a class="btn btn-danger btn-sm" name="{{path('pagesoption', {'option': 'removeselected'})}}" id="RemoveMany">{{ "Apagar"|trans }}</a>
-    </p> 
+    </p>
 {% endblock %}
