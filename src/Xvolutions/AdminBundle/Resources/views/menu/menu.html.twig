@@ -1,0 +1,34 @@
+{% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
+
+{% block title %}Menu - Backoffice{% endblock %}
+
+{% block maincontent %}
+    <h1>{{ "Menu"|trans }}</h1>
+    <div id="status" class="alert alert-success alert-dismissable" style="display: none;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <div id="text"></div>
+    </div>
+    {% if status %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ status|trans }}
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
+    <ul id="sortable1" class="connectedSortable">
+        {% if AliasList|length > 0 %}
+            {% for alias in AliasList %}
+                <li class="ui-state-default">{{ alias.url }}</li>
+            {% endfor %}
+        {% endif %}
+
+    </ul>
+
+    <ul id="sortable2" class="connectedSortable">
+    </ul>
+{% endblock %}
