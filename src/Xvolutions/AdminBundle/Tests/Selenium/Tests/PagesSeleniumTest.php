@@ -1,6 +1,6 @@
 <?php
 
-namespace Xvolutions\AdminBundle\Tests\Controller\Admin;
+namespace Xvolutions\AdminBundle\Tests\Selenium\Tests;
 
 use Xvolutions\AdminBundle\Tests\Selenium\SeleniumTest;
 
@@ -9,12 +9,7 @@ class PagesSeleniumTest extends SeleniumTest
 
     public function testAddPagesAction()
     {
-        $this->open("/admin/");
-        $this->type("id=username", parent::username);
-        $this->type("id=password", parent::password);
-        $this->click("css=button.btn.btn-primary");
-        $this->waitForPageToLoad("30000");
-        $this->assertEquals("Backoffice | Consola de Gestão", $this->getTitle());
+        parent::login();
         $this->clickAt("link=CMS", "");
         $this->click("link=Páginas");
         $this->waitForPageToLoad("30000");
@@ -30,19 +25,12 @@ class PagesSeleniumTest extends SeleniumTest
         $this->waitForPageToLoad("30000");
         $this->assertEquals("test selenium", $this->getTable("css=table.table.table-hover.1.1"));
         $this->clickAt("link=Bem-vindo, Administrator", "");
-        $this->click("link=Logout");
-        $this->waitForPageToLoad("30000");
-        $this->assertEquals("Login | Consola de Gestão", $this->getTitle());
+        parent::logout();
     }
 
     public function testVerifyPagesAction()
     {
-        $this->open("/admin/");
-        $this->type("id=username", parent::username);
-        $this->type("id=password", parent::password);
-        $this->click("css=button.btn.btn-primary");
-        $this->waitForPageToLoad("30000");
-        $this->assertEquals("Backoffice | Consola de Gestão", $this->getTitle());
+        parent::login();
         $this->clickAt("link=CMS", "");
         $this->click("link=Páginas");
         $this->waitForPageToLoad("30000");
@@ -62,19 +50,12 @@ class PagesSeleniumTest extends SeleniumTest
         $this->click("link=Ver Páginas");
         $this->waitForPageToLoad("30000");
         $this->clickAt("link=Bem-vindo, Administrator", "");
-        $this->click("link=Logout");
-        $this->waitForPageToLoad("30000");
-        $this->assertEquals("Login | Consola de Gestão", $this->getTitle());
+        parent::logout();
     }
 
     public function testDeletePagesAction()
     {
-        $this->open("/admin/");
-        $this->type("id=username", parent::username);
-        $this->type("id=password", parent::password);
-        $this->click("css=button.btn.btn-primary");
-        $this->waitForPageToLoad("30000");
-        $this->assertEquals("Backoffice | Consola de Gestão", $this->getTitle());
+        parent::login();
         $this->clickAt("link=CMS", "");
         $this->click("link=Páginas");
         $this->waitForPageToLoad("30000");
@@ -87,9 +68,7 @@ class PagesSeleniumTest extends SeleniumTest
         $this->click("link=Apagar");
         $this->assertFalse($this->isTextPresent("css=table.table.table-hover.1.1"));
         $this->clickAt("link=Bem-vindo, Administrator", "");
-        $this->click("link=Logout");
-        $this->waitForPageToLoad("30000");
-        $this->assertEquals("Login | Consola de Gestão", $this->getTitle());
+        parent::logout();
     }
 
 }
