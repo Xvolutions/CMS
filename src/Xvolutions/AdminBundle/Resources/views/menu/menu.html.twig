@@ -20,15 +20,50 @@
             {{ error|trans }}
         </div>
     {% endif %}
+    Pages
     <ul id="sortable1" class="connectedSortable">
-        {% if AliasList|length > 0 %}
-            {% for alias in AliasList %}
-                <li class="ui-state-default">{{ alias.url }}</li>
-            {% endfor %}
+        {% if pages is not null %}
+            {% if pages|length > 0 %}
+                {% for page in pages %}
+                    <li class="ui-state-default" id="id-{{ page.id }}">{{ page.title }}</li>
+                {% endfor %}
+            {% endif %}
         {% endif %}
-
     </ul>
 
+    Menu
     <ul id="sortable2" class="connectedSortable">
+        {% if menuItems is not null %}
+            {% if menuItems|length > 0 %}
+                {% for page in menuItems %}
+                    <li class="ui-state-default" id="id-{{ page.id }}">{{ page.title }}</li>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
     </ul>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () {
+            $("#sortable1, #sortable2").sortable({
+                connectWith: ".connectedSortable"
+            }).disableSelection();
+        });
+
+        $('#sortable2').sortable({
+            axis: 'y',
+            update: function (event, ui) {
+                var data = $(this).sortable('serialize');
+                $.ajax({
+                    data: data,
+                    type: 'POST',
+                    url: 'update'
+                });
+            },
+            success: function (data) {
+                location.reload();
+            }
+        });
+    </script>
 {% endblock %}
