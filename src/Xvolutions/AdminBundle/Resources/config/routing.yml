@@ -71,9 +71,15 @@ XvolutionsAdminBundle_files:
     resource: "@XvolutionsAdminBundle/Resources/config/routing/file.yml"
     prefix:   /files
 
+### MENU ###
+
+XvolutionsAdminBundle_menu:
+    resource: "@XvolutionsAdminBundle/Resources/config/routing/menu.yml"
+    prefix:   /menu
+
 ### SETTINGS ###
 
 XvolutionsAdminBundle_settings:
     resource: "@XvolutionsAdminBundle/Resources/config/routing/setting.yml"
     prefix:   /settings
-        
+

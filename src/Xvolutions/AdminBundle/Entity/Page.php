@@ -249,24 +249,4 @@ class Page
         return $this;
     }
 
-    
-    /**
-     * Set URL
-     *
-     * @return null
-     */
-    public function setUrl($url)
-    {
-        return null;
-    }
-
-    /**
-     * Get URL
-     *
-     * @return null 
-     */
-    public function getUrl()
-    {
-        return null;
-    }
 }

@@ -1,0 +1,69 @@
+{% extends "XvolutionsAdminBundle:template:backoffice.html.twig" %}
+
+{% block title %}Menu - Backoffice{% endblock %}
+
+{% block maincontent %}
+    <h1>{{ "Menu"|trans }}</h1>
+    <div id="status" class="alert alert-success alert-dismissable" style="display: none;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <div id="text"></div>
+    </div>
+    {% if status %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ status|trans }}
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error|trans }}
+        </div>
+    {% endif %}
+    Pages
+    <ul id="sortable1" class="connectedSortable">
+        {% if pages is not null %}
+            {% if pages|length > 0 %}
+                {% for page in pages %}
+                    <li class="ui-state-default" id="id-{{ page.id }}">{{ page.title }}</li>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </ul>
+
+    Menu
+    <ul id="sortable2" class="connectedSortable">
+        {% if menuItems is not null %}
+            {% if menuItems|length > 0 %}
+                {% for page in menuItems %}
+                    <li class="ui-state-default" id="id-{{ page.id }}">{{ page.title }}</li>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </ul>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () {
+            $("#sortable1, #sortable2").sortable({
+                connectWith: ".connectedSortable"
+            }).disableSelection();
+        });
+
+        $('#sortable2').sortable({
+            axis: 'y',
+            update: function (event, ui) {
+                var data = $(this).sortable('serialize');
+                $.ajax({
+                    data: data,
+                    type: 'POST',
+                    url: 'update'
+                });
+            },
+            success: function (data) {
+                location.reload();
+            }
+        });
+    </script>
+{% endblock %}
