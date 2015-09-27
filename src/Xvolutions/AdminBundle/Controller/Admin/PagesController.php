@@ -142,10 +142,10 @@ class PagesController extends AdminController
                 }
         }
 
-        if ($error != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($error != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($status != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($status, Response::HTTP_OK);
         }
 
@@ -214,7 +214,7 @@ class PagesController extends AdminController
     /**
      * This is function is responsible to remove a page
      *
-     * @param type $id the id of the page to be removed
+     * @param integer $id the id of the page to be removed
      * @return string with the information message
      */
     private function removePage($id, &$status, &$error)
@@ -224,6 +224,12 @@ class PagesController extends AdminController
             $em = $this->getDoctrine()->getManager();
             $page = $em->getRepository('XvolutionsAdminBundle:Page')->find($id);
             if ($page != 'empty') {
+                $menu = $em->getRepository('XvolutionsAdminBundle:Menu')->findBy(array('page' => $page));
+                    if (isset($menu[0])) {
+                        $em->remove($menu[0]);
+                        $em->flush($menu[0]);
+                    }
+
                 $em->remove($page);
                 $em->flush($page);
                 $status = 'Página removida com sucesso';
@@ -238,7 +244,7 @@ class PagesController extends AdminController
     /**
      * This function is responsible to remove a list of pages
      *
-     * @param type $ids array containing the id's of the pages to be removed
+     * @param integer $ids array containing the id's of the pages to be removed
      * @return string with the message
      */
     private function removeSelectedPages($ids, &$status, &$error)
@@ -249,6 +255,12 @@ class PagesController extends AdminController
             foreach ($ids as $id) {
                 $page = $em->getRepository('XvolutionsAdminBundle:Page')->find($id);
                 if ($page != 'empty') {
+                    $menu = $em->getRepository('XvolutionsAdminBundle:Menu')->findBy(array('page' => $page));
+                    if (isset($menu[0])) {
+                        $em->remove($menu[0]);
+                        $em->flush($menu[0]);
+                    }
+
                     $em->remove($page);
                     $em->flush($page);
                     $status = 'Página(s) removida(s) com sucesso';
