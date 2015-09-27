@@ -2,3 +2,8 @@ menu:
     pattern: /
     defaults: { _controller: XvolutionsAdminBundle:Admin/Menu:menu }
     methods:  [GET]
+
+menuupdate:
+    pattern: /update
+    defaults: { _controller: XvolutionsAdminBundle:Admin/Menu:update }
+    methods:  [POST]
