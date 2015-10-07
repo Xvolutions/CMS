@@ -9,15 +9,17 @@ use Xvolutions\AdminBundle\Entity\Language;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class LanguageTest extends \PHPUnit_Framework_TestCase {
-
-    public function testlanguage() {
+class LanguageTest extends \PHPUnit_Framework_TestCase
+{
+    public function testlanguage()
+    {
         $language = new Language();
         $language->setLanguage("PT");
         $language->getLanguage();
     }
 
-    public function testcode() {
+    public function testcode()
+    {
         $language = new Language();
         $language->setCode("pt-PT");
         $language->getCode();

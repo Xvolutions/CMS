@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PageType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -23,8 +23,8 @@ class PageType extends AbstractType
                     ))
             ->add('text')
             ->add(
-                    'id_language', 
-                    'entity', 
+                    'id_language',
+                    'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Language',
                         'property' => 'language',
@@ -33,8 +33,8 @@ class PageType extends AbstractType
                     )
             )
             ->add(
-                    'id_section', 
-                    'entity', 
+                    'id_section',
+                    'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Section',
                         'property' => 'section',
@@ -43,8 +43,8 @@ class PageType extends AbstractType
                     )
             )
             ->add(
-                    'id_status', 
-                    'entity', 
+                    'id_status',
+                    'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Status',
                         'property' => 'status',

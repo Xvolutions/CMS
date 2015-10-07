@@ -17,7 +17,6 @@ use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
  */
 class UsersController extends AdminController
 {
-
     /**
      * Controller responsible to add a new user for and handling the form
      * submission and the database insertion
@@ -218,8 +217,7 @@ class UsersController extends AdminController
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
-            foreach ($ids as $id)
-            {
+            foreach ($ids as $id) {
                 $user = $em->getRepository('XvolutionsAdminBundle:User')->find($id);
                 $em->remove($user);
                 $em->flush($user);
@@ -229,5 +227,4 @@ class UsersController extends AdminController
             $error = "Erro $ex ao remover utilizador(es)";
         }
     }
-
 }

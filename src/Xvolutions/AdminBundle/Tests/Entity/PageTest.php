@@ -10,8 +10,9 @@ use Xvolutions\AdminBundle\Entity\Section;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class PagesTest extends \PHPUnit_Framework_TestCase {
-//
+class PageTest extends \PHPUnit_Framework_TestCase
+{
+    //
 //    public function testid() {
 //        $page = new Page();
 //        $page->setTitle("test");
@@ -23,21 +24,24 @@ class PagesTest extends \PHPUnit_Framework_TestCase {
 //        $page->setDate($datetime);
 //    }
 //
-    public function testtitle() {
+    public function testtitle()
+    {
         $page = new Page();
         $page->setTitle("Title");
         $title = $page->getTitle();
         $this->assertTrue($title == "Title");
     }
 
-    public function testtext() {
+    public function testtext()
+    {
         $page = new Page();
         $page->setText("This is some ramdom text");
         $text = $page->getText();
         $this->assertTrue($text == "This is some ramdom text");
     }
 
-    public function testsection() {
+    public function testsection()
+    {
         $page = new Page();
         $section = new Section();
         $section->setSection("Test");
@@ -67,5 +71,4 @@ class PagesTest extends \PHPUnit_Framework_TestCase {
 //        $date = $page->getDate();
 //        $this->assertTrue($date == $datetime);
 //    }
-
 }

@@ -209,27 +209,31 @@ class User implements AdvancedUserInterface, \Serializable, \Symfony\Component\S
         return $this->salt;
     }
 
-    public function setSalt( $salt ) {
+    public function setSalt($salt)
+    {
         $this->salt = $salt;
 
         return $this;
     }
 
-    public function eraseCredentials() {
-        
+    public function eraseCredentials()
+    {
     }
 
-    public function setRoles( $roles ) {
+    public function setRoles($roles)
+    {
         $this->roles = $roles;
 
         return $this;
     }
 
-    public function getRoles() {
+    public function getRoles()
+    {
         return $this->roles->toArray();
     }
 
-    public function serialize() {
+    public function serialize()
+    {
         return serialize(array(
             $this->id,
             $this->username,
@@ -239,8 +243,9 @@ class User implements AdvancedUserInterface, \Serializable, \Symfony\Component\S
         ));
     }
 
-    public function unserialize($serialized) {
-        list (
+    public function unserialize($serialized)
+    {
+        list(
             $this->id,
             $this->username,
             $this->password,
@@ -249,23 +254,28 @@ class User implements AdvancedUserInterface, \Serializable, \Symfony\Component\S
         ) = unserialize($serialized);
     }
 
-    public function getEncoderName() {
+    public function getEncoderName()
+    {
         return 'default';
     }
 
-    public function isAccountNonExpired() {
+    public function isAccountNonExpired()
+    {
         return true;
     }
 
-    public function isAccountNonLocked() {
+    public function isAccountNonLocked()
+    {
         return true;
     }
 
-    public function isCredentialsNonExpired() {
+    public function isCredentialsNonExpired()
+    {
         return true;
     }
 
-    public function isEnabled() {
+    public function isEnabled()
+    {
         return $this->isactive;
     }
 

@@ -11,8 +11,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table()
  * @ORM\Entity
  */
-class BlogPost {
-
+class BlogPost
+{
     /**
      * @var integer
      *
@@ -99,7 +99,8 @@ class BlogPost {
      */
     private $id_status;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->tag = new ArrayCollection();
         $this->category = new ArrayCollection();
         $this->id_section = new ArrayCollection();
@@ -113,7 +114,8 @@ class BlogPost {
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -123,7 +125,8 @@ class BlogPost {
      * @param string $title
      * @return BlogPost
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
 
         return $this;
@@ -134,7 +137,8 @@ class BlogPost {
      *
      * @return string 
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
@@ -144,7 +148,8 @@ class BlogPost {
      * @param string $subtitle
      * @return BlogPost
      */
-    public function setSubTitle($subtitle) {
+    public function setSubTitle($subtitle)
+    {
         $this->subtitle = $subtitle;
 
         return $this;
@@ -155,7 +160,8 @@ class BlogPost {
      *
      * @return string 
      */
-    public function getSubTitle() {
+    public function getSubTitle()
+    {
         return $this->subtitle;
     }
 
@@ -165,7 +171,8 @@ class BlogPost {
      * @param string $author
      * @return BlogPost
      */
-    public function setAuthor($author) {
+    public function setAuthor($author)
+    {
         $this->author = $author;
 
         return $this;
@@ -176,7 +183,8 @@ class BlogPost {
      *
      * @return string 
      */
-    public function getAuthor() {
+    public function getAuthor()
+    {
         return $this->author;
     }
 
@@ -186,7 +194,8 @@ class BlogPost {
      * @param string $text
      * @return BlogPost
      */
-    public function setText($text) {
+    public function setText($text)
+    {
         $this->text = $text;
 
         return $this;
@@ -197,7 +206,8 @@ class BlogPost {
      *
      * @return string 
      */
-    public function getText() {
+    public function getText()
+    {
         return $this->text;
     }
 
@@ -207,7 +217,8 @@ class BlogPost {
      * @param \DateTime $date
      * @return BlogPost
      */
-    public function setDate($date) {
+    public function setDate($date)
+    {
         $this->date = $date;
 
         return $this;
@@ -218,7 +229,8 @@ class BlogPost {
      *
      * @return \DateTime 
      */
-    public function getDate() {
+    public function getDate()
+    {
         return $this->date;
     }
 
@@ -228,7 +240,8 @@ class BlogPost {
      * @param string tag
      * @return tag
      */
-    public function setTag($tag) {
+    public function setTag($tag)
+    {
         $this->tag = $tag;
 
         return $this;
@@ -239,7 +252,8 @@ class BlogPost {
      *
      * @return tag
      */
-    public function getTag() {
+    public function getTag()
+    {
         return $this->tag;
     }
 
@@ -249,7 +263,8 @@ class BlogPost {
      * @param string category
      * @return BlogPost
      */
-    public function setCategory($category) {
+    public function setCategory($category)
+    {
         $this->category = $category;
 
         return $this;
@@ -260,7 +275,8 @@ class BlogPost {
      *
      * @return category
      */
-    public function getCategory() {
+    public function getCategory()
+    {
         return $this->category;
     }
 
@@ -269,7 +285,8 @@ class BlogPost {
      *
      * @return integer 
      */
-    public function getIdsection() {
+    public function getIdsection()
+    {
         return $this->id_section;
     }
 
@@ -279,7 +296,8 @@ class BlogPost {
      * @param integer id_section
      * @return Section ID
      */
-    public function setIdsection($id_section) {
+    public function setIdsection($id_section)
+    {
         $this->id_section = $id_section;
 
         return $this;
@@ -290,7 +308,8 @@ class BlogPost {
      *
      * @return integer 
      */
-    public function getIdlanguage() {
+    public function getIdlanguage()
+    {
         return $this->id_language;
     }
 
@@ -300,7 +319,8 @@ class BlogPost {
      * @param integer id_language
      * @return Page's Language ID
      */
-    public function setIdlanguage($id_language) {
+    public function setIdlanguage($id_language)
+    {
         $this->id_language = $id_language;
 
         return $this;
@@ -311,7 +331,8 @@ class BlogPost {
      *
      * @return integer 
      */
-    public function getIdalias() {
+    public function getIdalias()
+    {
         return $this->id_alias;
     }
 
@@ -321,7 +342,8 @@ class BlogPost {
      * @param integer id_alias
      * @return Page's Alias ID
      */
-    public function setIdalias($id_alias) {
+    public function setIdalias($id_alias)
+    {
         $this->id_alias = $id_alias;
 
         return $this;
@@ -349,5 +371,4 @@ class BlogPost {
 
         return $this;
     }
-
 }

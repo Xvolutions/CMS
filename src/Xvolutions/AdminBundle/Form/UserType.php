@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UserType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -18,8 +18,8 @@ class UserType extends AbstractType
             ->add('username')
             ->add('name')
             ->add(
-                    'password', 
-                    'repeated', 
+                    'password',
+                    'repeated',
                     array(
                         'first_name' => 'password',
                         'second_name' => 'confirm',
@@ -30,8 +30,8 @@ class UserType extends AbstractType
             ->add('email')
             ->add('isactive')
             ->add(
-                    'roles', 
-                    'entity', 
+                    'roles',
+                    'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Role',
                         'property' => 'name',

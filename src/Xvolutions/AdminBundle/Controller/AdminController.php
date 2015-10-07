@@ -12,14 +12,15 @@ use Symfony\Component\Debug\ErrorHandler;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class AdminController extends Controller {
-
+class AdminController extends Controller
+{
     /**
      * Controller responsible to show the backoffice main page
      * 
      * @return type the template
      */
-    public function backofficeAction() {
+    public function backofficeAction()
+    {
         $this->verifyaccess();
 
         return $this->render(
@@ -31,7 +32,8 @@ class AdminController extends Controller {
      * 
      * @return type the template
      */
-    public function setupAction() {
+    public function setupAction()
+    {
         $this->verifyaccess();
         return $this->render('XvolutionsAdminBundle::setup.html.twig');
     }
@@ -41,11 +43,12 @@ class AdminController extends Controller {
      * 
      * @return type
      */
-    public function usernameAction() {
+    public function usernameAction()
+    {
         $this->verifyaccess();
         $username = $this->getUsername();
         return $this->render(
-            'XvolutionsAdminBundle:template:username.html.twig', 
+            'XvolutionsAdminBundle:template:username.html.twig',
             array(
                 'username' => $username
             )
@@ -57,11 +60,12 @@ class AdminController extends Controller {
      * 
      * @return type
      */
-    public function gravatarAction() {
+    public function gravatarAction()
+    {
         $this->verifyaccess();
         $gravatar = $this->getGravatar();
         return $this->render(
-            'XvolutionsAdminBundle:template:gravatar.html.twig', 
+            'XvolutionsAdminBundle:template:gravatar.html.twig',
             array(
                 'gravatar' => $gravatar
             )
@@ -90,7 +94,8 @@ class AdminController extends Controller {
      * 
      * @throws AccessDeniedException
      */
-    protected function verifyaccess() {
+    protected function verifyaccess()
+    {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
@@ -102,7 +107,8 @@ class AdminController extends Controller {
      * 
      * @return type string
      */
-    protected function getUsername() {
+    protected function getUsername()
+    {
         try {
             $user = $this->get('security.context')->getToken()->getUser();
             return $user->getName();
@@ -118,7 +124,8 @@ class AdminController extends Controller {
      * @return url of the gravatar
      * @throws AccessDeniedException
      */
-    private function getGravatar() {
+    private function getGravatar()
+    {
         try {
             $user = $this->get('security.context')->getToken()->getUser();
             $emailAddress = $user->getEmail();
@@ -128,5 +135,4 @@ class AdminController extends Controller {
             throw new AccessDeniedException();
         }
     }
-
 }

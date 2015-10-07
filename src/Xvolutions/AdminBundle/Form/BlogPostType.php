@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BlogPostType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -16,55 +16,55 @@ class BlogPostType extends AbstractType
     {
         $builder
             ->add(
-                    'title', 
+                    'title',
                     null,
                     array(
                         'label' => 'Título',
                         'attr' => array('class' => 'title')
                     ))
             ->add(
-                    'subtitle', 
+                    'subtitle',
                     null,
                     array(
                         'label' => 'Sub-Título',
                         'attr' => array('class' => 'title')
                     ))
             ->add(
-                    'author', 
+                    'author',
                     null,
                     array(
                         'label' => 'Autor'
                     ))
             ->add(
-                    'text', 
+                    'text',
                     null,
                     array(
                         'label' => 'Texto'
                     ))
             ->add(
-                    'date', 
+                    'date',
                     null,
                     array(
                         'label' => 'Data',
                         'data' => new \DateTime('now')
                     ))
             ->add(
-                    'tag', 
-                    null, 
+                    'tag',
+                    null,
                     array(
                         'label' => 'Tag'
                     )
             )
             ->add(
-                    'category', 
-                    null, 
+                    'category',
+                    null,
                     array(
                         'label' => 'Categoria'
                     )
             )
             ->add(
-                    'id_section', 
-                    'entity', 
+                    'id_section',
+                    'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Section',
                         'property' => 'section',
@@ -74,8 +74,8 @@ class BlogPostType extends AbstractType
                     )
             )
             ->add(
-                    'id_language', 
-                    'entity', 
+                    'id_language',
+                    'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Language',
                         'property' => 'language',
@@ -85,8 +85,8 @@ class BlogPostType extends AbstractType
                     )
             )
             ->add(
-                    'id_status', 
-                    'entity', 
+                    'id_status',
+                    'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Status',
                         'property' => 'status',

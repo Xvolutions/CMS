@@ -13,7 +13,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Menu
 {
-
     /**
      * @var integer
      *
@@ -97,5 +96,4 @@ class Menu
     {
         return $this->page;
     }
-
 }

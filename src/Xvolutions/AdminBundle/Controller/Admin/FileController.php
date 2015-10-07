@@ -15,15 +15,16 @@ use Xvolutions\AdminBundle\Entity\File;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class FileController extends AdminController {
-
+class FileController extends AdminController
+{
     /**
      * Controller responsible to return the list of images uploaded to the database
      * to be used by TinyMCE
      * 
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function imageListAction() {
+    public function imageListAction()
+    {
         parent::verifyaccess();
 
         $imageTypes = array('gif', 'jpeg', 'png', 'tiff', 'bmp');
@@ -55,7 +56,8 @@ class FileController extends AdminController {
      * @param string $error if the removal or adition had errors
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction($option = null, $id = null, $current_page = 1, $status = null, $error = null) {
+    public function listAction($option = null, $id = null, $current_page = 1, $status = null, $error = null)
+    {
         parent::verifyaccess();
 
         $this->options($option, $id, $status, $error);
@@ -91,7 +93,8 @@ class FileController extends AdminController {
      * @param type $current_page the actual page
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newFileAction(Request $request, $current_page = 1) {
+    public function newFileAction(Request $request, $current_page = 1)
+    {
         parent::verifyaccess();
 
         $upload = new Upload();
@@ -107,7 +110,7 @@ class FileController extends AdminController {
             if (count($name) > 0) {
                 @unlink($folder . '/' . $fileName);
                 $error = "Já existe um ficheiro com esse nome";
-                return New Response($error, Response::HTTP_NOT_ACCEPTABLE);
+                return new Response($error, Response::HTTP_NOT_ACCEPTABLE);
             } else {
                 $file = new File();
                 $datetime = new \DateTime('now');
@@ -121,11 +124,11 @@ class FileController extends AdminController {
                 $em->persist($file);
                 $em->flush();
                 $status = 'Ficheiro adicionado com sucesso';
-                return New Response($status, Response::HTTP_CREATED);
+                return new Response($status, Response::HTTP_CREATED);
             }
         } else {
             $error = "Impossível enviar o ficheiro";
-            return New Response($error, Response::HTTP_NOT_ACCEPTABLE);
+            return new Response($error, Response::HTTP_NOT_ACCEPTABLE);
         }
     }
 
@@ -137,7 +140,8 @@ class FileController extends AdminController {
      * @param string $error If there is and error message
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function options($option, $id, &$status, &$error) {
+    private function options($option, $id, &$status, &$error)
+    {
         switch ($option) {
             case 'remove': {
                     $this->removeFile($id, $status, $error);
@@ -157,7 +161,8 @@ class FileController extends AdminController {
      * @param integer $current_page The current page
      * @return \Xvolutions\AdminBundle\Helpers\PaginatorHelper
      */
-    private function showPagination($current_page = 1) {
+    private function showPagination($current_page = 1)
+    {
         $em = $this->getDoctrine()->getManager();
         $elementsPerPage = $this->container->getParameter('elements_per_page');
         $boundaries = $this->container->getParameter('boundaries');
@@ -174,7 +179,8 @@ class FileController extends AdminController {
      * @param string $status with the information message
      * @param string $error with the information message
      */
-    private function removeFile($id, &$status, &$error) {
+    private function removeFile($id, &$status, &$error)
+    {
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
@@ -207,7 +213,8 @@ class FileController extends AdminController {
      * @param string $status with the information message
      * @param string $error with the information message
      */
-    private function removeSelectedFiles($ids, $status, $error) {
+    private function removeSelectedFiles($ids, $status, $error)
+    {
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
@@ -239,7 +246,8 @@ class FileController extends AdminController {
      * @param type $elementsPerPage The number of elements per page
      * @return type Pagelist
      */
-    private function pageList($em, $current_page, $elementsPerPage) {
+    private function pageList($em, $current_page, $elementsPerPage)
+    {
         $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
         $queryPage = $em->createQuery(
                         'SELECT f.id, f.name, f.date, f.size, f.type, f.fileName
@@ -251,5 +259,4 @@ class FileController extends AdminController {
 
         return $queryPage->getResult();
     }
-
 }

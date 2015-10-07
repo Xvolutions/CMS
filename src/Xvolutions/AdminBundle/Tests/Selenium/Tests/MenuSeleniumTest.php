@@ -13,7 +13,6 @@ use Xvolutions\AdminBundle\Tests\Selenium\Tests\PagesSeleniumTest;
  */
 class MenuSeleniumTest extends SeleniumTest
 {
-
     /**
      * This test will verify if the pages and the menu areas are present
      * 
@@ -80,7 +79,7 @@ class MenuSeleniumTest extends SeleniumTest
         $this->clickAt("link=CMS", "");
         $this->click("link=Menus");
         $this->waitForPageToLoad("30000");
-        $this->dragAndDropToObject("css=ul#sortable1.connectedSortable.ui-sortable li#id-1","css=ul#sortable2");
+        $this->dragAndDropToObject("css=ul#sortable1.connectedSortable.ui-sortable li#id-1", "css=ul#sortable2");
         $this->clickAt("link=CMS", "");
         $this->click("link=Menus");
         $this->waitForPageToLoad("30000");
@@ -152,5 +151,4 @@ class MenuSeleniumTest extends SeleniumTest
         $this->assertFalse($this->isElementPresent("css=ul#sortable2.connectedSortable.ui-sortable li#id-2.ui-state-default.ui-sortable-handle"));
         parent::logout();
     }
-
 }

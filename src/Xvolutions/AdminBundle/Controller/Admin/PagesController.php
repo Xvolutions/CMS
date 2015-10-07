@@ -18,7 +18,6 @@ use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
  */
 class PagesController extends AdminController
 {
-
     /**
      * Controller responsible to edit a new section for and handling the form
      * submission and the database insertion
@@ -225,10 +224,10 @@ class PagesController extends AdminController
             $page = $em->getRepository('XvolutionsAdminBundle:Page')->find($id);
             if ($page != 'empty') {
                 $menu = $em->getRepository('XvolutionsAdminBundle:Menu')->findBy(array('page' => $page));
-                    if (isset($menu[0])) {
-                        $em->remove($menu[0]);
-                        $em->flush($menu[0]);
-                    }
+                if (isset($menu[0])) {
+                    $em->remove($menu[0]);
+                    $em->flush($menu[0]);
+                }
 
                 $em->remove($page);
                 $em->flush($page);
@@ -319,5 +318,4 @@ class PagesController extends AdminController
         $queryPage = $em->getRepository('XvolutionsAdminBundle:Page')->findBy(array(), array('id' => 'DESC'), $elementsPerPage, $startPoint);
         return $queryPage;
     }
-
 }
