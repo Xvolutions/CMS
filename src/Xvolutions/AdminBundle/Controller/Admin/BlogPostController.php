@@ -309,7 +309,7 @@ class BlogPostController extends AdminController
     private function postList($em, $current_page, $elementsPerPage)
     {
         $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
-        $queryPage = $em->getRepository('XvolutionsAdminBundle:BlogPost')->findBy(array(), array('id' => 'DESC'), $elementsPerPage, $startPoint);
+        $queryPage = $em->getRepository('XvolutionsAdminBundle:BlogPost')->findBy(array(), array('date' => 'DESC'), $elementsPerPage, $startPoint);
         return $queryPage;
     }
 
