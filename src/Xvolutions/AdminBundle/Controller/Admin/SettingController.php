@@ -13,9 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author pedroresende
  */
-class SettingController extends AdminController {
-
-    public function editSettingAction(Request $request, $id = 1) {
+class SettingController extends AdminController
+{
+    public function editSettingAction(Request $request, $id = 1)
+    {
         parent::verifyaccess();
 
         $status = null;
@@ -46,7 +47,7 @@ class SettingController extends AdminController {
         }
 
         return $this->render(
-                'XvolutionsAdminBundle:setting:setting.html.twig', 
+                'XvolutionsAdminBundle:setting:setting.html.twig',
                 array(
                     'status' => $status,
                     'error' => $error,
@@ -68,5 +69,4 @@ class SettingController extends AdminController {
 
         return new Response((string)$blog);
     }
-
 }

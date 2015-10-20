@@ -16,8 +16,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table
  * @ORM\Entity()
  */
-class Role implements RoleInterface {
-
+class Role implements RoleInterface
+{
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id()
@@ -40,7 +40,8 @@ class Role implements RoleInterface {
      */
     private $users;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->users = new ArrayCollection();
     }
 
@@ -60,7 +61,8 @@ class Role implements RoleInterface {
      * @param string $rolename
      * @return Role Name
      */
-    public function setRole( $role ) {
+    public function setRole($role)
+    {
         $this->role = $role;
 
         return $this;
@@ -69,7 +71,8 @@ class Role implements RoleInterface {
     /**
      * @see RoleInterface
      */
-    public function getRole() {
+    public function getRole()
+    {
         return $this->role;
     }
 
@@ -79,7 +82,8 @@ class Role implements RoleInterface {
      * @param string $name
      * @return Name
      */
-    public function setName( $name ) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -90,8 +94,8 @@ class Role implements RoleInterface {
      *
      * @return string 
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
-
 }

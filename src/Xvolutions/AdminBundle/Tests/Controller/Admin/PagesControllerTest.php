@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PagesControllerTest extends WebTestCase
 {
-
     private $client = null;
 
     public function setUp()
@@ -36,5 +35,4 @@ class PagesControllerTest extends WebTestCase
                 Response::HTTP_OK, $this->client->getResponse()->getStatusCode()
         );
     }
-
 }

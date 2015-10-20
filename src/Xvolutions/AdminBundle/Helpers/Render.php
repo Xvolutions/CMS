@@ -8,8 +8,8 @@ namespace Xvolutions\AdminBundle\Helpers;
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  * @date 27/06/2014
  */
-class Render {
-
+class Render
+{
     /*
      * The current page
      */
@@ -28,7 +28,8 @@ class Render {
     /*
      * Class constructor
      */
-    public function __construct($current_page, $total_pages, $list) {
+    public function __construct($current_page, $total_pages, $list)
+    {
         $this->current_page = $current_page;
         $this->total_pages = $total_pages;
         $this->list = $list;
@@ -37,7 +38,8 @@ class Render {
     /*
      * Function responsible to render the page numbers
      */
-    public function view() {
+    public function view()
+    {
         $pages = explode(' ', $this->list);
 
         if ($this->current_page < 1 || $this->current_page > $this->total_pages) {
@@ -57,7 +59,8 @@ class Render {
     /*
      * Function responsible to render the beginning of the list, in this case <<
      */
-    private function beginning() {
+    private function beginning()
+    {
         if ($this->current_page - 1 >= 1) {
             return '<li><a href="' . ($this->current_page - 1) . '">«</a></li>';
         } else {
@@ -68,7 +71,8 @@ class Render {
     /*
      * Function responsible to render the middle of the list aka numbers
      */
-    private function middle($pages) {
+    private function middle($pages)
+    {
         $output = null;
         foreach ($pages as $page) {
             if ($page == $this->current_page) {
@@ -87,12 +91,12 @@ class Render {
     /*
      * Function responsible to render the ending of the list, in this case >>
      */
-    private function ending() {
+    private function ending()
+    {
         if ($this->current_page + 1 <= $this->total_pages) {
             return '<li><a href="' . ($this->current_page + 1) . '">»</a></li>';
         } else {
             return '<li class="disabled"><a href="#">»</a></li>';
         }
     }
-
 }

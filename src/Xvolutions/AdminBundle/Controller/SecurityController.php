@@ -14,13 +14,12 @@ use Xvolutions\AdminBundle\Entity\User;
  */
 class SecurityController extends Controller
 {
-
     public function loginAction(Request $request)
     {
         $helper = $this->get('security.authentication_utils');
 
         $response = $this->render(
-            'XvolutionsAdminBundle::login.html.twig', 
+            'XvolutionsAdminBundle::login.html.twig',
             array(
                 'last_username' => $helper->getLastUsername(),
                 'error' => $helper->getLastAuthenticationError(),
@@ -76,7 +75,8 @@ class SecurityController extends Controller
         }
     }
 
-    private function generatePasswordAndMail( User $user, $email ) {
+    private function generatePasswordAndMail(User $user, $email)
+    {
         $factory = $this->get('security.encoder_factory');
         $encoder = $factory->getEncoder($user);
         $salt = md5(time());
@@ -103,7 +103,4 @@ class SecurityController extends Controller
         ;
         $this->get('mailer')->send($message);
     }
-
-    
-
 }

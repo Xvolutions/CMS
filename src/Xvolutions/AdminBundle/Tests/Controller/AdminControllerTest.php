@@ -10,15 +10,17 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class AdminControllerTest extends WebTestCase {
-
+class AdminControllerTest extends WebTestCase
+{
     private $client = null;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->client = static::createClient();
     }
 
-    public function testFailBackoffice() {
+    public function testFailBackoffice()
+    {
         $this->client->request('GET', '/admin/backoffice', array(), array(), array(
         ));
 
@@ -27,7 +29,8 @@ class AdminControllerTest extends WebTestCase {
         );
     }
 
-    public function testBackoffice() {
+    public function testBackoffice()
+    {
         $crawler = $this->client->request('GET', '/admin/backoffice', array(), array(), array(
             'PHP_AUTH_USER' => 'admin',
             'PHP_AUTH_PW' => 'adminpass',
@@ -46,7 +49,8 @@ class AdminControllerTest extends WebTestCase {
         );
     }
 
-    public function testSetup() {
+    public function testSetup()
+    {
         $crawler = $this->client->request('GET', '/admin/backoffice', array(), array(), array(
             'PHP_AUTH_USER' => 'admin',
             'PHP_AUTH_PW' => 'adminpass',
@@ -67,7 +71,8 @@ class AdminControllerTest extends WebTestCase {
         $this->assertGreaterThan(0, $crawler->filter('html:contains("Setup")')->count());
     }
 
-    public function testPhpinfo() {
+    public function testPhpinfo()
+    {
         $crawler = $this->client->request('GET', '/admin/backoffice', array(), array(), array(
             'PHP_AUTH_USER' => 'admin',
             'PHP_AUTH_PW' => 'adminpass',
@@ -87,5 +92,4 @@ class AdminControllerTest extends WebTestCase {
 
         $this->assertRegExp('/PHP Version/', $this->client->getResponse()->getContent());
     }
-
 }

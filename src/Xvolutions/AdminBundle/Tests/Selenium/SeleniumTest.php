@@ -11,7 +11,6 @@ use PHPUnit_Extensions_SeleniumTestCase;
  */
 class SeleniumTest extends PHPUnit_Extensions_SeleniumTestCase
 {
-
     const username = 'admin';
     const password = 'adminpass';
 
@@ -37,5 +36,4 @@ class SeleniumTest extends PHPUnit_Extensions_SeleniumTestCase
         $this->waitForPageToLoad("30000");
         $this->assertEquals("Login | Consola de Gestão", $this->getTitle());
     }
-
 }

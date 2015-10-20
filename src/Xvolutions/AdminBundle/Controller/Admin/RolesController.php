@@ -16,7 +16,6 @@ use Symfony\Component\Debug\ErrorHandler;
  */
 class RolesController extends AdminController
 {
-
     /**
      * Controller responsible to add a new role for and handling the form
      * submission and the database insertion
@@ -37,8 +36,8 @@ class RolesController extends AdminController
 
         $form->handleRequest($request);
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($role);
@@ -76,8 +75,8 @@ class RolesController extends AdminController
                 ->add('Guardar', 'submit')
         ;
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
 
         $form->handleRequest($request);
 
@@ -104,12 +103,12 @@ class RolesController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the roles
      */
-    public function rolesAction($option = NULL, $id = NULL)
+    public function rolesAction($option = null, $id = null)
     {
         parent::verifyaccess();
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
         switch ($option) {
             case 'remove': {
                     $this->RemoveRole($id, $status, $error);
@@ -152,18 +151,16 @@ class RolesController extends AdminController
             $role = $em->getRepository('XvolutionsAdminBundle:Role')->find($id);
             if ($role != 'empty') {
                 $usersList = $em->getRepository('XvolutionsAdminBundle:User')->findAll();
-                $found = FALSE;
-                foreach ($usersList as $user)
-                {
+                $found = false;
+                foreach ($usersList as $user) {
                     $userRole = $user->getRoles();
-                    foreach ($userRole as $urole)
-                    {
+                    foreach ($userRole as $urole) {
                         if ($urole->getId() == $role->getId()) {
-                            $found = TRUE;
+                            $found = true;
                         }
                     }
                 }
-                if ($found == FALSE) {
+                if ($found == false) {
                     $em->remove($role);
                     $em->flush($role);
                     $status = 'Grupo removido com sucesso';
@@ -189,23 +186,20 @@ class RolesController extends AdminController
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
-            foreach ($ids as $id)
-            {
+            foreach ($ids as $id) {
                 $role = $em->getRepository('XvolutionsAdminBundle:Role')->find($id);
                 if ($role != 'empty') {
                     $usersList = $em->getRepository('XvolutionsAdminBundle:User')->findAll();
-                    $found = FALSE;
-                    foreach ($usersList as $user)
-                    {
+                    $found = false;
+                    foreach ($usersList as $user) {
                         $userRole = $user->getRoles();
-                        foreach ($userRole as $urole)
-                        {
+                        foreach ($userRole as $urole) {
                             if ($urole->getId() == $role->getId()) {
-                                $found = TRUE;
+                                $found = true;
                             }
                         }
                     }
-                    if ($found == FALSE) {
+                    if ($found == false) {
                         $em->remove($role);
                         $em->flush($role);
                         $status = 'Grupo removido com sucesso';
@@ -220,5 +214,4 @@ class RolesController extends AdminController
             $error = "Erro $ex ao remover o(s) grupo(s)";
         }
     }
-
 }

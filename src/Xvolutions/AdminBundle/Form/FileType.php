@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class FileType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -23,7 +23,7 @@ class FileType extends AbstractType
                     )
             )
             ->add('fileName',
-                    'file', 
+                    'file',
                     array(
                         'label' => 'Ficheiro',
                         'required' => true

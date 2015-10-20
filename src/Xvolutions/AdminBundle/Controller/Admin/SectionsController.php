@@ -16,7 +16,6 @@ use Symfony\Component\Debug\ErrorHandler;
  */
 class SectionsController extends AdminController
 {
-
     /**
      * Controller responsible to add a new section for and handling the form
      * submission and the database insertion
@@ -37,8 +36,8 @@ class SectionsController extends AdminController
 
         $form->handleRequest($request);
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
         if ($form->isValid()) {
             $formValues = $request->request->get('xvolutions_adminbundle_section');
             $SectionName = $formValues["section"];
@@ -85,8 +84,8 @@ class SectionsController extends AdminController
                 ->add('Guardar', 'submit')
         ;
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
 
         $form->handleRequest($request);
 
@@ -126,12 +125,12 @@ class SectionsController extends AdminController
      * @param type $id The id, or id's, of the section(s) to be removed
      * @return type call the controller to handle
      */
-    public function sectionsAction($option = NULL, $id = NULL)
+    public function sectionsAction($option = null, $id = null)
     {
         parent::verifyaccess();
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
         switch ($option) {
             case 'remove': {
                     $this->RemoveSection($id, $status, $error);
@@ -170,7 +169,6 @@ class SectionsController extends AdminController
     {
         ErrorHandler::register();
         try {
-
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery(
                             'SELECT p.id
@@ -179,7 +177,7 @@ class SectionsController extends AdminController
                     )->setParameter('id', $id);
             $pagesCount = $query->getResult();
 
-            if ($pagesCount != NULL) {
+            if ($pagesCount != null) {
                 $error = 'Não é possível remover uma secção associada a páginas';
             } else {
                 $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
@@ -203,9 +201,7 @@ class SectionsController extends AdminController
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
-            foreach ($ids as $id)
-            {
-
+            foreach ($ids as $id) {
                 $query = $em->createQuery(
                                 'SELECT p.id
                     FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
@@ -213,7 +209,7 @@ class SectionsController extends AdminController
                         )->setParameter('id', $id);
                 $pagesCount = $query->getResult();
 
-                if ($pagesCount != NULL) {
+                if ($pagesCount != null) {
                     $error = 'Não é possível remover uma secção associada a páginas';
                     break;
                 } else {
@@ -227,5 +223,4 @@ class SectionsController extends AdminController
             $error = "Erro $ex ao remover as secção(ões)";
         }
     }
-
 }

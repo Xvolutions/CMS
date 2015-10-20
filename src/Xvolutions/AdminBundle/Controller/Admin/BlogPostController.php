@@ -18,7 +18,6 @@ use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
  */
 class BlogPostController extends AdminController
 {
-
     /**
      * Controller responsible to add a new blog post for and handling the form
      * submission and the database insertion
@@ -114,7 +113,7 @@ class BlogPostController extends AdminController
                     )
                 )
                 ->add(
-                    'date', 
+                    'date',
                     null,
                     array(
                         'label' => 'Data',
@@ -167,7 +166,7 @@ class BlogPostController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the blogPosts
      */
-    public function blogPostsAction(Request $request, $option = NULL, $id = NULL, $current_page = 1)
+    public function blogPostsAction(Request $request, $option = null, $id = null, $current_page = 1)
     {
         parent::verifyaccess();
 
@@ -281,8 +280,7 @@ class BlogPostController extends AdminController
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
-            foreach ($ids as $id)
-            {
+            foreach ($ids as $id) {
                 $blogPost = $em->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
                 if ($blogPost != 'empty') {
                     $em->remove($blogPost);

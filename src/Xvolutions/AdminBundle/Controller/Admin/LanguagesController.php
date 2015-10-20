@@ -20,8 +20,8 @@ use Symfony\Component\Debug\ErrorHandler;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class LanguagesController extends AdminController {
-
+class LanguagesController extends AdminController
+{
     /**
      * Controller responsible to add a new language for and handling the form
      * submission and the database insertion
@@ -29,7 +29,8 @@ class LanguagesController extends AdminController {
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the templates for adding a new language
      */
-    public function addlanguagesAction(Request $request) {
+    public function addlanguagesAction(Request $request)
+    {
         parent::verifyaccess();
 
         $language = new Language();
@@ -41,8 +42,8 @@ class LanguagesController extends AdminController {
 
         $form->handleRequest($request);
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
         if ($form->isValid()) {
             $formValues = $request->request->get('xvolutions_adminbundle_language');
             $languageName = $formValues["language"];
@@ -78,7 +79,8 @@ class LanguagesController extends AdminController {
      * @param type $id the id of an existing language
      * @return type the template for editing a language
      */
-    public function editlanguagesAction(Request $request, $id) {
+    public function editlanguagesAction(Request $request, $id)
+    {
         parent::verifyaccess();
 
         $languageType = new LanguageType();
@@ -90,8 +92,8 @@ class LanguagesController extends AdminController {
                 ->add('Guardar', 'submit')
         ;
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
 
         $form->handleRequest($request);
 
@@ -134,11 +136,12 @@ class LanguagesController extends AdminController {
      * @param type $id The id, or id's, of the language(s) to be removed
      * @return type call the controller to handle
      */
-    public function languagesAction($option = NULL, $id = NULL) {
+    public function languagesAction($option = null, $id = null)
+    {
         parent::verifyaccess();
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
         switch ($option) {
             case 'remove': {
                     $this->RemoveLanguage($id, $status, $error);
@@ -177,7 +180,8 @@ class LanguagesController extends AdminController {
      * @param type $id the id of the language to be removed
      * @return string with the information message
      */
-    private function removeLanguage($id, &$status, &$error) {
+    private function removeLanguage($id, &$status, &$error)
+    {
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
@@ -200,7 +204,8 @@ class LanguagesController extends AdminController {
      * @param type $ids array containing the id's of the languages to be removed
      * @return string with the message
      */
-    private function removeSelectedLanguages($ids, &$status, &$error) {
+    private function removeSelectedLanguages($ids, &$status, &$error)
+    {
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
@@ -218,5 +223,4 @@ class LanguagesController extends AdminController {
             $error = "Erro $ex ao remover o(s) ídioma(s)";
         }
     }
-
 }

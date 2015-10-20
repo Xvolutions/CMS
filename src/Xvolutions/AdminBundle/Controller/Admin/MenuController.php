@@ -14,7 +14,6 @@ use Xvolutions\AdminBundle\Entity\Menu;
  */
 class MenuController extends AdminController
 {
-
     /**
      * 
      * @param type $status
@@ -146,5 +145,4 @@ class MenuController extends AdminController
         $em->persist($menu);
         $em->flush();
     }
-
 }

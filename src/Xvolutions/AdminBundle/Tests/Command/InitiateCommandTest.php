@@ -12,29 +12,30 @@ use Xvolutions\AdminBundle\Command\InitiateCommand;
  *
  * @author Pedro Resende <pedro.resende@ez.no>
  */
-class InitiateCommandTest extends WebTestCase {
-
-    public function setUp() {
+class InitiateCommandTest extends WebTestCase
+{
+    public function setUp()
+    {
         static::$kernel = static::createKernel();
         static::$kernel->boot();
     }
 
-    public function testActivation() {
+    public function testActivation()
+    {
         $command = new InitiateCommand();
 
-        $application = new Application( static::$kernel );
-        $command->setApplication( $application );
-        $commandTester = new CommandTester( $command );
-        $commandTester->execute( 
-                array( 
-                    'command' => $command->getName(), 
-                    'username' => 'admin', 
-                    'name' => 'Administrator', 
-                    'password' => 'adminpass', 
-                    'email' => 'pedroresende@mail.resende.biz' 
-                    ) 
+        $application = new Application(static::$kernel);
+        $command->setApplication($application);
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(
+                array(
+                    'command' => $command->getName(),
+                    'username' => 'admin',
+                    'name' => 'Administrator',
+                    'password' => 'adminpass',
+                    'email' => 'pedroresende@mail.resende.biz'
+                    )
                 );
-        $this->assertRegExp( '/Grupos Adicionados\\nUtilizadores Adicionados\\nSecções Adicionadas\\nÍdiomas Adicionados\\nStatus Adicionadas\\n*/', $commandTester->getDisplay(), 'test passed' );
+        $this->assertRegExp('/Grupos Adicionados\\nUtilizadores Adicionados\\nSecções Adicionadas\\nÍdiomas Adicionados\\nStatus Adicionadas\\n*/', $commandTester->getDisplay(), 'test passed');
     }
-
 }
