@@ -235,7 +235,7 @@ class BlogPostController extends AdminController
                     FROM XvolutionsAdminBundle:BlogPost b';
         $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
 
-        $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
+        $blogPostList = $this->postList($em, $current_page, $elementsPerPage);
 
         return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(
                     'title' => 'Artigos',
@@ -298,6 +298,21 @@ class BlogPostController extends AdminController
         } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover o(s) artigo(s)";
         }
+    }
+
+    /**
+     * Function responsible to return the PostList
+     *
+     * @param type $em Doctrine
+     * @param type $current_page The current page
+     * @param type $elementsPerPage The number of elements per page
+     * @return type PostList
+     */
+    private function postList($em, $current_page, $elementsPerPage)
+    {
+        $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
+        $queryPage = $em->getRepository('XvolutionsAdminBundle:BlogPost')->findBy(array(), array('id' => 'DESC'), $elementsPerPage, $startPoint);
+        return $queryPage;
     }
 
 }
