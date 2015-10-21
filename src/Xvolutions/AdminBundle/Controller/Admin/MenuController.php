@@ -2,7 +2,8 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Menu;
@@ -12,8 +13,10 @@ use Xvolutions\AdminBundle\Entity\Menu;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class MenuController extends AdminController
+class MenuController extends Controller
 {
+    use General;
+
     /**
      * 
      * @param type $status
@@ -22,7 +25,7 @@ class MenuController extends AdminController
      */
     public function menuAction($status = null, $error = null)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         if ($error != null) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
@@ -52,7 +55,7 @@ class MenuController extends AdminController
      */
     public function updateAction(Request $request)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $menuOrder = $request->request->get('id');
         $em = $this->getDoctrine()->getManager();

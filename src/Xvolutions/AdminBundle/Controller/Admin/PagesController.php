@@ -2,7 +2,8 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Page;
@@ -16,8 +17,10 @@ use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class PagesController extends AdminController
+class PagesController extends Controller
 {
+    use General;
+
     /**
      * Controller responsible to edit a new section for and handling the form
      * submission and the database insertion
@@ -28,7 +31,7 @@ class PagesController extends AdminController
      */
     public function editpagesAction(Request $request, $id)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $pageType = new PageType();
 
@@ -96,7 +99,7 @@ class PagesController extends AdminController
      */
     public function pagesAction(Request $request, $option = null, $id = null, $current_page = 1, $status = null, $error = null)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         switch ($option) {
             case 'remove': {
@@ -172,7 +175,7 @@ class PagesController extends AdminController
      */
     public function addpagesAction(Request $request)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $page = new Page();
         $pageType = new PageType();

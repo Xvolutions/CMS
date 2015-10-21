@@ -2,7 +2,8 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\User;
@@ -15,8 +16,10 @@ use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class UsersController extends AdminController
+class UsersController extends Controller
 {
+    use General;
+
     /**
      * Controller responsible to add a new user for and handling the form
      * submission and the database insertion
@@ -26,7 +29,7 @@ class UsersController extends AdminController
      */
     public function addusersAction(Request $request)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $user = new User();
         $userType = new UserType();
@@ -76,7 +79,7 @@ class UsersController extends AdminController
      */
     public function editusersAction(Request $request, $id)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $userType = new UserType();
 
@@ -144,7 +147,7 @@ class UsersController extends AdminController
      */
     public function usersAction($option = null, $id = null, $current_page = 1)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $status = null;
         $error = null;

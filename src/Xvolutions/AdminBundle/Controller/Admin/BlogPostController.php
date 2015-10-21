@@ -2,7 +2,8 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\BlogPost;
@@ -16,8 +17,10 @@ use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class BlogPostController extends AdminController
+class BlogPostController extends Controller
 {
+    use General;
+
     /**
      * Controller responsible to add a new blog post for and handling the form
      * submission and the database insertion
@@ -27,7 +30,7 @@ class BlogPostController extends AdminController
      */
     public function addBlogPostsAction(Request $request)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $blogPost = new BlogPost();
         $blogPostType = new BlogPostType();
@@ -44,7 +47,7 @@ class BlogPostController extends AdminController
                 ->add('Criar', 'submit')
         ;
 
-        $form->get('author')->setData(parent::getUsername());
+        $form->get('author')->setData($this->getUsername());
 
         $form->handleRequest($request);
 
@@ -88,7 +91,7 @@ class BlogPostController extends AdminController
      */
     public function editBlogPostsAction(Request $request, $id)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $blogPostType = new BlogPostType();
 
@@ -100,7 +103,7 @@ class BlogPostController extends AdminController
                 ->add(
                     'author', null, array(
                     'label' => 'Autor',
-                    'data' => parent::getUsername()
+                    'data' => $this->getUsername()
                     )
                 )
                 ->add(
@@ -168,7 +171,7 @@ class BlogPostController extends AdminController
      */
     public function blogPostsAction(Request $request, $option = null, $id = null, $current_page = 1)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $status = null;
         $error = null;

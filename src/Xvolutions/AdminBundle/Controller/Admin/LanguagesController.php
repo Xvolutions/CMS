@@ -8,7 +8,8 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Language;
@@ -20,7 +21,7 @@ use Symfony\Component\Debug\ErrorHandler;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class LanguagesController extends AdminController
+class LanguagesController extends Controller
 {
     /**
      * Controller responsible to add a new language for and handling the form
