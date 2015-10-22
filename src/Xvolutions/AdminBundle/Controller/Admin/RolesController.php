@@ -2,7 +2,8 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Role;
@@ -14,8 +15,10 @@ use Symfony\Component\Debug\ErrorHandler;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class RolesController extends AdminController
+class RolesController extends Controller
 {
+    use General;
+
     /**
      * Controller responsible to add a new role for and handling the form
      * submission and the database insertion
@@ -25,7 +28,7 @@ class RolesController extends AdminController
      */
     public function addrolesAction(Request $request)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $role = new Role();
         $roleType = new RoleType();
@@ -65,7 +68,7 @@ class RolesController extends AdminController
      */
     public function editrolesAction(Request $request, $id)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $roleType = new RoleType();
 
@@ -105,7 +108,7 @@ class RolesController extends AdminController
      */
     public function rolesAction($option = null, $id = null)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $status = null;
         $error = null;

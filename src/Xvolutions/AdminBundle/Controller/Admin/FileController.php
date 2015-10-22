@@ -2,7 +2,8 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Debug\ErrorHandler;
@@ -15,8 +16,10 @@ use Xvolutions\AdminBundle\Entity\File;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class FileController extends AdminController
+class FileController extends Controller
 {
+    use General;
+
     /**
      * Controller responsible to return the list of images uploaded to the database
      * to be used by TinyMCE
@@ -25,7 +28,7 @@ class FileController extends AdminController
      */
     public function imageListAction()
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $imageTypes = array('gif', 'jpeg', 'png', 'tiff', 'bmp');
         $files = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:File')->findAll();
@@ -58,7 +61,7 @@ class FileController extends AdminController
      */
     public function listAction($option = null, $id = null, $current_page = 1, $status = null, $error = null)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $this->options($option, $id, $status, $error);
 
@@ -95,7 +98,7 @@ class FileController extends AdminController
      */
     public function newFileAction(Request $request, $current_page = 1)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $upload = new Upload();
         $folder = $this->container->getParameter('uploaded_files');

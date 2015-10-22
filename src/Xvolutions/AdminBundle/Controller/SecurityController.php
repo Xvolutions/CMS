@@ -14,8 +14,13 @@ use Xvolutions\AdminBundle\Entity\User;
  */
 class SecurityController extends Controller
 {
+
     public function loginAction(Request $request)
     {
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
+        {
+            return $this->redirectToRoute('backoffice');
+        }
         $helper = $this->get('security.authentication_utils');
 
         $response = $this->render(

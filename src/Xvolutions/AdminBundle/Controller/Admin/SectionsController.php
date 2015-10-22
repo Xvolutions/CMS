@@ -2,7 +2,8 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Section;
@@ -14,8 +15,10 @@ use Symfony\Component\Debug\ErrorHandler;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class SectionsController extends AdminController
+class SectionsController extends Controller
 {
+    use General;
+
     /**
      * Controller responsible to add a new section for and handling the form
      * submission and the database insertion
@@ -25,7 +28,7 @@ class SectionsController extends AdminController
      */
     public function addsectionAction(Request $request)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $section = new Section();
         $sectionType = new SectionType();
@@ -73,7 +76,7 @@ class SectionsController extends AdminController
      */
     public function editsectionAction(Request $request, $id)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $sectionType = new SectionType();
 
@@ -127,7 +130,7 @@ class SectionsController extends AdminController
      */
     public function sectionsAction($option = null, $id = null)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $status = null;
         $error = null;
