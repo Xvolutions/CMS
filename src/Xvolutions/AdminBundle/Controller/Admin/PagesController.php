@@ -152,12 +152,8 @@ class PagesController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
+        $pagination = $this->showPagination($em, 'Page', $current_page);
         $elementsPerPage = $this->container->getParameter('elements_per_page');
-        $boundaries = $this->container->getParameter('boundaries');
-        $around = $this->container->getParameter('around');
-        $select = 'SELECT COUNT(p.id) FROM XvolutionsAdminBundle:Page p';
-        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-
         $pageList = $this->elementList($em, $current_page, $elementsPerPage, 'Page');
 
         return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(

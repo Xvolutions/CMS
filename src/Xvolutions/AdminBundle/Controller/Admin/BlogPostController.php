@@ -230,13 +230,8 @@ class BlogPostController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
+        $pagination = $this->showPagination($em, 'BlogPost', $current_page);
         $elementsPerPage = $this->container->getParameter('elements_per_page');
-        $boundaries = $this->container->getParameter('boundaries');
-        $around = $this->container->getParameter('around');
-        $select = 'SELECT COUNT(b.id)
-                    FROM XvolutionsAdminBundle:BlogPost b';
-        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-
         $blogPostList = $this->elementList($em, $current_page, $elementsPerPage, 'BlogPost');
 
         return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(

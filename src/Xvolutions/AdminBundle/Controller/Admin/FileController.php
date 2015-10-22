@@ -72,12 +72,10 @@ class FileController extends Controller
             return new Response($status, Response::HTTP_OK);
         }
 
-        $pagination = $this->showPagination($current_page);
-        $elementsPerPage = $this->container->getParameter('elements_per_page');
         $em = $this->getDoctrine()->getManager();
-
+        $pagination = $this->showPagination($em, 'File', $current_page);
+        $elementsPerPage = $this->container->getParameter('elements_per_page');
         $fileList = $this->elementList($em, $current_page, $elementsPerPage, 'File', array('name' => 'ASC'));
-
         $files_location = $this->container->getParameter('files_location');
 
         return $this->render('XvolutionsAdminBundle:files:files.html.twig', array(
@@ -160,23 +158,6 @@ class FileController extends Controller
     }
 
     /**
-     * Function responsible for rendering the pagination
-     *
-     * @param integer $current_page The current page
-     * @return \Xvolutions\AdminBundle\Helpers\PaginatorHelper
-     */
-    private function showPagination($current_page = 1)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $elementsPerPage = $this->container->getParameter('elements_per_page');
-        $boundaries = $this->container->getParameter('boundaries');
-        $around = $this->container->getParameter('around');
-        $select = 'SELECT COUNT(f.id)
-                    FROM XvolutionsAdminBundle:File f';
-        return new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-    }
-
-    /**
      * This function is responsible for deleting a file
      *
      * @param integer $id the id of the file to be removed
@@ -186,9 +167,9 @@ class FileController extends Controller
     private function removeFile($id, &$status, &$error)
     {
         ErrorHandler::register();
+        $em = $this->getDoctrine()->getManager();
+        $file = $em->getRepository('XvolutionsAdminBundle:File')->find($id);
         try {
-            $em = $this->getDoctrine()->getManager();
-            $file = $em->getRepository('XvolutionsAdminBundle:File')->find($id);
             if ($file != 'empty') {
                 $folder = $this->container->getParameter('uploaded_files');
                 if (unlink($folder . '/' . $file->getFileName())) {
@@ -213,7 +194,7 @@ class FileController extends Controller
     /**
      * This function is responsible to remove a list of files
      *
-     * @param array $id the array of id of the files to be removed
+     * @param array $ids the array of id of the files to be removed
      * @param string $status with the information message
      * @param string $error with the information message
      */

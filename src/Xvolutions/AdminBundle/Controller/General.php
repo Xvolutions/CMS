@@ -3,6 +3,7 @@
 namespace Xvolutions\AdminBundle\Controller;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 
 trait General
 {
@@ -72,6 +73,24 @@ trait General
         $queryPage = $em->getRepository('XvolutionsAdminBundle:'.$table)->findBy(array(), $orderBy, $elementsPerPage, $startPoint);
 
         return $queryPage;
+    }
+
+    /**
+     * Function responsible for rendering the pagination
+     *
+     * @param type $em Doctrine
+     * @param string $table The Table of the select
+     * @param integer $current_page The current page
+     * @return \Xvolutions\AdminBundle\Helpers\PaginatorHelper
+     */
+    public function showPagination($em, $table, $current_page = 1)
+    {
+        $elementsPerPage = $this->container->getParameter('elements_per_page');
+        $boundaries = $this->container->getParameter('boundaries');
+        $around = $this->container->getParameter('around');
+        $select = 'SELECT COUNT(f.id)
+                    FROM XvolutionsAdminBundle:'. $table .' f';
+        return new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
     }
 
 }

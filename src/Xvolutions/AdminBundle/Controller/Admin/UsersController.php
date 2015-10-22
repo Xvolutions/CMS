@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\User;
 use Xvolutions\AdminBundle\Form\UserType;
 use Symfony\Component\Debug\ErrorHandler;
-use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 
 /**
  * Description of UsersController
@@ -172,13 +171,8 @@ class UsersController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
+        $pagination = $this->showPagination($em, 'Page', $current_page);
         $elementsPerPage = $this->container->getParameter('elements_per_page');
-        $boundaries = $this->container->getParameter('boundaries');
-        $around = $this->container->getParameter('around');
-        $select = 'SELECT COUNT(u.id)
-                    FROM XvolutionsAdminBundle:User u';
-        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-
         $userList = $this->elementList($em, $current_page, $elementsPerPage, 'User', array('id' => 'DESC'));
 
         return $this->render('XvolutionsAdminBundle:users:users.html.twig', array(
