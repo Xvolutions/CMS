@@ -179,7 +179,7 @@ class UsersController extends Controller
                     FROM XvolutionsAdminBundle:User u';
         $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
 
-        $userList = $this->elementList($em, $current_page, $elementsPerPage, 'User');
+        $userList = $this->elementList($em, $current_page, $elementsPerPage, 'User', array('id' => 'DESC'));
 
         return $this->render('XvolutionsAdminBundle:users:users.html.twig', array(
                     'title' => 'Utilizadores',

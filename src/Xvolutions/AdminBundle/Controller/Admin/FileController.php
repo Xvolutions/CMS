@@ -75,7 +75,8 @@ class FileController extends Controller
         $pagination = $this->showPagination($current_page);
         $elementsPerPage = $this->container->getParameter('elements_per_page');
         $em = $this->getDoctrine()->getManager();
-        $fileList = $this->pageList($em, $current_page, $elementsPerPage);
+
+        $fileList = $this->elementList($em, $current_page, $elementsPerPage, 'File', array('name' => 'ASC'));
 
         $files_location = $this->container->getParameter('files_location');
 
@@ -241,25 +242,4 @@ class FileController extends Controller
         }
     }
 
-    /**
-     * Function responsible to return the PageList
-     *
-     * @param type $em Doctrine
-     * @param type $current_page The current page
-     * @param type $elementsPerPage The number of elements per page
-     * @return type Pagelist
-     */
-    private function pageList($em, $current_page, $elementsPerPage)
-    {
-        $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
-        $queryPage = $em->createQuery(
-                        'SELECT f.id, f.name, f.date, f.size, f.type, f.fileName
-            FROM XvolutionsAdminBundle:File f
-            ORDER BY f.name ASC'
-                )
-                ->setFirstResult($startPoint)
-                ->setMaxResults($elementsPerPage);
-
-        return $queryPage->getResult();
-    }
 }
