@@ -5,14 +5,16 @@ namespace Xvolutions\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Response;
+use Xvolutions\AdminBundle\Controller\AdminControllerInterface;
 
 /**
  * Description of SecurityController
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class AdminController extends Controller
+class AdminController extends Controller implements AdminControllerInterface
 {
+
     use General;
 
     /**
@@ -23,9 +25,8 @@ class AdminController extends Controller
     public function backofficeAction()
     {
         $this->verifyaccess();
-
         return $this->render(
-            'XvolutionsAdminBundle::main.html.twig');
+                        'XvolutionsAdminBundle::main.html.twig');
     }
 
     /**
@@ -49,10 +50,9 @@ class AdminController extends Controller
         $this->verifyaccess();
         $username = $this->getUsername();
         return $this->render(
-            'XvolutionsAdminBundle:template:username.html.twig',
-            array(
-                'username' => $username
-            )
+                        'XvolutionsAdminBundle:template:username.html.twig', array(
+                    'username' => $username
+                        )
         );
     }
 
@@ -66,10 +66,9 @@ class AdminController extends Controller
         $this->verifyaccess();
         $gravatar = $this->getGravatar();
         return $this->render(
-            'XvolutionsAdminBundle:template:gravatar.html.twig',
-            array(
-                'gravatar' => $gravatar
-            )
+                        'XvolutionsAdminBundle:template:gravatar.html.twig', array(
+                    'gravatar' => $gravatar
+                        )
         );
     }
 
