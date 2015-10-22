@@ -136,7 +136,7 @@ class SectionsController extends Controller
         $error = null;
         switch ($option) {
             case 'remove': {
-                    $this->RemoveSection($id, $status, $error);
+                    $this->RemoveSelectedSections([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -160,37 +160,6 @@ class SectionsController extends Controller
                     'status' => $status,
                     'error' => $error
         ));
-    }
-
-    /**
-     * This is function is repsonsible to remove a section
-     *
-     * @param type $id the id of the section to be removed
-     * @return string with the information message
-     */
-    private function removeSection($id, &$status, &$error)
-    {
-        ErrorHandler::register();
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery(
-                            'SELECT p.id
-                FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
-                WHERE p.id_section = :id'
-                    )->setParameter('id', $id);
-            $pagesCount = $query->getResult();
-
-            if ($pagesCount != null) {
-                $error = 'Não é possível remover uma secção associada a páginas';
-            } else {
-                $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
-                $em->remove($section);
-                $em->flush($section);
-                $status = 'Secção removida com sucesso';
-            }
-        } catch (\ErrorException $ex) {
-            $error = "Erro $ex ao remover a secção";
-        }
     }
 
     /**

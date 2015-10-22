@@ -115,14 +115,7 @@ class UsersController extends Controller
 
             return $this->forward('XvolutionsAdminBundle:Admin/Users:users', array('status' => $status, 'error' => $error));
         }
-        $em = $this->getDoctrine()->getManager();
-        $current_page= 1;
-        $elementsPerPage = $this->container->getParameter('elements_per_page');
-        $boundaries = $this->container->getParameter('boundaries');
-        $around = $this->container->getParameter('around');
-        $select = 'SELECT COUNT(u.id)
-                    FROM XvolutionsAdminBundle:User u';
-        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
+
         $rolesList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
 
         return $this->render('XvolutionsAdminBundle:users:add_users.hml.twig', array(
@@ -130,8 +123,7 @@ class UsersController extends Controller
                     'title' => 'Editar um Utilizador',
                     'status' => $status,
                     'error' => $error,
-                    'roleslist' => $rolesList,
-                    'pagination' => $pagination
+                    'roleslist' => $rolesList
         ));
     }
 
@@ -153,7 +145,7 @@ class UsersController extends Controller
 
         switch ($option) {
             case 'remove': {
-                    $this->RemoveUser($id, $status, $error);
+                    $this->RemoveSelectedUsers([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -182,26 +174,6 @@ class UsersController extends Controller
                     'error' => $error,
                     'pagination' => $pagination
         ));
-    }
-
-    /**
-     * This is function is repsonsible to remove a user
-     *
-     * @param type $id the id of the user to be removed
-     * @return string with the information message
-     */
-    private function removeUser($id, &$status, &$error)
-    {
-        ErrorHandler::register();
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository('XvolutionsAdminBundle:User')->find($id);
-            $em->remove($user);
-            $em->flush($user);
-            $status = 'Utilizador removido com sucesso';
-        } catch (\ErrorException $ex) {
-            $error = "Erro $ex ao remover um utilizador";
-        }
     }
 
     /**

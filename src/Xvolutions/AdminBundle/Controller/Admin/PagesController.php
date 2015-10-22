@@ -103,7 +103,7 @@ class PagesController extends Controller
 
         switch ($option) {
             case 'remove': {
-                    $this->removePage($id, $status, $error);
+                    $this->removeSelectedPages([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -208,36 +208,6 @@ class PagesController extends Controller
                         'status' => $status,
                         'error' => $error
             ));
-        }
-    }
-
-    /**
-     * This is function is responsible to remove a page
-     *
-     * @param integer $id the id of the page to be removed
-     * @return string with the information message
-     */
-    private function removePage($id, &$status, &$error)
-    {
-        ErrorHandler::register();
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $page = $em->getRepository('XvolutionsAdminBundle:Page')->find($id);
-            if ($page != 'empty') {
-                $menu = $em->getRepository('XvolutionsAdminBundle:Menu')->findBy(array('page' => $page));
-                if (isset($menu[0])) {
-                    $em->remove($menu[0]);
-                    $em->flush($menu[0]);
-                }
-
-                $em->remove($page);
-                $em->flush($page);
-                $status = 'Página removida com sucesso';
-            } else {
-                $error = "Erro ao remover a página";
-            }
-        } catch (\ErrorException $ex) {
-            $error = "Erro $ex ao remover a página";
         }
     }
 

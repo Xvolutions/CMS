@@ -114,7 +114,7 @@ class RolesController extends Controller
         $error = null;
         switch ($option) {
             case 'remove': {
-                    $this->RemoveRole($id, $status, $error);
+                    $this->RemoveSelectedRoles([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -138,44 +138,6 @@ class RolesController extends Controller
                     'status' => $status,
                     'error' => $error
                 ));
-    }
-
-    /**
-     * This is function is repsonsible to remove a group
-     *
-     * @param type $id the id of the group to be removed
-     * @return string with the information message
-     */
-    private function removeRole($id, &$status, &$error)
-    {
-        ErrorHandler::register();
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $role = $em->getRepository('XvolutionsAdminBundle:Role')->find($id);
-            if ($role != 'empty') {
-                $usersList = $em->getRepository('XvolutionsAdminBundle:User')->findAll();
-                $found = false;
-                foreach ($usersList as $user) {
-                    $userRole = $user->getRoles();
-                    foreach ($userRole as $urole) {
-                        if ($urole->getId() == $role->getId()) {
-                            $found = true;
-                        }
-                    }
-                }
-                if ($found == false) {
-                    $em->remove($role);
-                    $em->flush($role);
-                    $status = 'Grupo removido com sucesso';
-                } else {
-                    $error = 'Erro ao remover o grupo, tem utilizadores associados';
-                }
-            } else {
-                $error = "Erro ao remover o grupo";
-            }
-        } catch (\ErrorException $ex) {
-            $error = "Erro $ex ao remover o grupo";
-        }
     }
 
     /**

@@ -146,7 +146,7 @@ class FileController extends Controller
     {
         switch ($option) {
             case 'remove': {
-                    $this->removeFile($id, $status, $error);
+                    $this->removeSelectedFiles([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -154,40 +154,6 @@ class FileController extends Controller
                     $this->removeSelectedFiles($ids, $status, $error);
                     break;
                 }
-        }
-    }
-
-    /**
-     * This function is responsible for deleting a file
-     *
-     * @param integer $id the id of the file to be removed
-     * @param string $status with the information message
-     * @param string $error with the information message
-     */
-    private function removeFile($id, &$status, &$error)
-    {
-        ErrorHandler::register();
-        $em = $this->getDoctrine()->getManager();
-        $file = $em->getRepository('XvolutionsAdminBundle:File')->find($id);
-        try {
-            if ($file != 'empty') {
-                $folder = $this->container->getParameter('uploaded_files');
-                if (unlink($folder . '/' . $file->getFileName())) {
-                    $em->remove($file);
-                    $em->flush();
-                    $status = 'Ficheiro removido com sucesso';
-                } else {
-                    $error = "Erro ao remover o ficheiro";
-                }
-            } else {
-                $error = "Erro ao remover o ficheiro";
-            }
-        } catch (\ErrorException $ex) {
-            if (!is_file($folder . '/' . $file->getFileName())) {
-                $em->remove($file);
-                $em->flush();
-                $error = "Inconsistencia encontrada na base de dados. Esta foi reparada";
-            }
         }
     }
 

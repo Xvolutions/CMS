@@ -177,7 +177,7 @@ class BlogPostController extends Controller
         $error = null;
         switch ($option) {
             case 'remove': {
-                    $this->removeBlogPost($id, $status, $error);
+                    $this->removeSelectedBlogPosts([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -241,30 +241,6 @@ class BlogPostController extends Controller
                     'error' => $error,
                     'pagination' => $pagination
         ));
-    }
-
-    /**
-     * This is function is repsonsible to remove a blog post
-     *
-     * @param type $id the id of the blog post to be removed
-     * @return string with the information message
-     */
-    private function removeBlogPost($id, &$status, &$error)
-    {
-        ErrorHandler::register();
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $blogPost = $em->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
-            if ($blogPost != 'empty') {
-                $em->remove($blogPost);
-                $em->flush();
-                $status = 'Artigo removido com sucesso';
-            } else {
-                $error = "Erro ao remover o artigo";
-            }
-        } catch (\ErrorException $ex) {
-            $error = "Erro $ex ao remover o artigo";
-        }
     }
 
     /**

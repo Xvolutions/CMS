@@ -145,7 +145,7 @@ class LanguagesController extends Controller
         $error = null;
         switch ($option) {
             case 'remove': {
-                    $this->RemoveLanguage($id, $status, $error);
+                    $this->RemoveSelectedLanguages([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -173,30 +173,6 @@ class LanguagesController extends Controller
                     'status' => $status,
                     'error' => $error
         ));
-    }
-
-    /**
-     * This is function is repsonsible to remove a language
-     *
-     * @param type $id the id of the language to be removed
-     * @return string with the information message
-     */
-    private function removeLanguage($id, &$status, &$error)
-    {
-        ErrorHandler::register();
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $language = $em->getRepository('XvolutionsAdminBundle:Language')->find($id);
-            if ($language != 'empty') {
-                $em->remove($language);
-                $em->flush();
-                $status = 'Ídioma removido com sucesso';
-            } else {
-                $error = "Erro ao remover um ídioma";
-            }
-        } catch (\ErrorException $ex) {
-            $error = "Erro $ex ao remover o ídioma";
-        }
     }
 
     /**
