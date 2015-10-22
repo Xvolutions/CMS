@@ -14,7 +14,6 @@ use Xvolutions\AdminBundle\Controller\AdminControllerInterface;
  */
 class AdminController extends Controller implements AdminControllerInterface
 {
-
     use General;
 
     /**
@@ -87,5 +86,4 @@ class AdminController extends Controller implements AdminControllerInterface
 
         return new Response($phpinfo, 200, array('Content-Type' => 'text/html'));
     }
-
 }

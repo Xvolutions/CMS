@@ -187,5 +187,4 @@ class FileController extends Controller
             $error = "Erro $ex ao remover o ficheiro";
         }
     }
-
 }

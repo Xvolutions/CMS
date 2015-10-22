@@ -50,8 +50,7 @@ class SettingController extends Controller
         }
 
         return $this->render(
-                'XvolutionsAdminBundle:setting:setting.html.twig',
-                array(
+                        'XvolutionsAdminBundle:setting:setting.html.twig', array(
                     'status' => $status,
                     'error' => $error,
                     'title' => 'Configurações',
@@ -70,6 +69,6 @@ class SettingController extends Controller
             $blog = $setting->getBlog();
         }
 
-        return new Response((string)$blog);
+        return new Response((string) $blog);
     }
 }

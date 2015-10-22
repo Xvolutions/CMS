@@ -36,12 +36,10 @@ class BlogPostController extends Controller
 
         $form = $this->createForm($blogPostType, $blogPost)
                 ->add(
-                    'idalias',
-                    'text',
-                    array(
-                        'label' => 'URL',
-                        'attr' => array('class' => 'url')
-                    )
+                        'idalias', 'text', array(
+                    'label' => 'URL',
+                    'attr' => array('class' => 'url')
+                        )
                 )
                 ->add('Criar', 'submit')
         ;
@@ -100,27 +98,23 @@ class BlogPostController extends Controller
 
         $form = $this->createForm($blogPostType, $blogPost)
                 ->add(
-                    'author', null, array(
+                        'author', null, array(
                     'label' => 'Autor',
                     'data' => $this->getUsername()
-                    )
+                        )
                 )
                 ->add(
-                    'idalias',
-                    'text',
-                    array(
-                        'label' => 'URL',
-                        'attr' => array('class' => 'url'),
-                        'data' => $alias->getUrl()
-                    )
+                        'idalias', 'text', array(
+                    'label' => 'URL',
+                    'attr' => array('class' => 'url'),
+                    'data' => $alias->getUrl()
+                        )
                 )
                 ->add(
-                    'date',
-                    null,
-                    array(
-                        'label' => 'Data',
-                        'data' => $blogPost->getDate()
-                    ))
+                        'date', null, array(
+                    'label' => 'Data',
+                    'data' => $blogPost->getDate()
+                ))
                 ->add('Guardar', 'submit')
         ;
 
@@ -192,7 +186,7 @@ class BlogPostController extends Controller
                     $blogPost->setTitle($received->title);
                     $blogPost->setSubTitle($received->subtitle);
                     $blogPost->setText($received->text);
-                    $dateAndTime = new \DateTime($received->date_date_year . '/' . $received->date_date_month . "/" . $received->date_date_day ." " .$received->date_time_hour . ":" . $received->date_time_minute);
+                    $dateAndTime = new \DateTime($received->date_date_year . '/' . $received->date_date_month . "/" . $received->date_date_day . " " . $received->date_time_hour . ":" . $received->date_time_minute);
                     $dateAndTime->format("Y/m/d H:i:s");
                     $blogPost->setDate($dateAndTime);
                     $blogPost->setIdlanguage($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->find($received->id_language));
@@ -221,10 +215,10 @@ class BlogPostController extends Controller
                 }
         }
 
-        if ($error != null && $option == 'remove' || $option =='removeselected') {
+        if ($error != null && $option == 'remove' || $option == 'removeselected') {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != null && $option == 'remove' || $option =='removeselected') {
+        if ($status != null && $option == 'remove' || $option == 'removeselected') {
             return new Response($status, Response::HTTP_OK);
         }
 
@@ -270,6 +264,4 @@ class BlogPostController extends Controller
             $error = "Erro $ex ao remover o(s) artigo(s)";
         }
     }
-
-
 }

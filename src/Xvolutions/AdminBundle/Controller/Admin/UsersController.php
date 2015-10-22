@@ -155,10 +155,10 @@ class UsersController extends Controller
                 }
         }
 
-        if ($error != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($error != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($status != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($status, Response::HTTP_OK);
         }
 
@@ -197,5 +197,4 @@ class UsersController extends Controller
             $error = "Erro $ex ao remover utilizador(es)";
         }
     }
-
 }

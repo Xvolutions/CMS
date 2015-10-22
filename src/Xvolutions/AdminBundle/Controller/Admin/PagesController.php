@@ -273,5 +273,4 @@ class PagesController extends Controller
             $error = 'Já existe uma página com esse endereço';
         }
     }
-
 }

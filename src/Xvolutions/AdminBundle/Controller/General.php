@@ -7,7 +7,6 @@ use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 
 trait General
 {
-
     /**
      * This function is responsible to verify is the use with the
      * Role admin is authenticated
@@ -16,8 +15,7 @@ trait General
      */
     public function verifyaccess()
     {
-        if (false === $this->isGranted('ROLE_ADMIN'))
-        {
+        if (false === $this->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
     }
@@ -92,5 +90,4 @@ trait General
                     FROM XvolutionsAdminBundle:'. $table .' f';
         return new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
     }
-
 }

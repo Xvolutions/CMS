@@ -9,7 +9,6 @@ namespace Xvolutions\AdminBundle\Controller;
  */
 interface AdminControllerInterface
 {
-
     /**
      * Controller responsible to show the backoffice main page
      * 

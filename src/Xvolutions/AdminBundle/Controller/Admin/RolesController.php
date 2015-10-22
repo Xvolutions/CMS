@@ -124,10 +124,10 @@ class RolesController extends Controller
                 }
         }
 
-        if ($error != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($error != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($status != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($status, Response::HTTP_OK);
         }
 
@@ -137,7 +137,7 @@ class RolesController extends Controller
                     'roleList' => $roleList,
                     'status' => $status,
                     'error' => $error
-                ));
+        ));
     }
 
     /**
