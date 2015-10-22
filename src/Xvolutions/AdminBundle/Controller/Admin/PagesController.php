@@ -157,7 +157,9 @@ class PagesController extends Controller
         $around = $this->container->getParameter('around');
         $select = 'SELECT COUNT(p.id) FROM XvolutionsAdminBundle:Page p';
         $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-        $pageList = $this->pageList($em, $current_page, $elementsPerPage);
+
+        $pageList = $this->elementList($em, $current_page, $elementsPerPage, 'Page');
+
         return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                     'pageList' => $pageList,
                     'status' => $status,
@@ -307,18 +309,4 @@ class PagesController extends Controller
         }
     }
 
-    /**
-     * Function responsible to return the PageList
-     *
-     * @param type $em Doctrine
-     * @param type $current_page The current page
-     * @param type $elementsPerPage The number of elements per page
-     * @return type Pagelist
-     */
-    private function pageList($em, $current_page, $elementsPerPage)
-    {
-        $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
-        $queryPage = $em->getRepository('XvolutionsAdminBundle:Page')->findBy(array(), array('date' => 'DESC'), $elementsPerPage, $startPoint);
-        return $queryPage;
-    }
 }

@@ -13,7 +13,7 @@ trait General
      * 
      * @throws AccessDeniedException
      */
-    protected function verifyaccess()
+    public function verifyaccess()
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
@@ -27,7 +27,7 @@ trait General
      * 
      * @return type string
      */
-    protected function getUsername()
+    public function getUsername()
     {
         try {
             $user = $this->get('security.context')->getToken()->getUser();
@@ -44,7 +44,7 @@ trait General
      * @return url of the gravatar
      * @throws AccessDeniedException
      */
-    private function getGravatar()
+    public function getGravatar()
     {
         try {
             $user = $this->get('security.context')->getToken()->getUser();
@@ -54,6 +54,23 @@ trait General
         } catch (\ErrorException $ex) {
             throw new AccessDeniedException();
         }
+    }
+
+    /**
+     * Function responsible to return the Element's List
+     *
+     * @param type $em Doctrine
+     * @param type $current_page The current page
+     * @param type $elementsPerPage The number of elements per page
+     * @param type $table Entity to search
+     * @return type PostList
+     */
+    public function elementList($em, $current_page, $elementsPerPage, $table)
+    {
+        $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
+        $queryPage = $em->getRepository('XvolutionsAdminBundle:'.$table)->findBy(array(), array('date' => 'DESC'), $elementsPerPage, $startPoint);
+
+        return $queryPage;
     }
 
 }

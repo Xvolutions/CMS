@@ -179,7 +179,7 @@ class UsersController extends Controller
                     FROM XvolutionsAdminBundle:User u';
         $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
 
-        $userList = $this->userList($em, $current_page, $elementsPerPage);
+        $userList = $this->elementList($em, $current_page, $elementsPerPage, 'User');
 
         return $this->render('XvolutionsAdminBundle:users:users.html.twig', array(
                     'title' => 'Utilizadores',
@@ -230,21 +230,6 @@ class UsersController extends Controller
         } catch (\ErrorException $ex) {
             $error = "Erro $ex ao remover utilizador(es)";
         }
-    }
-
-    /**
-     * Function responsible to return the userList
-     *
-     * @param type $em Doctrine
-     * @param type $current_page The current page
-     * @param type $elementsPerPage The number of elements per page
-     * @return type userList
-     */
-    private function userList($em, $current_page, $elementsPerPage)
-    {
-        $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
-        $queryPage = $em->getRepository('XvolutionsAdminBundle:User')->findBy(array(), array('id' => 'DESC'), $elementsPerPage, $startPoint);
-        return $queryPage;
     }
 
 }
