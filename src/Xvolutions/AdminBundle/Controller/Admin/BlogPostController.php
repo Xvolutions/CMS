@@ -10,7 +10,6 @@ use Xvolutions\AdminBundle\Entity\BlogPost;
 use Xvolutions\AdminBundle\Form\BlogPostType;
 use Xvolutions\AdminBundle\Entity\Alias;
 use Symfony\Component\Debug\ErrorHandler;
-use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 
 /**
  * Description of BlogPostController

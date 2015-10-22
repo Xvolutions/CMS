@@ -7,7 +7,6 @@ use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Debug\ErrorHandler;
-use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 use Xvolutions\AdminBundle\Helpers\Upload;
 use Xvolutions\AdminBundle\Entity\File;
 

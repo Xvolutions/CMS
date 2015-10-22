@@ -23,6 +23,8 @@ use Symfony\Component\Debug\ErrorHandler;
  */
 class LanguagesController extends Controller
 {
+    use General;
+
     /**
      * Controller responsible to add a new language for and handling the form
      * submission and the database insertion
@@ -32,7 +34,7 @@ class LanguagesController extends Controller
      */
     public function addlanguagesAction(Request $request)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $language = new Language();
         $languageType = new LanguageType();
@@ -82,7 +84,7 @@ class LanguagesController extends Controller
      */
     public function editlanguagesAction(Request $request, $id)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $languageType = new LanguageType();
 
@@ -139,7 +141,7 @@ class LanguagesController extends Controller
      */
     public function languagesAction($option = null, $id = null)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $status = null;
         $error = null;

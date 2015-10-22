@@ -10,7 +10,6 @@ use Xvolutions\AdminBundle\Entity\Page;
 use Xvolutions\AdminBundle\Entity\Alias;
 use Xvolutions\AdminBundle\Form\PageType;
 use Symfony\Component\Debug\ErrorHandler;
-use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 
 /**
  * Description of PagesController
