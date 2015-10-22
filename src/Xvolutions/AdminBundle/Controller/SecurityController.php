@@ -17,7 +17,7 @@ class SecurityController extends Controller
 
     public function loginAction(Request $request)
     {
-        if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
+        if ($this->isGranted('ROLE_ADMIN'))
         {
             return $this->redirectToRoute('backoffice');
         }

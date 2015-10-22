@@ -15,7 +15,7 @@ trait General
      */
     public function verifyaccess()
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
+        if (false === $this->isGranted('ROLE_ADMIN'))
         {
             throw new AccessDeniedException();
         }
@@ -30,7 +30,7 @@ trait General
     public function getUsername()
     {
         try {
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
             return $user->getName();
         } catch (\ErrorException $ex) {
             throw new AccessDeniedException();
@@ -47,7 +47,7 @@ trait General
     public function getGravatar()
     {
         try {
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
             $emailAddress = $user->getEmail();
             $misc = $this->get('xvolutions_admin.misc');
             return $misc->fetchGravatar($emailAddress);
@@ -63,12 +63,13 @@ trait General
      * @param type $current_page The current page
      * @param type $elementsPerPage The number of elements per page
      * @param type $table Entity to search
+     * @param type $orderBy The fetch will be order by date, id, etc ?
      * @return type PostList
      */
-    public function elementList($em, $current_page, $elementsPerPage, $table)
+    public function elementList($em, $current_page, $elementsPerPage, $table, $orderBy = array('date' => 'DESC'))
     {
         $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
-        $queryPage = $em->getRepository('XvolutionsAdminBundle:'.$table)->findBy(array(), array('date' => 'DESC'), $elementsPerPage, $startPoint);
+        $queryPage = $em->getRepository('XvolutionsAdminBundle:'.$table)->findBy(array(), $orderBy, $elementsPerPage, $startPoint);
 
         return $queryPage;
     }
