@@ -2,7 +2,8 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Role;
@@ -14,8 +15,10 @@ use Symfony\Component\Debug\ErrorHandler;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class RolesController extends AdminController
+class RolesController extends Controller
 {
+    use General;
+
     /**
      * Controller responsible to add a new role for and handling the form
      * submission and the database insertion
@@ -25,7 +28,7 @@ class RolesController extends AdminController
      */
     public function addrolesAction(Request $request)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $role = new Role();
         $roleType = new RoleType();
@@ -65,7 +68,7 @@ class RolesController extends AdminController
      */
     public function editrolesAction(Request $request, $id)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $roleType = new RoleType();
 
@@ -105,13 +108,13 @@ class RolesController extends AdminController
      */
     public function rolesAction($option = null, $id = null)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $status = null;
         $error = null;
         switch ($option) {
             case 'remove': {
-                    $this->RemoveRole($id, $status, $error);
+                    $this->RemoveSelectedRoles([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -121,10 +124,10 @@ class RolesController extends AdminController
                 }
         }
 
-        if ($error != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($error != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($status != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($status, Response::HTTP_OK);
         }
 
@@ -134,45 +137,7 @@ class RolesController extends AdminController
                     'roleList' => $roleList,
                     'status' => $status,
                     'error' => $error
-                ));
-    }
-
-    /**
-     * This is function is repsonsible to remove a group
-     *
-     * @param type $id the id of the group to be removed
-     * @return string with the information message
-     */
-    private function removeRole($id, &$status, &$error)
-    {
-        ErrorHandler::register();
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $role = $em->getRepository('XvolutionsAdminBundle:Role')->find($id);
-            if ($role != 'empty') {
-                $usersList = $em->getRepository('XvolutionsAdminBundle:User')->findAll();
-                $found = false;
-                foreach ($usersList as $user) {
-                    $userRole = $user->getRoles();
-                    foreach ($userRole as $urole) {
-                        if ($urole->getId() == $role->getId()) {
-                            $found = true;
-                        }
-                    }
-                }
-                if ($found == false) {
-                    $em->remove($role);
-                    $em->flush($role);
-                    $status = 'Grupo removido com sucesso';
-                } else {
-                    $error = 'Erro ao remover o grupo, tem utilizadores associados';
-                }
-            } else {
-                $error = "Erro ao remover o grupo";
-            }
-        } catch (\ErrorException $ex) {
-            $error = "Erro $ex ao remover o grupo";
-        }
+        ));
     }
 
     /**

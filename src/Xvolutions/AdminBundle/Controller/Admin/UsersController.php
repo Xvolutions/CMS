@@ -2,21 +2,23 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\User;
 use Xvolutions\AdminBundle\Form\UserType;
 use Symfony\Component\Debug\ErrorHandler;
-use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 
 /**
  * Description of UsersController
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class UsersController extends AdminController
+class UsersController extends Controller
 {
+    use General;
+
     /**
      * Controller responsible to add a new user for and handling the form
      * submission and the database insertion
@@ -26,7 +28,7 @@ class UsersController extends AdminController
      */
     public function addusersAction(Request $request)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $user = new User();
         $userType = new UserType();
@@ -76,7 +78,7 @@ class UsersController extends AdminController
      */
     public function editusersAction(Request $request, $id)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $userType = new UserType();
 
@@ -113,14 +115,7 @@ class UsersController extends AdminController
 
             return $this->forward('XvolutionsAdminBundle:Admin/Users:users', array('status' => $status, 'error' => $error));
         }
-        $em = $this->getDoctrine()->getManager();
-        $current_page= 1;
-        $elementsPerPage = $this->container->getParameter('elements_per_page');
-        $boundaries = $this->container->getParameter('boundaries');
-        $around = $this->container->getParameter('around');
-        $select = 'SELECT COUNT(u.id)
-                    FROM XvolutionsAdminBundle:User u';
-        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
+
         $rolesList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Role')->findAll();
 
         return $this->render('XvolutionsAdminBundle:users:add_users.hml.twig', array(
@@ -128,8 +123,7 @@ class UsersController extends AdminController
                     'title' => 'Editar um Utilizador',
                     'status' => $status,
                     'error' => $error,
-                    'roleslist' => $rolesList,
-                    'pagination' => $pagination
+                    'roleslist' => $rolesList
         ));
     }
 
@@ -144,14 +138,14 @@ class UsersController extends AdminController
      */
     public function usersAction($option = null, $id = null, $current_page = 1)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $status = null;
         $error = null;
 
         switch ($option) {
             case 'remove': {
-                    $this->RemoveUser($id, $status, $error);
+                    $this->RemoveSelectedUsers([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -161,22 +155,17 @@ class UsersController extends AdminController
                 }
         }
 
-        if ($error != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($error != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($status != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($status, Response::HTTP_OK);
         }
 
         $em = $this->getDoctrine()->getManager();
+        $pagination = $this->showPagination($em, 'Page', $current_page);
         $elementsPerPage = $this->container->getParameter('elements_per_page');
-        $boundaries = $this->container->getParameter('boundaries');
-        $around = $this->container->getParameter('around');
-        $select = 'SELECT COUNT(u.id)
-                    FROM XvolutionsAdminBundle:User u';
-        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-
-        $userList = $this->userList($em, $current_page, $elementsPerPage);
+        $userList = $this->elementList($em, $current_page, $elementsPerPage, 'User', array('id' => 'DESC'));
 
         return $this->render('XvolutionsAdminBundle:users:users.html.twig', array(
                     'title' => 'Utilizadores',
@@ -185,26 +174,6 @@ class UsersController extends AdminController
                     'error' => $error,
                     'pagination' => $pagination
         ));
-    }
-
-    /**
-     * This is function is repsonsible to remove a user
-     *
-     * @param type $id the id of the user to be removed
-     * @return string with the information message
-     */
-    private function removeUser($id, &$status, &$error)
-    {
-        ErrorHandler::register();
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository('XvolutionsAdminBundle:User')->find($id);
-            $em->remove($user);
-            $em->flush($user);
-            $status = 'Utilizador removido com sucesso';
-        } catch (\ErrorException $ex) {
-            $error = "Erro $ex ao remover um utilizador";
-        }
     }
 
     /**
@@ -228,20 +197,4 @@ class UsersController extends AdminController
             $error = "Erro $ex ao remover utilizador(es)";
         }
     }
-
-    /**
-     * Function responsible to return the userList
-     *
-     * @param type $em Doctrine
-     * @param type $current_page The current page
-     * @param type $elementsPerPage The number of elements per page
-     * @return type userList
-     */
-    private function userList($em, $current_page, $elementsPerPage)
-    {
-        $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
-        $queryPage = $em->getRepository('XvolutionsAdminBundle:User')->findBy(array(), array('id' => 'DESC'), $elementsPerPage, $startPoint);
-        return $queryPage;
-    }
-
 }

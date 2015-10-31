@@ -4,7 +4,7 @@ namespace Xvolutions\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BlogPostType extends AbstractType
 {
@@ -67,7 +67,7 @@ class BlogPostType extends AbstractType
                     'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Section',
-                        'property' => 'section',
+                        'choice_label' => 'section',
                         'multiple' => false,
                         'expanded' => false,
                         'label' => 'Section'
@@ -78,7 +78,7 @@ class BlogPostType extends AbstractType
                     'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Language',
-                        'property' => 'language',
+                        'choice_label' => 'language',
                         'multiple' => false,
                         'expanded' => false,
                         'label' => 'Language'
@@ -89,7 +89,7 @@ class BlogPostType extends AbstractType
                     'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Status',
-                        'property' => 'status',
+                        'choice_label' => 'status',
                         'multiple' => false,
                         'expanded' => false
                     )
@@ -98,9 +98,9 @@ class BlogPostType extends AbstractType
     }
     
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Xvolutions\AdminBundle\Entity\BlogPost'
