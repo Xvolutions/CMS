@@ -5,7 +5,6 @@ namespace Xvolutions\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Debug\ErrorHandler;
 
 /**
  * Description of SecurityController
@@ -94,11 +93,8 @@ class AdminController extends Controller
      * 
      * @throws AccessDeniedException
      */
-    protected function verifyaccess()
-    {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+    protected function verifyaccess() {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
     }
 
     /**
@@ -110,7 +106,7 @@ class AdminController extends Controller
     protected function getUsername()
     {
         try {
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->get('security.token_storage')->getToken()->getUser();
             return $user->getName();
         } catch (\ErrorException $ex) {
             throw new AccessDeniedException();
@@ -127,7 +123,7 @@ class AdminController extends Controller
     private function getGravatar()
     {
         try {
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->get('security.token_storage')->getToken()->getUser();
             $emailAddress = $user->getEmail();
             $misc = $this->get('xvolutions_admin.misc');
             return $misc->fetchGravatar($emailAddress);

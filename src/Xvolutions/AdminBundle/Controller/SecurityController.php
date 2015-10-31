@@ -4,7 +4,6 @@ namespace Xvolutions\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 use Xvolutions\AdminBundle\Entity\User;
 
 /**
