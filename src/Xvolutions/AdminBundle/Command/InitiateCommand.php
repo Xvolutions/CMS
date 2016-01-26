@@ -20,7 +20,6 @@ use Symfony\Component\Debug\ErrorHandler;
  */
 class InitiateCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         $this
@@ -53,8 +52,7 @@ class InitiateCommand extends ContainerAwareCommand
             $em = $this->getContainer()->get('doctrine')->getManager('default');
 
             $status = array('Rascunho', 'Publicado', 'Arquivado');
-            foreach ($status as $s)
-            {
+            foreach ($status as $s) {
                 $status = new Status();
                 $status->setStatus($s);
                 $em->persist($status);
@@ -72,8 +70,7 @@ class InitiateCommand extends ContainerAwareCommand
             $em = $this->getContainer()->get('doctrine')->getManager('default');
 
             $sections = array('Pública', 'Privada');
-            foreach ($sections as $s)
-            {
+            foreach ($sections as $s) {
                 $section = new Section();
                 $section->setSection($s);
                 $em->persist($section);
@@ -101,8 +98,7 @@ class InitiateCommand extends ContainerAwareCommand
                 )
             );
 
-            foreach ($languages as $l)
-            {
+            foreach ($languages as $l) {
                 $language = new Language();
                 $language->setLanguage($l[0]);
                 $language->setCode($l[1]);
@@ -131,8 +127,7 @@ class InitiateCommand extends ContainerAwareCommand
                 )
             );
 
-            foreach ($roles as $r)
-            {
+            foreach ($roles as $r) {
                 $role = new Role();
                 $role->setName($r[0]);
                 $role->setRole($r[1]);
@@ -161,8 +156,7 @@ class InitiateCommand extends ContainerAwareCommand
                 ),
             );
             $em = $this->getContainer()->get('doctrine')->getManager('default');
-            foreach ($users as $u)
-            {
+            foreach ($users as $u) {
                 $user = new User();
                 $user->setUsername($u[0]);
                 $user->setName($u[1]);
@@ -185,5 +179,4 @@ class InitiateCommand extends ContainerAwareCommand
             $output->writeln("Erro ao adicionar os utilizadores base -> $ex");
         }
     }
-
 }

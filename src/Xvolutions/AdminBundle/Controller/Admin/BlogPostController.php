@@ -2,22 +2,23 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\BlogPost;
 use Xvolutions\AdminBundle\Form\BlogPostType;
 use Xvolutions\AdminBundle\Entity\Alias;
 use Symfony\Component\Debug\ErrorHandler;
-use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 
 /**
  * Description of BlogPostController
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class BlogPostController extends AdminController
+class BlogPostController extends Controller
 {
+    use General;
 
     /**
      * Controller responsible to add a new blog post for and handling the form
@@ -28,24 +29,22 @@ class BlogPostController extends AdminController
      */
     public function addBlogPostsAction(Request $request)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $blogPost = new BlogPost();
         $blogPostType = new BlogPostType();
 
         $form = $this->createForm($blogPostType, $blogPost)
                 ->add(
-                    'idalias',
-                    'text',
-                    array(
-                        'label' => 'URL',
-                        'attr' => array('class' => 'url')
-                    )
+                        'idalias', 'text', array(
+                    'label' => 'URL',
+                    'attr' => array('class' => 'url')
+                        )
                 )
                 ->add('Criar', 'submit')
         ;
 
-        $form->get('author')->setData(parent::getUsername());
+        $form->get('author')->setData($this->getUsername());
 
         $form->handleRequest($request);
 
@@ -89,7 +88,7 @@ class BlogPostController extends AdminController
      */
     public function editBlogPostsAction(Request $request, $id)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $blogPostType = new BlogPostType();
 
@@ -99,27 +98,23 @@ class BlogPostController extends AdminController
 
         $form = $this->createForm($blogPostType, $blogPost)
                 ->add(
-                    'author', null, array(
+                        'author', null, array(
                     'label' => 'Autor',
-                    'data' => parent::getUsername()
-                    )
+                    'data' => $this->getUsername()
+                        )
                 )
                 ->add(
-                    'idalias',
-                    'text',
-                    array(
-                        'label' => 'URL',
-                        'attr' => array('class' => 'url'),
-                        'data' => $alias->getUrl()
-                    )
+                        'idalias', 'text', array(
+                    'label' => 'URL',
+                    'attr' => array('class' => 'url'),
+                    'data' => $alias->getUrl()
+                        )
                 )
                 ->add(
-                    'date', 
-                    null,
-                    array(
-                        'label' => 'Data',
-                        'data' => $blogPost->getDate()
-                    ))
+                        'date', null, array(
+                    'label' => 'Data',
+                    'data' => $blogPost->getDate()
+                ))
                 ->add('Guardar', 'submit')
         ;
 
@@ -167,15 +162,15 @@ class BlogPostController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the blogPosts
      */
-    public function blogPostsAction(Request $request, $option = NULL, $id = NULL, $current_page = 1)
+    public function blogPostsAction(Request $request, $option = null, $id = null, $current_page = 1)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $status = null;
         $error = null;
         switch ($option) {
             case 'remove': {
-                    $this->removeBlogPost($id, $status, $error);
+                    $this->removeSelectedBlogPosts([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -191,7 +186,7 @@ class BlogPostController extends AdminController
                     $blogPost->setTitle($received->title);
                     $blogPost->setSubTitle($received->subtitle);
                     $blogPost->setText($received->text);
-                    $dateAndTime = new \DateTime($received->date_date_year . '/' . $received->date_date_month . "/" . $received->date_date_day ." " .$received->date_time_hour . ":" . $received->date_time_minute);
+                    $dateAndTime = new \DateTime($received->date_date_year . '/' . $received->date_date_month . "/" . $received->date_date_day . " " . $received->date_time_hour . ":" . $received->date_time_minute);
                     $dateAndTime->format("Y/m/d H:i:s");
                     $blogPost->setDate($dateAndTime);
                     $blogPost->setIdlanguage($this->getDoctrine()->getRepository('XvolutionsAdminBundle:Language')->find($received->id_language));
@@ -220,22 +215,17 @@ class BlogPostController extends AdminController
                 }
         }
 
-        if ($error != null && $option == 'remove' || $option =='removeselected') {
+        if ($error != null && $option == 'remove' || $option == 'removeselected') {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != null && $option == 'remove' || $option =='removeselected') {
+        if ($status != null && $option == 'remove' || $option == 'removeselected') {
             return new Response($status, Response::HTTP_OK);
         }
 
         $em = $this->getDoctrine()->getManager();
+        $pagination = $this->showPagination($em, 'BlogPost', $current_page);
         $elementsPerPage = $this->container->getParameter('elements_per_page');
-        $boundaries = $this->container->getParameter('boundaries');
-        $around = $this->container->getParameter('around');
-        $select = 'SELECT COUNT(b.id)
-                    FROM XvolutionsAdminBundle:BlogPost b';
-        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-
-        $blogPostList = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:BlogPost')->findAll();
+        $blogPostList = $this->elementList($em, $current_page, $elementsPerPage, 'BlogPost');
 
         return $this->render('XvolutionsAdminBundle:blog:posts.html.twig', array(
                     'title' => 'Artigos',
@@ -244,30 +234,6 @@ class BlogPostController extends AdminController
                     'error' => $error,
                     'pagination' => $pagination
         ));
-    }
-
-    /**
-     * This is function is repsonsible to remove a blog post
-     *
-     * @param type $id the id of the blog post to be removed
-     * @return string with the information message
-     */
-    private function removeBlogPost($id, &$status, &$error)
-    {
-        ErrorHandler::register();
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $blogPost = $em->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
-            if ($blogPost != 'empty') {
-                $em->remove($blogPost);
-                $em->flush();
-                $status = 'Artigo removido com sucesso';
-            } else {
-                $error = "Erro ao remover o artigo";
-            }
-        } catch (\ErrorException $ex) {
-            $error = "Erro $ex ao remover o artigo";
-        }
     }
 
     /**
@@ -281,8 +247,7 @@ class BlogPostController extends AdminController
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
-            foreach ($ids as $id)
-            {
+            foreach ($ids as $id) {
                 $blogPost = $em->getRepository('XvolutionsAdminBundle:BlogPost')->find($id);
                 if ($blogPost != 'empty') {
                     $em->remove($blogPost);
@@ -299,5 +264,4 @@ class BlogPostController extends AdminController
             $error = "Erro $ex ao remover o(s) artigo(s)";
         }
     }
-
 }

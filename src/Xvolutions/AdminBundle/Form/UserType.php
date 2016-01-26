@@ -4,11 +4,11 @@ namespace Xvolutions\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -18,8 +18,8 @@ class UserType extends AbstractType
             ->add('username')
             ->add('name')
             ->add(
-                    'password', 
-                    'repeated', 
+                    'password',
+                    'repeated',
                     array(
                         'first_name' => 'password',
                         'second_name' => 'confirm',
@@ -30,11 +30,11 @@ class UserType extends AbstractType
             ->add('email')
             ->add('isactive')
             ->add(
-                    'roles', 
-                    'entity', 
+                    'roles',
+                    'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Role',
-                        'property' => 'name',
+                        'choice_label' => 'name',
                         'multiple' => true,
                         'expanded' => false
                     )
@@ -43,9 +43,9 @@ class UserType extends AbstractType
     }
     
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Xvolutions\AdminBundle\Entity\User'

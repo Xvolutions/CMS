@@ -2,7 +2,8 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Section;
@@ -14,8 +15,9 @@ use Symfony\Component\Debug\ErrorHandler;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class SectionsController extends AdminController
+class SectionsController extends Controller
 {
+    use General;
 
     /**
      * Controller responsible to add a new section for and handling the form
@@ -26,7 +28,7 @@ class SectionsController extends AdminController
      */
     public function addsectionAction(Request $request)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $section = new Section();
         $sectionType = new SectionType();
@@ -37,8 +39,8 @@ class SectionsController extends AdminController
 
         $form->handleRequest($request);
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
         if ($form->isValid()) {
             $formValues = $request->request->get('xvolutions_adminbundle_section');
             $SectionName = $formValues["section"];
@@ -74,7 +76,7 @@ class SectionsController extends AdminController
      */
     public function editsectionAction(Request $request, $id)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $sectionType = new SectionType();
 
@@ -85,8 +87,8 @@ class SectionsController extends AdminController
                 ->add('Guardar', 'submit')
         ;
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
 
         $form->handleRequest($request);
 
@@ -126,15 +128,15 @@ class SectionsController extends AdminController
      * @param type $id The id, or id's, of the section(s) to be removed
      * @return type call the controller to handle
      */
-    public function sectionsAction($option = NULL, $id = NULL)
+    public function sectionsAction($option = null, $id = null)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
         switch ($option) {
             case 'remove': {
-                    $this->RemoveSection($id, $status, $error);
+                    $this->RemoveSelectedSections([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -144,10 +146,10 @@ class SectionsController extends AdminController
                 }
         }
 
-        if ($error != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($error != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($status != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($status, Response::HTTP_OK);
         }
 
@@ -161,38 +163,6 @@ class SectionsController extends AdminController
     }
 
     /**
-     * This is function is repsonsible to remove a section
-     *
-     * @param type $id the id of the section to be removed
-     * @return string with the information message
-     */
-    private function removeSection($id, &$status, &$error)
-    {
-        ErrorHandler::register();
-        try {
-
-            $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery(
-                            'SELECT p.id
-                FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
-                WHERE p.id_section = :id'
-                    )->setParameter('id', $id);
-            $pagesCount = $query->getResult();
-
-            if ($pagesCount != NULL) {
-                $error = 'Não é possível remover uma secção associada a páginas';
-            } else {
-                $section = $em->getRepository('XvolutionsAdminBundle:Section')->find($id);
-                $em->remove($section);
-                $em->flush($section);
-                $status = 'Secção removida com sucesso';
-            }
-        } catch (\ErrorException $ex) {
-            $error = "Erro $ex ao remover a secção";
-        }
-    }
-
-    /**
      * This function is responsible to remove a list of sections
      *
      * @param type $ids array containing the id's of the sections to be removed
@@ -203,9 +173,7 @@ class SectionsController extends AdminController
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
-            foreach ($ids as $id)
-            {
-
+            foreach ($ids as $id) {
                 $query = $em->createQuery(
                                 'SELECT p.id
                     FROM XvolutionsAdminBundle:Page p, XvolutionsAdminBundle:Section s
@@ -213,7 +181,7 @@ class SectionsController extends AdminController
                         )->setParameter('id', $id);
                 $pagesCount = $query->getResult();
 
-                if ($pagesCount != NULL) {
+                if ($pagesCount != null) {
                     $error = 'Não é possível remover uma secção associada a páginas';
                     break;
                 } else {
@@ -227,5 +195,4 @@ class SectionsController extends AdminController
             $error = "Erro $ex ao remover as secção(ões)";
         }
     }
-
 }

@@ -11,7 +11,8 @@ use Symfony\Component\Debug\ErrorHandler;
  * @date 22/06/2014
  * 
  */
-class Pagination {
+class Pagination
+{
     /*
      * The current page
      */
@@ -41,7 +42,8 @@ class Pagination {
     /*
      * Class constructor
      */
-    public function __construct($current_page, $total_pages, $boundaries, $around) {
+    public function __construct($current_page, $total_pages, $boundaries, $around)
+    {
         $this->current_page = $current_page;
         $this->total_pages = $total_pages;
         $this->boundaries = $boundaries;
@@ -51,7 +53,8 @@ class Pagination {
     /*
      * Function responsible to display the page numbers
      */
-    public function displayPagination() {
+    public function displayPagination()
+    {
         $this->validation();
 
         $this->bootstrapPages();
@@ -81,19 +84,21 @@ class Pagination {
      * Function responsible to fill the pages array with zeros (0)
      */
 
-    private function bootstrapPages() {
+    private function bootstrapPages()
+    {
         $this->pages = array_fill(0, $this->total_pages, 0);
     }
 
     /*
      * Function responsible to validate the variables
      */
-    private function validation() {
+    private function validation()
+    {
         if (is_numeric($this->current_page) && is_numeric($this->total_pages) && is_numeric($this->boundaries) && is_numeric($this->around)) {
             if ($this->current_page < 1 || $this->current_page > $this->total_pages) {
                 $this->current_page = 1;
             }
-            if ( $this->total_pages < 1) {
+            if ($this->total_pages < 1) {
                 $this->total_pages = 1;
             }
         } else {
@@ -104,7 +109,8 @@ class Pagination {
     /*
      * Function responsible to display the first page with the boundaries
      */
-    private function beginning() {
+    private function beginning()
+    {
         if ($this->boundaries > 1) {
             for ($i = 1; $i < $this->boundaries + 1; $i ++) {
                 $this->pages[$i - 1] = 1;
@@ -117,7 +123,8 @@ class Pagination {
     /*
      * Function reponsible to displau the current page with the arround ones
      */
-    private function current() {
+    private function current()
+    {
         if ($this->current_page - $this->around < 1) {
             $start = 1;
         } else {
@@ -137,7 +144,8 @@ class Pagination {
     /*
      * Function responsible to display the last page with boundaries
      */
-    private function ending() {
+    private function ending()
+    {
         if ($this->boundaries > 1) {
             $first = $this->total_pages - $this->boundaries + 1;
             for ($i = $first; $i < $this->total_pages + 1; $i ++) {
@@ -147,5 +155,4 @@ class Pagination {
             $this->pages[$this->total_pages - 1] = 1;
         }
     }
-
 }

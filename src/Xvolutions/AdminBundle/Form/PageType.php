@@ -4,11 +4,11 @@ namespace Xvolutions\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PageType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -23,31 +23,31 @@ class PageType extends AbstractType
                     ))
             ->add('text')
             ->add(
-                    'id_language', 
-                    'entity', 
+                    'id_language',
+                    'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Language',
-                        'property' => 'language',
+                        'choice_label' => 'language',
                         'multiple' => false,
                         'expanded' => false
                     )
             )
             ->add(
-                    'id_section', 
-                    'entity', 
+                    'id_section',
+                    'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Section',
-                        'property' => 'section',
+                        'choice_label' => 'section',
                         'multiple' => false,
                         'expanded' => false
                     )
             )
             ->add(
-                    'id_status', 
-                    'entity', 
+                    'id_status',
+                    'entity',
                     array(
                         'class' => 'Xvolutions\AdminBundle\Entity\Status',
-                        'property' => 'status',
+                        'choice_label' => 'status',
                         'multiple' => false,
                         'expanded' => false
                     )
@@ -56,9 +56,9 @@ class PageType extends AbstractType
     }
     
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Xvolutions\AdminBundle\Entity\Page'

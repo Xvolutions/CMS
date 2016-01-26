@@ -2,11 +2,11 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Debug\ErrorHandler;
-use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 use Xvolutions\AdminBundle\Helpers\Upload;
 use Xvolutions\AdminBundle\Entity\File;
 
@@ -15,7 +15,9 @@ use Xvolutions\AdminBundle\Entity\File;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class FileController extends AdminController {
+class FileController extends Controller
+{
+    use General;
 
     /**
      * Controller responsible to return the list of images uploaded to the database
@@ -23,8 +25,9 @@ class FileController extends AdminController {
      * 
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function imageListAction() {
-        parent::verifyaccess();
+    public function imageListAction()
+    {
+        $this->verifyaccess();
 
         $imageTypes = array('gif', 'jpeg', 'png', 'tiff', 'bmp');
         $files = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:File')->findAll();
@@ -55,8 +58,9 @@ class FileController extends AdminController {
      * @param string $error if the removal or adition had errors
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction($option = null, $id = null, $current_page = 1, $status = null, $error = null) {
-        parent::verifyaccess();
+    public function listAction($option = null, $id = null, $current_page = 1, $status = null, $error = null)
+    {
+        $this->verifyaccess();
 
         $this->options($option, $id, $status, $error);
 
@@ -67,11 +71,10 @@ class FileController extends AdminController {
             return new Response($status, Response::HTTP_OK);
         }
 
-        $pagination = $this->showPagination($current_page);
-        $elementsPerPage = $this->container->getParameter('elements_per_page');
         $em = $this->getDoctrine()->getManager();
-        $fileList = $this->pageList($em, $current_page, $elementsPerPage);
-
+        $pagination = $this->showPagination($em, 'File', $current_page);
+        $elementsPerPage = $this->container->getParameter('elements_per_page');
+        $fileList = $this->elementList($em, $current_page, $elementsPerPage, 'File', array('name' => 'ASC'));
         $files_location = $this->container->getParameter('files_location');
 
         return $this->render('XvolutionsAdminBundle:files:files.html.twig', array(
@@ -91,8 +94,9 @@ class FileController extends AdminController {
      * @param type $current_page the actual page
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newFileAction(Request $request, $current_page = 1) {
-        parent::verifyaccess();
+    public function newFileAction(Request $request, $current_page = 1)
+    {
+        $this->verifyaccess();
 
         $upload = new Upload();
         $folder = $this->container->getParameter('uploaded_files');
@@ -107,7 +111,7 @@ class FileController extends AdminController {
             if (count($name) > 0) {
                 @unlink($folder . '/' . $fileName);
                 $error = "Já existe um ficheiro com esse nome";
-                return New Response($error, Response::HTTP_NOT_ACCEPTABLE);
+                return new Response($error, Response::HTTP_NOT_ACCEPTABLE);
             } else {
                 $file = new File();
                 $datetime = new \DateTime('now');
@@ -121,11 +125,11 @@ class FileController extends AdminController {
                 $em->persist($file);
                 $em->flush();
                 $status = 'Ficheiro adicionado com sucesso';
-                return New Response($status, Response::HTTP_CREATED);
+                return new Response($status, Response::HTTP_CREATED);
             }
         } else {
             $error = "Impossível enviar o ficheiro";
-            return New Response($error, Response::HTTP_NOT_ACCEPTABLE);
+            return new Response($error, Response::HTTP_NOT_ACCEPTABLE);
         }
     }
 
@@ -137,10 +141,11 @@ class FileController extends AdminController {
      * @param string $error If there is and error message
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function options($option, $id, &$status, &$error) {
+    private function options($option, $id, &$status, &$error)
+    {
         switch ($option) {
             case 'remove': {
-                    $this->removeFile($id, $status, $error);
+                    $this->removeSelectedFiles([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -152,62 +157,14 @@ class FileController extends AdminController {
     }
 
     /**
-     * Function responsible for rendering the pagination
-     *
-     * @param integer $current_page The current page
-     * @return \Xvolutions\AdminBundle\Helpers\PaginatorHelper
-     */
-    private function showPagination($current_page = 1) {
-        $em = $this->getDoctrine()->getManager();
-        $elementsPerPage = $this->container->getParameter('elements_per_page');
-        $boundaries = $this->container->getParameter('boundaries');
-        $around = $this->container->getParameter('around');
-        $select = 'SELECT COUNT(f.id)
-                    FROM XvolutionsAdminBundle:File f';
-        return new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-    }
-
-    /**
-     * This function is responsible for deleting a file
-     *
-     * @param integer $id the id of the file to be removed
-     * @param string $status with the information message
-     * @param string $error with the information message
-     */
-    private function removeFile($id, &$status, &$error) {
-        ErrorHandler::register();
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $file = $em->getRepository('XvolutionsAdminBundle:File')->find($id);
-            if ($file != 'empty') {
-                $folder = $this->container->getParameter('uploaded_files');
-                if (unlink($folder . '/' . $file->getFileName())) {
-                    $em->remove($file);
-                    $em->flush();
-                    $status = 'Ficheiro removido com sucesso';
-                } else {
-                    $error = "Erro ao remover o ficheiro";
-                }
-            } else {
-                $error = "Erro ao remover o ficheiro";
-            }
-        } catch (\ErrorException $ex) {
-            if (!is_file($folder . '/' . $file->getFileName())) {
-                $em->remove($file);
-                $em->flush();
-                $error = "Inconsistencia encontrada na base de dados. Esta foi reparada";
-            }
-        }
-    }
-
-    /**
      * This function is responsible to remove a list of files
      *
-     * @param array $id the array of id of the files to be removed
+     * @param array $ids the array of id of the files to be removed
      * @param string $status with the information message
      * @param string $error with the information message
      */
-    private function removeSelectedFiles($ids, $status, $error) {
+    private function removeSelectedFiles($ids, $status, $error)
+    {
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
@@ -230,26 +187,4 @@ class FileController extends AdminController {
             $error = "Erro $ex ao remover o ficheiro";
         }
     }
-
-    /**
-     * Function responsible to return the PageList
-     *
-     * @param type $em Doctrine
-     * @param type $current_page The current page
-     * @param type $elementsPerPage The number of elements per page
-     * @return type Pagelist
-     */
-    private function pageList($em, $current_page, $elementsPerPage) {
-        $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
-        $queryPage = $em->createQuery(
-                        'SELECT f.id, f.name, f.date, f.size, f.type, f.fileName
-            FROM XvolutionsAdminBundle:File f
-            ORDER BY f.name ASC'
-                )
-                ->setFirstResult($startPoint)
-                ->setMaxResults($elementsPerPage);
-
-        return $queryPage->getResult();
-    }
-
 }

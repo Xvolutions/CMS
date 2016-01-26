@@ -2,7 +2,8 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Xvolutions\AdminBundle\Entity\Setting;
 use Xvolutions\AdminBundle\Form\SettingType;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,10 +14,13 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author pedroresende
  */
-class SettingController extends AdminController {
+class SettingController extends Controller
+{
+    use General;
 
-    public function editSettingAction(Request $request, $id = 1) {
-        parent::verifyaccess();
+    public function editSettingAction(Request $request, $id = 1)
+    {
+        $this->verifyaccess();
 
         $status = null;
         $error = null;
@@ -46,8 +50,7 @@ class SettingController extends AdminController {
         }
 
         return $this->render(
-                'XvolutionsAdminBundle:setting:setting.html.twig', 
-                array(
+                        'XvolutionsAdminBundle:setting:setting.html.twig', array(
                     'status' => $status,
                     'error' => $error,
                     'title' => 'Configurações',
@@ -57,7 +60,7 @@ class SettingController extends AdminController {
 
     public function menuAction()
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $setting = $this->getDoctrine()->getRepository('XvolutionsAdminBundle:Setting')->find(1);
         if ($setting == null) {
@@ -66,7 +69,6 @@ class SettingController extends AdminController {
             $blog = $setting->getBlog();
         }
 
-        return new Response((string)$blog);
+        return new Response((string) $blog);
     }
-
 }

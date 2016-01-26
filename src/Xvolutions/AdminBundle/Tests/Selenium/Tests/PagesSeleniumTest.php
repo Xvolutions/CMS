@@ -6,7 +6,6 @@ use Xvolutions\AdminBundle\Tests\Selenium\SeleniumTest;
 
 class PagesSeleniumTest extends SeleniumTest
 {
-
     public function testAddPagesAction()
     {
         parent::login();
@@ -70,5 +69,4 @@ class PagesSeleniumTest extends SeleniumTest
         $this->clickAt("link=Bem-vindo, Administrator", "");
         parent::logout();
     }
-
 }

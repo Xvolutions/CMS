@@ -2,7 +2,8 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Role;
@@ -14,8 +15,9 @@ use Symfony\Component\Debug\ErrorHandler;
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class RolesController extends AdminController
+class RolesController extends Controller
 {
+    use General;
 
     /**
      * Controller responsible to add a new role for and handling the form
@@ -26,7 +28,7 @@ class RolesController extends AdminController
      */
     public function addrolesAction(Request $request)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $role = new Role();
         $roleType = new RoleType();
@@ -37,8 +39,8 @@ class RolesController extends AdminController
 
         $form->handleRequest($request);
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($role);
@@ -66,7 +68,7 @@ class RolesController extends AdminController
      */
     public function editrolesAction(Request $request, $id)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $roleType = new RoleType();
 
@@ -76,8 +78,8 @@ class RolesController extends AdminController
                 ->add('Guardar', 'submit')
         ;
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
 
         $form->handleRequest($request);
 
@@ -104,15 +106,15 @@ class RolesController extends AdminController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return type the template of the roles
      */
-    public function rolesAction($option = NULL, $id = NULL)
+    public function rolesAction($option = null, $id = null)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
-        $status = NULL;
-        $error = NULL;
+        $status = null;
+        $error = null;
         switch ($option) {
             case 'remove': {
-                    $this->RemoveRole($id, $status, $error);
+                    $this->RemoveSelectedRoles([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -122,10 +124,10 @@ class RolesController extends AdminController
                 }
         }
 
-        if ($error != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($error != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
-        if ($status != null && ($option == 'remove' || $option =='removeselected')) {
+        if ($status != null && ($option == 'remove' || $option == 'removeselected')) {
             return new Response($status, Response::HTTP_OK);
         }
 
@@ -135,47 +137,7 @@ class RolesController extends AdminController
                     'roleList' => $roleList,
                     'status' => $status,
                     'error' => $error
-                ));
-    }
-
-    /**
-     * This is function is repsonsible to remove a group
-     *
-     * @param type $id the id of the group to be removed
-     * @return string with the information message
-     */
-    private function removeRole($id, &$status, &$error)
-    {
-        ErrorHandler::register();
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $role = $em->getRepository('XvolutionsAdminBundle:Role')->find($id);
-            if ($role != 'empty') {
-                $usersList = $em->getRepository('XvolutionsAdminBundle:User')->findAll();
-                $found = FALSE;
-                foreach ($usersList as $user)
-                {
-                    $userRole = $user->getRoles();
-                    foreach ($userRole as $urole)
-                    {
-                        if ($urole->getId() == $role->getId()) {
-                            $found = TRUE;
-                        }
-                    }
-                }
-                if ($found == FALSE) {
-                    $em->remove($role);
-                    $em->flush($role);
-                    $status = 'Grupo removido com sucesso';
-                } else {
-                    $error = 'Erro ao remover o grupo, tem utilizadores associados';
-                }
-            } else {
-                $error = "Erro ao remover o grupo";
-            }
-        } catch (\ErrorException $ex) {
-            $error = "Erro $ex ao remover o grupo";
-        }
+        ));
     }
 
     /**
@@ -189,23 +151,20 @@ class RolesController extends AdminController
         ErrorHandler::register();
         try {
             $em = $this->getDoctrine()->getManager();
-            foreach ($ids as $id)
-            {
+            foreach ($ids as $id) {
                 $role = $em->getRepository('XvolutionsAdminBundle:Role')->find($id);
                 if ($role != 'empty') {
                     $usersList = $em->getRepository('XvolutionsAdminBundle:User')->findAll();
-                    $found = FALSE;
-                    foreach ($usersList as $user)
-                    {
+                    $found = false;
+                    foreach ($usersList as $user) {
                         $userRole = $user->getRoles();
-                        foreach ($userRole as $urole)
-                        {
+                        foreach ($userRole as $urole) {
                             if ($urole->getId() == $role->getId()) {
-                                $found = TRUE;
+                                $found = true;
                             }
                         }
                     }
-                    if ($found == FALSE) {
+                    if ($found == false) {
                         $em->remove($role);
                         $em->flush($role);
                         $status = 'Grupo removido com sucesso';
@@ -220,5 +179,4 @@ class RolesController extends AdminController
             $error = "Erro $ex ao remover o(s) grupo(s)";
         }
     }
-
 }

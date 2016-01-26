@@ -2,22 +2,23 @@
 
 namespace Xvolutions\AdminBundle\Controller\Admin;
 
-use Xvolutions\AdminBundle\Controller\AdminController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Xvolutions\AdminBundle\Controller\General;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Xvolutions\AdminBundle\Entity\Page;
 use Xvolutions\AdminBundle\Entity\Alias;
 use Xvolutions\AdminBundle\Form\PageType;
 use Symfony\Component\Debug\ErrorHandler;
-use Xvolutions\AdminBundle\Helpers\PaginatorHelper;
 
 /**
  * Description of PagesController
  *
  * @author Pedro Resende <pedroresende@mail.resende.biz>
  */
-class PagesController extends AdminController
+class PagesController extends Controller
 {
+    use General;
 
     /**
      * Controller responsible to edit a new section for and handling the form
@@ -29,7 +30,7 @@ class PagesController extends AdminController
      */
     public function editpagesAction(Request $request, $id)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $pageType = new PageType();
 
@@ -97,11 +98,11 @@ class PagesController extends AdminController
      */
     public function pagesAction(Request $request, $option = null, $id = null, $current_page = 1, $status = null, $error = null)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         switch ($option) {
             case 'remove': {
-                    $this->removePage($id, $status, $error);
+                    $this->removeSelectedPages([$id], $status, $error);
                     break;
                 }
             case 'removeselected': {
@@ -150,12 +151,10 @@ class PagesController extends AdminController
         }
 
         $em = $this->getDoctrine()->getManager();
+        $pagination = $this->showPagination($em, 'Page', $current_page);
         $elementsPerPage = $this->container->getParameter('elements_per_page');
-        $boundaries = $this->container->getParameter('boundaries');
-        $around = $this->container->getParameter('around');
-        $select = 'SELECT COUNT(p.id) FROM XvolutionsAdminBundle:Page p';
-        $pagination = new PaginatorHelper($em, $select, $elementsPerPage, $current_page, $boundaries, $around);
-        $pageList = $this->pageList($em, $current_page, $elementsPerPage);
+        $pageList = $this->elementList($em, $current_page, $elementsPerPage, 'Page');
+
         return $this->render('XvolutionsAdminBundle:pages:pages.html.twig', array(
                     'pageList' => $pageList,
                     'status' => $status,
@@ -173,7 +172,7 @@ class PagesController extends AdminController
      */
     public function addpagesAction(Request $request)
     {
-        parent::verifyaccess();
+        $this->verifyaccess();
 
         $page = new Page();
         $pageType = new PageType();
@@ -208,36 +207,6 @@ class PagesController extends AdminController
                         'status' => $status,
                         'error' => $error
             ));
-        }
-    }
-
-    /**
-     * This is function is responsible to remove a page
-     *
-     * @param integer $id the id of the page to be removed
-     * @return string with the information message
-     */
-    private function removePage($id, &$status, &$error)
-    {
-        ErrorHandler::register();
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $page = $em->getRepository('XvolutionsAdminBundle:Page')->find($id);
-            if ($page != 'empty') {
-                $menu = $em->getRepository('XvolutionsAdminBundle:Menu')->findBy(array('page' => $page));
-                    if (isset($menu[0])) {
-                        $em->remove($menu[0]);
-                        $em->flush($menu[0]);
-                    }
-
-                $em->remove($page);
-                $em->flush($page);
-                $status = 'Página removida com sucesso';
-            } else {
-                $error = "Erro ao remover a página";
-            }
-        } catch (\ErrorException $ex) {
-            $error = "Erro $ex ao remover a página";
         }
     }
 
@@ -304,20 +273,4 @@ class PagesController extends AdminController
             $error = 'Já existe uma página com esse endereço';
         }
     }
-
-    /**
-     * Function responsible to return the PageList
-     *
-     * @param type $em Doctrine
-     * @param type $current_page The current page
-     * @param type $elementsPerPage The number of elements per page
-     * @return type Pagelist
-     */
-    private function pageList($em, $current_page, $elementsPerPage)
-    {
-        $startPoint = ($current_page * $elementsPerPage) - $elementsPerPage;
-        $queryPage = $em->getRepository('XvolutionsAdminBundle:Page')->findBy(array(), array('id' => 'DESC'), $elementsPerPage, $startPoint);
-        return $queryPage;
-    }
-
 }

@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class Upload
 {
-
     /**
      * This function is responsible to deal with the uploaded file
      * 
@@ -25,8 +24,7 @@ class Upload
     public function upload(Request $request, $folder, &$fileName, &$originalFileName, &$size, &$type)
     {
         $status = true;
-        foreach ($request->files as $uploadedFile)
-        {
+        foreach ($request->files as $uploadedFile) {
             $type = $uploadedFile->guessClientExtension();
             $originalFileName = $uploadedFile->getClientOriginalName();
             $fileName = md5(time()) . '.' . $type;
@@ -35,5 +33,4 @@ class Upload
         }
         return $status;
     }
-
 }

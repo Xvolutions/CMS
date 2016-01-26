@@ -4,11 +4,11 @@ namespace Xvolutions\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FileType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -23,7 +23,7 @@ class FileType extends AbstractType
                     )
             )
             ->add('fileName',
-                    'file', 
+                    'file',
                     array(
                         'label' => 'Ficheiro',
                         'required' => true
@@ -33,9 +33,9 @@ class FileType extends AbstractType
     }
     
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Xvolutions\AdminBundle\Entity\File'

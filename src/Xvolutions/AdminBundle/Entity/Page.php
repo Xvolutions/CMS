@@ -71,7 +71,8 @@ class Page
      */
     private $id_alias;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->id_language = new \Doctrine\Common\Collections\ArrayCollection();
         $this->id_section = new \Doctrine\Common\Collections\ArrayCollection();
         $this->id_status = new \Doctrine\Common\Collections\ArrayCollection();
@@ -248,5 +249,4 @@ class Page
 
         return $this;
     }
-
 }
